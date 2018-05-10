@@ -24,7 +24,7 @@ typedef struct _AigFileAttribute
 /// 参数	 :	pPath	 [in] 路径
 /// 返回值:  数量
 /// </summary>
-int path_GetFilesNum(char* pPath);
+int path_GetFilesNumInDirectory(char* pPath);
 
 /// <summary>
 /// 功能	 :	查看目录下文件和文件夹的属性
@@ -33,7 +33,7 @@ int path_GetFilesNum(char* pPath);
 ///			aAttr	 [out]属性
 /// 返回值:
 /// </summary>
-int path_GetFilesAttr(char* pPath, int iOrder, AigFileAttribute* aAttr);
+int path_GetFilesAttrInDirectory(char* pPath, int iOrder, AigFileAttribute* aAttr);
 
 
 
@@ -45,6 +45,14 @@ int path_GetFilesAttr(char* pPath, int iOrder, AigFileAttribute* aAttr);
 int path_IsRelativePath(char* pPath);
 
 /// <summary>
+/// 功能	 :	获取当前工作目录
+/// 参数	 :	pOutPath		[out]输出路径
+///			iOutPathLen		[in] 输出路径长度
+/// 返回值:
+/// </summary>
+int path_GetWorkPath(char* pOutPath, int iOutPathLen);
+
+/// <summary>
 /// 功能	 :	获取绝对路径
 /// 参数	 :	pPath			[in] 路径
 ///			pOutPath		[out]输出路径
@@ -52,6 +60,48 @@ int path_IsRelativePath(char* pPath);
 /// 返回值:
 /// </summary>
 int path_GetFullPath(char* pPath, char* pOutPath, int iOutPathLen);
+
+
+
+/// <summary>
+/// 功能	 :	获取路径中的文件名
+/// 参数	 :	pFilePath		[in] 路径文件名
+///			pName			[out]输出文件名
+///			iNameLen		[in] 输出文件名长度
+///	例子	 :  C:\\JiYF\\BenXH\\BenXHCMS.xml --> BenXHCMS.xml
+/// 返回值:
+/// </summary>
+int path_GetFileName(char* pFilePath, char* pName, int iNameLen);
+
+/// <summary>
+/// 功能	 :	获取路径中的文件名(不带扩展名)
+/// 参数	 :	pFilePath		[in] 路径文件名
+///			pName			[out]输出文件名
+///			iNameLen		[in] 输出文件名长度
+///	例子	 :  C:\\JiYF\\BenXH\\BenXHCMS.xml --> BenXHCMS
+/// 返回值:
+/// </summary>
+int path_GetFileNameWithoutExtension(char* pFilePath, char* pName, int iNameLen);
+
+/// <summary>
+/// 功能	 :	获取路径中的文件扩展名
+/// 参数	 :	pFilePath		[in] 路径文件名
+///			pName			[out]输出文件名
+///			iNameLen		[in] 输出文件名长度
+///	例子	 :  C:\\JiYF\\BenXH\\BenXHCMS.xml --> .xml
+/// 返回值:
+/// </summary>
+int path_GetExtensionName(char* pFilePath, char* pName, int iNameLen);
+
+/// <summary>
+/// 功能	 :	获取路径中的路径
+/// 参数	 :	pFilePath		[in] 路径文件名
+///			pName			[out]输出文件名
+///			iNameLen		[in] 输出文件名长度
+///	例子	 :  C:\\JiYF\\BenXH\\BenXHCMS.xml --> C:\\JiYF\\BenXH\\
+/// 返回值:
+/// </summary>
+int path_GetDirectoryName(char* pFilePath, char* pName, int iNameLen);
 
 #ifdef __cplusplus
 }
