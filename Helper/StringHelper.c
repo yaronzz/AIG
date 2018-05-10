@@ -672,15 +672,15 @@ int string_ConvertEncodingFormat(char* pStr, char* pDesc, int iDescLen, enumAigE
 		if (iLen > iDescLen)
 			return eAEC_BufferOver;
 
-		MultiByteToWideChar(CP_ACP, 0, pStr, strlen(pStr), pDesc, iDescLen);
+		MultiByteToWideChar(CP_ACP, 0, pStr, strlen(pStr), (LPWSTR)pDesc, iDescLen);
 		pDesc[iLen] = '\0';
 		break;
 	case eAEConv_UnicodeToAnsi:
-		iLen = WideCharToMultiByte(CP_ACP, 0, pStr, wcslen(pStr), NULL, 0, NULL, NULL);
+		iLen = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)pStr, wcslen((LPCWSTR)pStr), NULL, 0, NULL, NULL);
 		if (iLen > iDescLen)
 			return eAEC_BufferOver;
 
-		WideCharToMultiByte(CP_ACP, 0, pStr, wcslen(pStr), pDesc, iDescLen, NULL, NULL);
+		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)pStr, wcslen((LPCWSTR)pStr), pDesc, iDescLen, NULL, NULL);
 		pDesc[iLen] = '\0';
 		break;
 	}

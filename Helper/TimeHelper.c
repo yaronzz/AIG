@@ -60,13 +60,13 @@ int time_GetUTCDayNum(int in_lYear)
 void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 {
 #ifdef _WIN32
-	long long lTemp = 0;
+	LONGLONG lTemp = 0;
 	ULARGE_INTEGER ui;
 	FILETIME* pFileTime = (FILETIME*)aFileTime;
 
 	ui.LowPart	= pFileTime->dwLowDateTime;
 	ui.HighPart = pFileTime->dwHighDateTime;
-	lTemp		= pFileTime->dwHighDateTime << 32 + pFileTime->dwLowDateTime;
+	lTemp		= ((LONGLONG)pFileTime->dwHighDateTime << 32) + pFileTime->dwLowDateTime;
 	*pTimet		= ((LONGLONG)(ui.QuadPart - 116444736000000000) / 10000000);
 #endif
 }

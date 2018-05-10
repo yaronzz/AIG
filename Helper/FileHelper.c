@@ -90,12 +90,12 @@ int file_SetFileRight(char *pPath, enumAigFileRight eType)
 	{
 	case eAFileRight_ReadOnly://Ö»¶Á
 #ifdef _WIN32
-		SetFileAttributes(pPath,FILE_ATTRIBUTE_READONLY);
+		SetFileAttributes((LPCWSTR)pPath,FILE_ATTRIBUTE_READONLY);
 #endif
 		break;
 	case eAFileRight_Hide://Òþ²Ø
 #ifdef _WIN32
-		SetFileAttributes(pPath, FILE_ATTRIBUTE_HIDDEN);
+		SetFileAttributes((LPCWSTR)pPath, FILE_ATTRIBUTE_HIDDEN);
 #endif
 		break;
 	}

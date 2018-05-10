@@ -1,3 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+
 #include "PathHelper.h"
 
 /// <summary>
@@ -14,15 +19,17 @@ int path_GetFilesNum(char* pPath)
 	char sFilePath[AIG_MAXLEN_FILEPATH];
 
 #ifdef WIN32 
+	
+	
 	WIN32_FIND_DATA pFindData;
 	sprintf(sFilePath, "%s\\*", pPath);
-	HANDLE pHandle = FindFirstFileA(sFilePath, &pFindData);
+	HANDLE pHandle = FindFirstFileA(sFilePath, (LPWIN32_FIND_DATAA)&pFindData);
 
 	while (pHandle != INVALID_HANDLE_VALUE)
 	{
-		if (strcmp(pFindData.cFileName, ".") != 0 && strcmp(pFindData.cFileName, "..") != 0)
+		if (strcmp((LPCCH)pFindData.cFileName, ".") != 0 && strcmp((LPCCH)pFindData.cFileName, "..") != 0)
 			iRet++;
-		if (!FindNextFileA(pHandle, &pFindData))
+		if (!FindNextFileA(pHandle, (LPWIN32_FIND_DATAA)&pFindData))
 			break;
 	}
 	FindClose(pHandle);
@@ -51,13 +58,13 @@ int path_GetFilesAttr(char* pPath, int iOrder, AigFileAttribute* aAttr)
 #ifdef WIN32  
 	WIN32_FIND_DATA pFindData;
 	sprintf(sFilePath, "%s\\*", pPath);
-	HANDLE pHandle = FindFirstFileA(sFilePath, &pFindData);
+	HANDLE pHandle = FindFirstFileA(sFilePath, (LPWIN32_FIND_DATAA)&pFindData);
 	if (pHandle == INVALID_HANDLE_VALUE)
 		return iRet;
 
 	for (int iIndex = 0;; iIndex++)
 	{
-		if (strcmp(pFindData.cFileName, ".") == 0 || strcmp(pFindData.cFileName, "..") == 0)
+		if (strcmp((LPCCH)pFindData.cFileName, ".") == 0 || strcmp((LPCCH)pFindData.cFileName, "..") == 0)
 			iIndex--;
 		else if (iIndex == iOrder)
 		{
@@ -65,23 +72,23 @@ int path_GetFilesAttr(char* pPath, int iOrder, AigFileAttribute* aAttr)
 			break;
 		}
 
-		if (!FindNextFileA(pHandle, &pFindData))
+		if (!FindNextFileA(pHandle, (LPWIN32_FIND_DATAA)&pFindData))
 			break;
 	}
 
 	if (iRet == eAEC_Success)
 	{
 		//名字赋值
-		iLen = strlen(pFindData.cFileName);
+		iLen = strlen((LPCCH)pFindData.cFileName);
 		if (iLen > AIG_MAXLEN_FILENAME)
 			return eAEC_BufferOver;
 		memcpy(aAttr->FileName, pFindData.cFileName, iLen + 1);
 
 		//查看信息
 		aAttr->bIsDirectory	= pFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? AIG_TRUE : AIG_FALSE;
-		time_FileTime2AigSystemTime(pFindData.ftCreationTime, &aAttr->CreatTime);
-		time_FileTime2AigSystemTime(pFindData.ftLastAccessTime, &aAttr->LastAccessTime);
-		time_FileTime2AigSystemTime(pFindData.ftLastWriteTime, &aAttr->LastWriteTime);
+		time_FileTime2AigSystemTime((void*)&pFindData.ftCreationTime, &aAttr->CreatTime);
+		time_FileTime2AigSystemTime((void*)&pFindData.ftLastAccessTime, &aAttr->LastAccessTime);
+		time_FileTime2AigSystemTime((void*)&pFindData.ftLastWriteTime, &aAttr->LastWriteTime);
 	}
 	FindClose(pHandle);
 #endif
@@ -139,13 +146,15 @@ int path_GetFullPath(char* pPath, char* pOutPath, int iOutPathLen)
 	}
 
 	//获取工作目录
-	int iRet = 0;
-	TCHAR tcFullPath[AIG_MAXLEN_FILEPATH];
 	char sFullPath[AIG_MAXLEN_FILEPATH];
+
+#ifdef _WIN32
+	TCHAR tcFullPath[AIG_MAXLEN_FILEPATH];
 	GetModuleFileName(NULL, tcFullPath, AIG_MAXLEN_FILEPATH);
-	string_ConvertEncodingFormat(tcFullPath, sFullPath, AIG_MAXLEN_FILEPATH, eAEConv_UnicodeToAnsi);
+	string_ConvertEncodingFormat((CHAR*)tcFullPath, sFullPath, AIG_MAXLEN_FILEPATH, eAEConv_UnicodeToAnsi);
 	char *pTmp = strrchr(sFullPath, '\\');
 	*pTmp = '\0';
+#endif
 
 	iLen = strlen(sFullPath) + strlen(pPath) + 3;
 	if (iLen > iOutPathLen)
