@@ -47,7 +47,7 @@ int time_GetUTCDayNum(int in_lYear);
 ///			pTimet			 [out]pTimet
 /// 返回值:
 /// </summary>
-void  time_FileTime2TimeT(FILETIME aFileTime, time_t* pTimet);
+void  time_FileTime2TimeT(void* aFileTime, time_t* pTimet);
 
 /// <summary>
 /// 功能	 :	Time_T转AigSystemTime
@@ -63,7 +63,7 @@ int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime);
 ///			pAigTime		 [out]AigSystemTime
 /// 返回值:
 /// </summary>
-void time_FileTime2AigSystemTime(FILETIME aFileTime, AigSystemTime* pAigTime);
+void time_FileTime2AigSystemTime(void* aFileTime, AigSystemTime* pAigTime);
 
 #ifdef __cplusplus
 extern "C" {

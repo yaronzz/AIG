@@ -57,15 +57,18 @@ int time_GetUTCDayNum(int in_lYear)
 ///			pTimet			 [out]pTimet
 /// 返回值:
 /// </summary>
-void time_FileTime2TimeT(FILETIME aFileTime, time_t* pTimet)
+void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 {
+#ifdef _WIN32
 	long long lTemp = 0;
 	ULARGE_INTEGER ui;
+	FILETIME* pFileTime = (FILETIME*)aFileTime;
 
-	ui.LowPart	= aFileTime.dwLowDateTime;
-	ui.HighPart = aFileTime.dwHighDateTime;
-	lTemp		= aFileTime.dwHighDateTime << 32 + aFileTime.dwLowDateTime;
+	ui.LowPart	= pFileTime->dwLowDateTime;
+	ui.HighPart = pFileTime->dwHighDateTime;
+	lTemp		= pFileTime->dwHighDateTime << 32 + pFileTime->dwLowDateTime;
 	*pTimet		= ((LONGLONG)(ui.QuadPart - 116444736000000000) / 10000000);
+#endif
 }
 
 /// <summary>
@@ -135,7 +138,7 @@ int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
 ///			pAigTime		 [out]AigSystemTime
 /// 返回值:
 /// </summary>
-void time_FileTime2AigSystemTime(FILETIME aFileTime, AigSystemTime* pAigTime)
+void time_FileTime2AigSystemTime(void* aFileTime, AigSystemTime* pAigTime)
 {
 	time_t aTimeT;
 	time_FileTime2TimeT(aFileTime, &aTimeT);
