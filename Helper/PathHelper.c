@@ -38,7 +38,7 @@ int path_GetFilesNumInDirectory(char* pPath)
 		return eAEC_Input;
 
 	struct dirent* pDirent;
-	while ((pDirent = readdir(dir)) != NULL)
+	while ((pDirent = readdir(pDirHandle)) != NULL)
 	{
 		if (strcmp(pDirent->d_name, ".") != 0 && strcmp(pDirent->d_name, "..") != 0)
 			iRet++;
@@ -115,10 +115,10 @@ int path_GetFilesAttrInDirectory(char* pPath, int iOrder, AigFileAttribute* aAtt
 	struct dirent* pDirent;
 	for (int iIndex = 0;; iIndex++)
 	{
-		if((pDirent = readdir(dir)) == NULL)
+		if((pDirent = readdir(pDirHandle)) == NULL)
 			break;
 
-		if (strcmp(pFindData.cFileName, ".") == 0 || strcmp(pFindData.cFileName, "..") == 0)
+		if (strcmp(pDirent->d_name, ".") == 0 || strcmp(pDirent->d_name, "..") == 0)
 			iIndex--;
 		else if (iIndex == iOrder)
 		{
