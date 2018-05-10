@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdarg.h>
 
-#include "DefHelper.h"
 #include "StringHelper.h"
 
 
@@ -645,3 +644,47 @@ int string_GetLen(char* in_pStr, int IsUnicode)
 	return 0;
 }
 
+
+
+
+
+
+/// <summary>
+/// 功能	 :	编码转换
+/// 参数	 :	pStr				字符串
+///			pDesc				输出字符串
+///			iDescLen			输出字符串长度
+///			eType				转换类型
+/// 返回值:  
+/// </summary>
+int string_ConvertEncodingFormat(char* pStr, char* pDesc, int iDescLen, enumAigEncodingConvert eType)
+{
+	if (pStr == NULL || pDesc == NULL || iDescLen <= 0)
+		return eAEC_Input;
+
+	int iLen;
+
+#ifdef _WIN32
+	switch (eType)
+	{
+	case eAEConv_AnsiToUnicode:
+		iLen = MultiByteToWideChar(CP_ACP, 0, pStr, strlen(pStr), NULL, 0);
+		if (iLen > iDescLen)
+			return eAEC_BufferOver;
+
+		MultiByteToWideChar(CP_ACP, 0, pStr, strlen(pStr), pDesc, iDescLen);
+		pDesc[iLen] = '\0';
+		break;
+	case eAEConv_UnicodeToAnsi:
+		iLen = WideCharToMultiByte(CP_ACP, 0, pStr, wcslen(pStr), NULL, 0, NULL, NULL);
+		if (iLen > iDescLen)
+			return eAEC_BufferOver;
+
+		WideCharToMultiByte(CP_ACP, 0, pStr, wcslen(pStr), pDesc, iDescLen, NULL, NULL);
+		pDesc[iLen] = '\0';
+		break;
+	}
+#endif
+
+	return eAEC_Success;
+}

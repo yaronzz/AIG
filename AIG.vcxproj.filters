@@ -27,6 +27,15 @@
     <ClCompile Include="Helper\FileHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\PathHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Head\CommonHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Head\TimeHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Head\StringHelper.h">
@@ -36,6 +45,15 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="Head\DefHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\PathHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\CommonHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\TimeHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

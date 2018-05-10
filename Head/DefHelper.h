@@ -8,7 +8,7 @@ extern "C" {
 #ifdef _WIN32  
 #include <windows.h>
 #include <io.h>  
-#elif linux || (__LYNX
+#elif linux || __LYNX
 #include <unistd.h>  
 #include <sys/time.h>
 #endif 
@@ -18,6 +18,7 @@ extern "C" {
 #define AIG_TRUE			1		//正确
 #define AIG_FALSE			0		//错误
 #define AIG_MAXLEN_FILEPATH	1024	//目录名的最大长度
+#define AIG_MAXLEN_FILENAME 256		//文件名的最大长度
 
 typedef int KEYPTR;
 typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB);						//关键字比较回调函数（0相等,>0 A>B,<0 A<B）

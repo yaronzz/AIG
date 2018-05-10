@@ -81,13 +81,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIG.c" />
+    <ClCompile Include="Head\CommonHelper.c" />
+    <ClCompile Include="Head\TimeHelper.c" />
     <ClCompile Include="Helper\FileHelper.c" />
+    <ClCompile Include="Helper\PathHelper.c" />
     <ClCompile Include="Helper\StringHelper.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Head\CommonHelper.h" />
     <ClInclude Include="Head\FileHelper.h" />
     <ClInclude Include="Head\DefHelper.h" />
+    <ClInclude Include="Head\PathHelper.h" />
     <ClInclude Include="Head\StringHelper.h" />
+    <ClInclude Include="Head\TimeHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

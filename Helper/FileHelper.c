@@ -3,8 +3,6 @@
 #include <string.h>
 #include <direct.h>
 
-#include "DefHelper.h"
-#include "StringHelper.h"
 #include "FileHelper.h"
 
 //元素比较回调函数（0相等,>0 A>B,<0 A<B）
@@ -79,23 +77,23 @@ long file_GetFileLen(char* pPath)
 }
 
 /// <summary>
-/// 功能	 :	设置文件属性
+/// 功能	 :	设置文件权限
 /// 参数	 :	pPath	 [in] 路径
 /// 返回值:
 /// </summary>
-int file_SetFileAttributes(char *pPath, AIG_FILE_ATTRIBUTES eType)
+int file_SetFileRight(char *pPath, enumAigFileRight eType)
 {
 	if (pPath == NULL)
 		return eAEC_Input;
 
 	switch (eType)
 	{
-	case eAFATTR_READONLY://只读
+	case eAFileRight_ReadOnly://只读
 #ifdef _WIN32
 		SetFileAttributes(pPath,FILE_ATTRIBUTE_READONLY);
 #endif
 		break;
-	case eAFATTR_HIDE://隐藏
+	case eAFileRight_Hide://隐藏
 #ifdef _WIN32
 		SetFileAttributes(pPath, FILE_ATTRIBUTE_HIDDEN);
 #endif
@@ -121,93 +119,6 @@ int file_IsFileExist(char* pPath)
 	return AIG_FALSE;
 }
 
-/// <summary>
-/// 功能：遍历目录下的文件
-/// 参数：pPath:				目录路径，必须以“\\结尾”
-///		 iOrder:			文件序号
-///		 pFileName:			文件名
-///		 iNameLen:			文件名缓存的大小
-///		 iType:				文件类型：0-文件 1-目录
-///	返回值：0正常 非0失败
-/// </summary>
-int file_GetDirFileNum(char* pPath)
-{
-	if (pPath == NULL)
-		return eAEC_Input;
-
-	int iRet = 0;
-	char sFilePath[AIG_MAXLEN_FILEPATH];
-
-#ifdef WIN32 
-	HANDLE hFile;
-	WIN32_FIND_DATA findData;
-	sprintf(sFilePath, "%s\\*", pPath);
-	hFile = FindFirstFile(sFilePath, &findData);
-
-	while (hFile != INVALID_HANDLE_VALUE)
-	{
-		if (strcmp(findData.cFileName, ".") != 0 && strcmp(findData.cFileName, "..") != 0)
-			iRet++;
-		if (!FindNextFile(hFile, &findData))
-			break;
-	}
-	FindClose(hFile);
-#endif
-
-	return iRet;
-}
-
-int file_GetDirFileName(char* pPath, int iOrder, char* pFileName, int iNameLen, int* iType)
-{
-	if (pPath == NULL || iOrder < 0 || pFileName == NULL || iNameLen <= 0)
-		return eAEC_Input;
-
-	int iRet = -1, iIndex = 0, iTmp = 0;
-	char sFilePath[AIG_MAXLEN_FILEPATH];
-#ifdef WIN32  
-	HANDLE hFile;
-	WIN32_FIND_DATA findData;
-	WIN32_FILE_ATTRIBUTE_DATA fileAttr;
-	sprintf(sFilePath, "%s\\*", pPath);
-	hFile = FindFirstFile(sFilePath, &findData);
-
-	while (hFile != INVALID_HANDLE_VALUE)
-	{
-		if (strcmp(findData.cFileName, ".") != 0 && strcmp(findData.cFileName, "..") != 0)
-		{
-			if (iIndex == iOrder)
-			{
-				iRet = 0;
-				break;
-			}
-			iIndex++;
-		}
-		if (!FindNextFile(hFile, &findData))
-			break;
-	}
-
-	if (iRet == 0)
-	{
-		sprintf(sFilePath, "%s\\%s", pPath, findData.cFileName);
-		if (GetFileAttributesEx(sFilePath, GetFileExInfoStandard, &fileAttr))
-		{
-			if (iType != NULL)
-				*iType = fileAttr.dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY ? 1 : 0;//0-文件 1-目录
-			iTmp = strlen(findData.cFileName);
-			if (iNameLen > iTmp)
-				sprintf(pFileName, findData.cFileName);
-			else
-			{
-				strncpy(pFileName, findData.cFileName, iNameLen);
-				pFileName[iNameLen - 1] = '\0';
-			}
-		}
-	}
-	FindClose(hFile);
-#endif
-
-	return iRet;
-}
 
 //备份目录
 int file_BakDir(char* pSrcPath, char* pDescPath)
@@ -241,66 +152,6 @@ RETURN:
 
 
 
-/*======================================================
-功能:	查询是否为相对路径
-参数:	pFilePath			[in] 文件路径
-
-返回值:  1表示是
-======================================================*/
-int file_IsRelativePath(char* pFilePath)
-{
-	if (pFilePath == NULL)
-		return 0;
-
-	//c:\\TEST.txt
-	char* pTmp = strchr(pFilePath, ':');
-	if (pTmp != NULL)
-		return 0;
-	// \\\\192.168.71.2\\TEST.txt
-	pTmp = strstr(pFilePath, "\\\\");
-	if (pTmp == pFilePath)
-		return 0;
-
-	return 1;
-}
-
-
-/*======================================================
-功能:	相对路径转绝对路径
-参数:	pFilePath			[in] 文件路径
-
-返回值:  需要人工释放
-======================================================*/
-char* file_GetFullPath(char* pFilePath)
-{
-	if (pFilePath == NULL)
-		return NULL;
-
-	char* pBuf = NULL;
-	//查询是否为相对路径
-	if (file_IsRelativePath(pFilePath) == 0)
-	{
-		pBuf = (char*)malloc(strlen(pFilePath) + 1);
-		if (pBuf == NULL)
-			return NULL;
-
-		sprintf(pBuf, pFilePath);
-		return pBuf;
-	}
-
-	//获取工作目录
-	int iRet = 0;
-	TCHAR tcFullPath[1024];
-	GetModuleFileName(NULL, tcFullPath, 1024);
-	char *pTmp = strrchr(tcFullPath, '\\');
-	*pTmp = '\0';
-
-	int iLen = strlen(tcFullPath) + strlen(pFilePath);
-	pBuf = (char*)malloc(iLen + 5);
-	sprintf(pBuf, "%s\\%s", tcFullPath, pFilePath);
-
-	return pBuf;
-}
 
 
 /***************************************************************************************************************************

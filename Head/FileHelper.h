@@ -1,31 +1,19 @@
-/*
-File name   : FileHelper.h
-Description : 文件相关处理
-
-Creator by  : Yaron (yaronhuang@foxmail.com)
-Create date : 2017-4-11
-Language    : C
-Compiler    : Microsoft Visual Studio
-Version     : 1.0
-Last update :
-Modification History :
-Date           Programmer         Amendment
-
-*/
-#if !defined __file_H__
-#define __file_H__
+#if !defined __AIG_FILE_H__
+#define __AIG_FILE_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include <stdio.h>
+#include "DefHelper.h"
+#include "StringHelper.h"
 
-typedef enum _AIG_FILE_ATTRIBUTES
+typedef enum _enumAigFileRight
 {
-	eAFATTR_READONLY = 0,	//只读
-	eAFATTR_HIDE     = 1,	//隐藏
-}AIG_FILE_ATTRIBUTES;
+	eAFileRight_ReadOnly,	//只读
+	eAFileRight_Hide, 		//隐藏
+
+}enumAigFileRight;
 
 /// <summary>
 /// 功能：递归新建目录
@@ -43,7 +31,7 @@ long file_GetFileLen(char* pPath);
 /// 功能：设置文件属性
 /// 返回值：非0表示错误
 /// </summary>
-int file_SetFileAttributes(char *pPath, AIG_FILE_ATTRIBUTES eType);
+int file_SetFileAttributes(char *pPath, enumAigFileRight eType);
 
 /// <summary>
 /// 功能：文件是否存在
@@ -52,23 +40,11 @@ int file_SetFileAttributes(char *pPath, AIG_FILE_ATTRIBUTES eType);
 int file_IsFileExist(char* pPath);
 
 
-/// <summary>
-/// 功能：遍历目录下的文件
-/// 参数：pPath:				目录路径，必须以“\\结尾”
-///		 iOrder:			文件序号
-///		 pFileName:			文件名
-///		 iNameLen:			文件名缓存的大小
-///		 iType:				文件类型：0-文件 1-目录
-///	返回值：0正常 非0失败
-/// </summary>
-int file_GetDirFileNum(char* pPath);
-int file_GetDirFileName(char* pPath, int iOrder, char* pFileName, int iNameLen, int* iType);
+
 
 //备份目录
 int file_BakDir(char* pSrcPath, char* pDescPath);
 
-//查询路径是否为相对路径
-int file_IsRelativePath(char* pFilePath);
 
 /// <summary>
 /// 功能：获取绝对路径
@@ -126,4 +102,4 @@ int   file_RemoveProfileKey(void* pHandle, char* pGroup, char* pKey);										/
 }
 #endif
 
-#endif  //__file_H__
+#endif  //__AIG_FILE_H__

@@ -5,7 +5,12 @@
 extern "C" {
 #endif
 
+#include "DefHelper.h"
+
 #define AIG_STRING_EMPTY "\t \n"	//空串标识 TAB\空格\换行
+
+
+
 
 
 /// <summary>
@@ -223,6 +228,28 @@ int string_IsNullOrEmpty(char *in_pStr);
 /// 返回值:  
 /// </summary>
 int string_GetLen(char* in_pStr, int IsUnicode);
+
+
+
+
+
+
+typedef enum _enumAigEncodingConvert
+{
+	eAEConv_AnsiToUnicode,
+	eAEConv_UnicodeToAnsi,
+}enumAigEncodingConvert;
+
+/// <summary>
+/// 功能	 :	编码转换
+/// 参数	 :	pStr				字符串
+///			pDesc				输出字符串
+///			iDescLen			输出字符串长度
+///			eType				转换类型
+/// 返回值:  
+/// </summary>
+int string_ConvertEncodingFormat(char* pStr, char* pDesc, int iDescLen, enumAigEncodingConvert eType);
+
 
 
 #ifdef __cplusplus
