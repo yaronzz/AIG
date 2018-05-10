@@ -23,9 +23,12 @@ int main(int argc, char* argv[])
 
 	iCheck = path_GetFullPath("Test", sText3, 100);
 	iCount = path_GetFilesNumInDirectory("E:\\1");
+	printf("FileNum [%d]\n", iCount);
 	for (int i = 0; i < iCount; i++)
 	{
 		iCheck = path_GetFilesAttrInDirectory("E:\\1", i, &aFileAttr);
+
+		printf("[%d] %s\n", i, aFileAttr.FileName);
 	}
 
 	iCheck = string_Strcat(sText3, "aa", "bb", "cc");

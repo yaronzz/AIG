@@ -31,6 +31,20 @@ int path_GetFilesNumInDirectory(char* pPath)
 			break;
 	}
 	FindClose(pHandle);
+
+#elif linux || __LYNX
+	DIR* pDirHandle = opendir(pPath);
+	if (pDirHandle == NULL)
+		return eAEC_Input;
+
+	struct dirent* pDirent;
+	while ((pDirent = readdir(dir)) != NULL)
+	{
+		if (strcmp(pDirent->d_name, ".") != 0 && strcmp(pDirent->d_name, "..") != 0)
+			iRet++;
+	}
+
+	closedir(pDirHandle);
 #endif
 
 	return iRet;
@@ -79,7 +93,10 @@ int path_GetFilesAttrInDirectory(char* pPath, int iOrder, AigFileAttribute* aAtt
 		//名字赋值
 		iLen = strlen((LPCCH)pFindData.cFileName);
 		if (iLen > AIG_MAXLEN_FILENAME)
+		{
+			FindClose(pHandle);
 			return eAEC_BufferOver;
+		}
 		memcpy(aAttr->FileName, pFindData.cFileName, iLen + 1);
 
 		//查看信息
@@ -89,6 +106,48 @@ int path_GetFilesAttrInDirectory(char* pPath, int iOrder, AigFileAttribute* aAtt
 		time_FileTime2AigSystemTime((void*)&pFindData.ftLastWriteTime, &aAttr->LastWriteTime);
 	}
 	FindClose(pHandle);
+
+#elif linux || __LYNX
+	DIR* pDirHandle = opendir(pPath);
+	if (pDirHandle == NULL)
+		return eAEC_Input;
+
+	struct dirent* pDirent;
+	for (int iIndex = 0;; iIndex++)
+	{
+		if((pDirent = readdir(dir)) == NULL)
+			break;
+
+		if (strcmp(pFindData.cFileName, ".") == 0 || strcmp(pFindData.cFileName, "..") == 0)
+			iIndex--;
+		else if (iIndex == iOrder)
+		{
+			iRet = eAEC_Success;
+			break;
+		}
+	}
+
+	if (iRet == eAEC_Success)
+	{
+		//名字赋值
+		iLen = strlen(pDirent->d_name);
+		if (iLen > AIG_MAXLEN_FILENAME)
+		{
+			closedir(pDirHandle);
+			return eAEC_BufferOver;
+		}
+		memcpy(aAttr->FileName, pDirent->d_name, iLen + 1);
+
+		//查看信息
+		aAttr->bIsDirectory = pDirent->d_type == DT_DIR ? AIG_TRUE : AIG_FALSE;
+
+		//struct stat pStat;
+		//stat(pDirent->d_name, &pStat);
+		//time_FileTime2AigSystemTime((void*)&pFindData.ftCreationTime, &aAttr->CreatTime);
+		//time_FileTime2AigSystemTime((void*)&pFindData.ftLastAccessTime, &aAttr->LastAccessTime);
+		//time_FileTime2AigSystemTime((void*)&pFindData.ftLastWriteTime, &aAttr->LastWriteTime);
+	}
+	closedir(pDirHandle);
 #endif
 
 	return iRet;
