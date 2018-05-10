@@ -1,0 +1,1 @@
+gcc AIG.c Helper/StringHelper.c Helper/PathHelper.c -o TEST -IHead
