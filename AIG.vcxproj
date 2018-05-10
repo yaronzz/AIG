@@ -81,11 +81,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AIG.c" />
-    <ClCompile Include="Head\CommonHelper.c" />
-    <ClCompile Include="Head\TimeHelper.c" />
+    <ClCompile Include="Helper\CommonHelper.c" />
     <ClCompile Include="Helper\FileHelper.c" />
     <ClCompile Include="Helper\PathHelper.c" />
     <ClCompile Include="Helper\StringHelper.c" />
+    <ClCompile Include="Helper\TimeHelper.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Head\CommonHelper.h" />

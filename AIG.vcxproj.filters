@@ -30,10 +30,10 @@
     <ClCompile Include="Helper\PathHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
-    <ClCompile Include="Head\CommonHelper.c">
+    <ClCompile Include="Helper\CommonHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
-    <ClCompile Include="Head\TimeHelper.c">
+    <ClCompile Include="Helper\TimeHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
   </ItemGroup>
