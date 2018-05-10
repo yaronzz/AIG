@@ -10,6 +10,7 @@ extern "C" {
 #include <io.h>  
 #elif linux || __LYNX
 #include <unistd.h>  
+#include <dirent.h>
 #include <sys/time.h>
 #endif 
 
