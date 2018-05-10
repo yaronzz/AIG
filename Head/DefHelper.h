@@ -11,6 +11,7 @@ extern "C" {
 #elif linux || __LYNX
 #include <unistd.h>  
 #include <dirent.h>
+#include <sys/stat.h>
 #include <sys/time.h>
 #endif 
 

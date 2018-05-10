@@ -8,6 +8,13 @@ int main(int argc, char* argv[])
 	int iCheck;
 	int iCount;
 	AigFileAttribute aFileAttr;
+
+#ifdef _WIN32
+	char sPath2[100] = { "E:\\1" };
+#elif linux || __LYNX
+	char sPath2[100] = { "/home/AIG/trunk" };
+#endif
+
 	char sPath[100] = { "E:\\1\\test\\hello.c" };
 	char sText[100] = { "abababTextbbb" };
 	char sText2[100] = { "ababab" };
@@ -22,13 +29,19 @@ int main(int argc, char* argv[])
 	iCheck = path_GetDirectoryName(sPath, sText3, 100);
 
 	iCheck = path_GetFullPath("Test", sText3, 100);
-	iCount = path_GetFilesNumInDirectory("/home/AIG/trunk");
+	iCount = path_GetFilesNumInDirectory(sPath2);
 	printf("FileNum [%d]\n", iCount);
 	for (int i = 0; i < iCount; i++)
 	{
-		iCheck = path_GetFilesAttrInDirectory("/home/AIG/trunk", i, &aFileAttr);
+		iCheck = path_GetFilesAttrInDirectory(sPath2, i, &aFileAttr);
 
-		printf("[%d] %s\n", i, aFileAttr.FileName);
+		printf("[%d] %s Time:%d-%d-%d %d-%d-%d\n", i, aFileAttr.FileName
+			, aFileAttr.CreatTime.Year
+			, aFileAttr.CreatTime.Month
+			, aFileAttr.CreatTime.Day
+			, aFileAttr.CreatTime.Hour
+			, aFileAttr.CreatTime.Minute
+			, aFileAttr.CreatTime.Second);
 	}
 
 	iCheck = string_Strcat(sText3, "aa", "bb", "cc");

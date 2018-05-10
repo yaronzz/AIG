@@ -141,11 +141,12 @@ int path_GetFilesAttrInDirectory(char* pPath, int iOrder, AigFileAttribute* aAtt
 		//查看信息
 		aAttr->bIsDirectory = pDirent->d_type == DT_DIR ? AIG_TRUE : AIG_FALSE;
 
-		//struct stat pStat;
-		//stat(pDirent->d_name, &pStat);
-		//time_FileTime2AigSystemTime((void*)&pFindData.ftCreationTime, &aAttr->CreatTime);
-		//time_FileTime2AigSystemTime((void*)&pFindData.ftLastAccessTime, &aAttr->LastAccessTime);
-		//time_FileTime2AigSystemTime((void*)&pFindData.ftLastWriteTime, &aAttr->LastWriteTime);
+		struct stat pStat;
+		sprintf(sFilePath, "%s\\%s", pPath, pDirent->d_name);
+		stat(sFilePath, &pStat);
+		time_TimeT2AigSystemTime(pStat.st_ctime, &aAttr->CreatTime);
+		time_TimeT2AigSystemTime(pStat.st_atime, &aAttr->LastAccessTime);
+		time_TimeT2AigSystemTime(pStat.st_mtime, &aAttr->LastWriteTime);
 	}
 	closedir(pDirHandle);
 #endif
