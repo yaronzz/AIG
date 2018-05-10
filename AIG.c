@@ -22,11 +22,11 @@ int main(int argc, char* argv[])
 	iCheck = path_GetDirectoryName(sPath, sText3, 100);
 
 	iCheck = path_GetFullPath("Test", sText3, 100);
-	iCount = path_GetFilesNumInDirectory("E:\\1");
+	iCount = path_GetFilesNumInDirectory("/home/AIG/trunk");
 	printf("FileNum [%d]\n", iCount);
 	for (int i = 0; i < iCount; i++)
 	{
-		iCheck = path_GetFilesAttrInDirectory("E:\\1", i, &aFileAttr);
+		iCheck = path_GetFilesAttrInDirectory("/home/AIG/trunk", i, &aFileAttr);
 
 		printf("[%d] %s\n", i, aFileAttr.FileName);
 	}
