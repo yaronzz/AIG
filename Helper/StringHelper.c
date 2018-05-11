@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-
 #include "StringHelper.h"
 
 
@@ -397,6 +392,76 @@ int string_Substring(char* in_pStr, int in_iIndex, int in_Length, char* out_pRes
 	return eAEC_Success;
 }
 
+/// <summary>
+/// 功能	 :	截取區間內的字符串
+/// 参数	 :	in_pStr			字符串
+///			in_cStartChr	開始字符
+///			in_cEndChr		結束字符
+///			out_pResult		输出字符串
+///			in_ResultLen	输出字符串长度
+/// 返回值: 
+/// </summary>
+int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr, char* out_pResult, int in_ResultLen)
+{
+	if (in_pStr == NULL || out_pResult == NULL || in_ResultLen <= 0)
+		return eAEC_Input;
+
+	char* pStart = strchr(in_pStr, in_cStartChr);
+	char* pEnd = strchr(in_pStr, in_cEndChr);
+	if (pStart == NULL || pEnd == NULL)
+		return eAEC_Err;
+
+	//如果開始字符和結束字符一樣的話，則結束字符要找第二個
+	if (in_cStartChr == in_cEndChr)
+	{
+		pEnd = strchr(pStart + 1, in_cEndChr);
+		if (pEnd == NULL)
+			return eAEC_Err;
+	}
+
+	//計算長度
+	int iLen = pEnd - pStart;
+	if (iLen > in_ResultLen)
+		return eAEC_BufferOver;
+
+	memcpy(out_pResult, pStart + 1, iLen - 1);
+	out_pResult[iLen - 1] = '\0';
+
+	return eAEC_Success;
+}
+
+/// <summary>
+/// 功能	 :	截取字符兩邊的字符串
+/// 参数	 :	in_pStr			字符串
+///			in_Chr			中間字符
+///			out_pDesc1		输出字符串1
+///			in_Desc1Len		输出字符串1长度
+///			out_pDesc2		输出字符串2
+///			in_Desc2Len		输出字符串2长度
+/// 返回值: 
+/// </summary>
+int string_SubstringByChr(char* in_pStr, char in_Chr, char* out_pDesc1, int in_Desc1Len, char* out_pDesc2, int in_Desc2Len)
+{
+	if (in_pStr == NULL || out_pDesc1 == NULL || in_Desc1Len <= 0 || out_pDesc2 == NULL || in_Desc2Len <= 0)
+		return eAEC_Input;
+
+	char* pTemp = strchr(in_pStr, in_Chr);
+	if (pTemp == NULL)
+		return eAEC_Err;
+
+	int iLen1 = pTemp - in_pStr + 1;
+	int iLen2 = strlen(in_pStr) - iLen1 + 1;
+	if (iLen1 > in_Desc1Len || iLen2 > in_Desc2Len)
+		return eAEC_BufferOver;
+
+	memcpy(out_pDesc1, in_pStr, iLen1 - 1);
+	memcpy(out_pDesc2, pTemp + 1, iLen2 - 1);
+	out_pDesc1[iLen1 - 1] = '\0';
+	out_pDesc2[iLen2 - 1] = '\0';
+
+	return eAEC_Success;
+}
+
 
 /// <summary>
 /// 功能	 :	类split功能,获取字段数量
@@ -527,6 +592,71 @@ int string_GetFieldNumberSting(char* in_pStr, char in_Chr, long* pArray, long lA
 
 
 
+
+/// <summary>
+/// 功能	 :	内存交换
+/// 参数	 :	pMemA	 [in-out] 缓存1
+///			pMemB	 [in-out] 缓存2
+///			iSize	 [in]     长度
+/// 返回值:
+/// </summary>
+void string_MemorySwap(void* pMemA, void* pMemB, int iSize)
+{
+	unsigned char* pEleA = pMemA;
+	unsigned char* pEleB = pMemB;
+	unsigned char Tmp;
+
+	while (iSize-- > 0)
+	{
+		Tmp = *pEleA;
+		*pEleA++ = *pEleB;
+		*pEleB++ = Tmp;
+	}
+}
+
+/// <summary>
+/// 功能	 :	内存比较
+/// 参数	 :	pMemA	 [in] 缓存1
+///			pMemB	 [in] 缓存2
+///			iSize	 [in]     长度
+/// 返回值:  0-相等 1A大 -1B大
+/// </summary>
+int string_MemoryCmp(void* pMemA, void* pMemB, int iSize)
+{
+	unsigned char* pEleA = pMemA;
+	unsigned char* pEleB = pMemB;
+	unsigned char Tmp;
+
+	while (iSize-- > 0)
+	{
+		if (*pEleA == *pEleB)
+		{
+			pEleA++;
+			pEleB++;
+			continue;
+		}
+
+		return *pEleA > *pEleB ? 1 : -1;
+	}
+
+	return 0;
+}
+
+/// <summary>
+/// 功能	 :	内存复制
+/// 参数	 :	pDesc	 [out] 输出缓存
+///			pSrc	 [in]  来源
+///			iSize	 [in]  长度
+/// 返回值:
+/// </summary>
+void string_MemoryCopy(void* pDesc, void* pSrc, int iSize)
+{
+	unsigned char* pEleA = pDesc;
+	unsigned char* pEleB = pSrc;
+
+	while (iSize-- > 0)
+		*pEleA++ = *pEleB++;
+}
 
 /// <summary>
 /// 功能	 :	内存缓冲申请

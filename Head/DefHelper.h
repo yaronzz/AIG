@@ -5,8 +5,14 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <direct.h>
+
 #ifdef _WIN32  
 #include <windows.h>
+#include <time.h>  
 #include <io.h>  
 #elif linux || __LYNX
 #include <unistd.h>  
@@ -23,8 +29,7 @@ extern "C" {
 #define AIG_MAXLEN_FILENAME 256		//文件名的最大长度
 
 typedef int KEYPTR;
-typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB);						//关键字比较回调函数（0相等,>0 A>B,<0 A<B）
-typedef int(*pfn_AIG_CMP_CALLBACK2)(void* in_pKeyA, void* in_pKeyB, int in_KeyLen);		//关键字比较回调函数（0相等,>0 A>B,<0 A<B）
+typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB, int in_KeyLen);		//关键字比较回调函数（0相等,>0 A>B,<0 A<B）
 
 
 //错误码
@@ -47,6 +52,7 @@ typedef enum _AIG_ERRORCODE
 	eAEC_OptErr				= 23,	//Opt格式错误
 	eAEC_PwdLenOver	        = 24,   //密码长度超过了限制
 	eAEC_PwdErr             = 25,   //密码错误
+	eAEC_InvalidTime		= 26,	//无效的时间
 
 }AIG_ERRORCODE;
 

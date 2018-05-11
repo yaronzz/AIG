@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "StringHelper.h"
 #include "PathHelper.h"
-
+#include "ProfileHelper.h"
+#include "SortHelper.h"
 
 int main(int argc, char* argv[])
 {
@@ -15,10 +16,17 @@ int main(int argc, char* argv[])
 	char sPath2[100] = { "/home/AIG/trunk" };
 #endif
 
-	char sPath[100] = { "E:\\1\\test\\hello.c" };
+	int  iArrary[20] = { 9, 3, 5, 8, 3, 5, 6, 1 };
+	char sPath[100] = { "E:\\1\\Hello.ini" };
 	char sText[100] = { "abababTextbbb" };
 	char sText2[100] = { "ababab" };
 	char sText3[1024] = {"\0"};
+
+	iCheck = sort_Quick(iArrary, 8, sizeof(int), string_MemoryCmp);
+
+
+	iCheck = profile_GetString("TEST", "KEY", NULL, sText3, sizeof(sText3), sPath);
+	iCheck = profile_SetString("TEST", "KEY", "QQQ", sPath);
 
 	iCheck = path_GetWorkPath(sText3, 1024);
 	printf("%s\n", sText3);

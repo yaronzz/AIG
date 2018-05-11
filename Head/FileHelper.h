@@ -7,6 +7,7 @@ extern "C" {
 
 #include "DefHelper.h"
 #include "StringHelper.h"
+#include "PathHelper.h"
 
 typedef enum _enumAigFileRight
 {
@@ -43,8 +44,15 @@ int file_SetFileRight(char *pPath, enumAigFileRight eType);
 /// </summary>
 int file_IsFileExist(char* pPath);
 
-
-
+/// <summary>
+/// 功能	 :	获取备份路径文件名
+/// 参数	 :	pFilePath	 [in] 路径文件名
+///			pBakString	 [in] 备份字符串
+///			pOutPath	 [out]输出路径
+///			iOutPathLen	 [in] 输出路径长度
+/// 返回值:
+/// </summary>
+int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int iOutPathLen);
 
 
 #ifdef __cplusplus

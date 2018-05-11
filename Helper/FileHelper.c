@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <direct.h>
-
 #include "FileHelper.h"
 
 /// <summary>
@@ -110,4 +105,37 @@ int file_IsFileExist(char* pPath)
 
 	return AIG_FALSE;
 }
+
+/// <summary>
+/// 功能	 :	获取备份路径文件名
+/// 参数	 :	pFilePath	 [in] 路径文件名
+///			pBakString	 [in] 备份字符串
+///			pOutPath	 [out]输出路径
+///			iOutPathLen	 [in] 输出路径长度
+/// 返回值:
+/// </summary>
+int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int iOutPathLen)
+{
+	if (pFilePath == NULL || pBakString == NULL || pOutPath == NULL || iOutPathLen <= 0)
+		return eAEC_Input;
+
+	char sTempFileName[AIG_MAXLEN_FILENAME];
+	char sTempFilePath[AIG_MAXLEN_FILEPATH];
+	char sTempFileExtension[100];
+	path_GetDirectoryName(pFilePath, sTempFilePath, sizeof(sTempFilePath));
+	path_GetFileNameWithoutExtension(pFilePath, sTempFileName, sizeof(sTempFileName));
+	path_GetExtensionName(pFilePath, sTempFileExtension, sizeof(sTempFileExtension));
+
+	strcat(sTempFilePath, sTempFileName);
+	strcat(sTempFilePath, pBakString);
+	strcat(sTempFilePath, sTempFileExtension);
+
+	int iLen = strlen(sTempFilePath) + 1;
+	if (iLen > iOutPathLen)
+		return eAEC_BufferOver;
+
+	memcpy(pOutPath, sTempFilePath, iLen);
+	return eAEC_Success;
+}
+
 

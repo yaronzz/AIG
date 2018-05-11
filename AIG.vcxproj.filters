@@ -36,6 +36,12 @@
     <ClCompile Include="Helper\TimeHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\ProfileHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\SortHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Head\StringHelper.h">
@@ -56,5 +62,19 @@
     <ClInclude Include="Head\TimeHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
+    <ClInclude Include="Head\ProfileHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\SortHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MakeFile_Exe.sh">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="makefile.sh">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

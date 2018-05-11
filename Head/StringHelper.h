@@ -10,9 +10,6 @@ extern "C" {
 #define AIG_STRING_EMPTY "\t \n"	//空串标识 TAB\空格\换行
 
 
-
-
-
 /// <summary>
 /// 功能	 :	去掉字符序列左边的字符
 /// 参数	 :	in_out_pStr		字符串输入与输出
@@ -154,8 +151,28 @@ int string_MakeReverse(char* in_out_pStr);
 /// </summary>
 int string_Substring(char* in_pStr, int in_iIndex, int in_Length, char* out_pResult, int in_ResultLen);
 
+/// <summary>
+/// 功能	 :	截取區間內的字符串
+/// 参数	 :	in_pStr			字符串
+///			in_cStartChr	開始字符
+///			in_cEndChr		結束字符
+///			out_pResult		输出字符串
+///			in_ResultLen	输出字符串长度
+/// 返回值: 
+/// </summary>
+int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr, char* out_pResult, int in_ResultLen);
 
-
+/// <summary>
+/// 功能	 :	截取字符兩邊的字符串
+/// 参数	 :	in_pStr			字符串
+///			in_Chr			中間字符
+///			out_pDesc1		输出字符串1
+///			in_Desc1Len		输出字符串1长度
+///			out_pDesc2		输出字符串2
+///			in_Desc2Len		输出字符串2长度
+/// 返回值: 
+/// </summary>
+int string_SubstringByChr(char* in_pStr, char in_Chr, char* out_pDesc1, int in_Desc1Len, char* out_pDesc2, int in_Desc2Len);
 
 /// <summary>
 /// 功能	 :	类split功能,获取字段数量
@@ -188,6 +205,33 @@ int string_GetFieldNumberSting(char* in_pStr, char in_Chr, long* pArray, long lA
 
 
 
+
+/// <summary>
+/// 功能	 :	内存交换
+/// 参数	 :	pMemA	 [in-out] 缓存1
+///			pMemB	 [in-out] 缓存2
+///			iSize	 [in]     长度
+/// 返回值:
+/// </summary>
+void string_MemorySwap(void* pMemA, void* pMemB, int iSize);
+
+/// <summary>
+/// 功能	 :	内存比较
+/// 参数	 :	pMemA	 [in] 缓存1
+///			pMemB	 [in] 缓存2
+///			iSize	 [in]     长度
+/// 返回值:  0-相等 1A大 -1B大
+/// </summary>
+int string_MemoryCmp(void* pMemA, void* pMemB, int iSize);
+
+/// <summary>
+/// 功能	 :	内存复制
+/// 参数	 :	pDesc	 [out] 输出缓存
+///			pSrc	 [in]  来源
+///			iSize	 [in]  长度
+/// 返回值:
+/// </summary>
+void string_MemoryCopy(void* pDesc, void* pSrc, int iSize);
 
 /// <summary>
 /// 功能	 :	内存缓冲申请

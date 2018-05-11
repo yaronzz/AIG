@@ -84,6 +84,8 @@
     <ClCompile Include="Helper\CommonHelper.c" />
     <ClCompile Include="Helper\FileHelper.c" />
     <ClCompile Include="Helper\PathHelper.c" />
+    <ClCompile Include="Helper\ProfileHelper.c" />
+    <ClCompile Include="Helper\SortHelper.c" />
     <ClCompile Include="Helper\StringHelper.c" />
     <ClCompile Include="Helper\TimeHelper.c" />
   </ItemGroup>
@@ -92,8 +94,14 @@
     <ClInclude Include="Head\FileHelper.h" />
     <ClInclude Include="Head\DefHelper.h" />
     <ClInclude Include="Head\PathHelper.h" />
+    <ClInclude Include="Head\ProfileHelper.h" />
+    <ClInclude Include="Head\SortHelper.h" />
     <ClInclude Include="Head\StringHelper.h" />
     <ClInclude Include="Head\TimeHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile.sh" />
+    <None Include="MakeFile_Exe.sh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
