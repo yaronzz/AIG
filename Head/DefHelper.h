@@ -53,6 +53,8 @@ typedef enum _AIG_ERRORCODE
 	eAEC_PwdLenOver	        = 24,   //密码长度超过了限制
 	eAEC_PwdErr             = 25,   //密码错误
 	eAEC_InvalidTime		= 26,	//无效的时间
+	eAEC_AlreadyExist		= 27,	//已经存在
+	eAEC_TimeOut			= 28,	//超时
 
 }AIG_ERRORCODE;
 

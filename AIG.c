@@ -3,13 +3,14 @@
 #include "PathHelper.h"
 #include "ProfileHelper.h"
 #include "SortHelper.h"
+#include "ConsoleHelper.h"
 
 int main(int argc, char* argv[])
 {
 	int iCheck;
 	int iCount;
 	AigFileAttribute aFileAttr;
-
+	void* pHandle;
 #ifdef _WIN32
 	char sPath2[100] = { "E:\\1" };
 #elif linux || __LYNX
@@ -22,8 +23,12 @@ int main(int argc, char* argv[])
 	char sText2[100] = { "ababab" };
 	char sText3[1024] = {"\0"};
 
-	iCheck = sort_Quick(iArrary, 8, sizeof(int), string_MemoryCmp);
-
+	console_ProgressOpen(&pHandle, "TESTTESTTESTTEST", 100, 0);
+	for (int i = 0; i < 100; i++)
+	{
+		console_ProgressRefresh(pHandle, i + 1);
+		Sleep(100);
+	}
 
 	iCheck = profile_GetString("TEST", "KEY", NULL, sText3, sizeof(sText3), sPath);
 	iCheck = profile_SetString("TEST", "KEY", "QQQ", sPath);

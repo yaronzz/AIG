@@ -30,9 +30,6 @@
     <ClCompile Include="Helper\PathHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\CommonHelper.c">
-      <Filter>Helper</Filter>
-    </ClCompile>
     <ClCompile Include="Helper\TimeHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
@@ -40,6 +37,21 @@
       <Filter>Helper</Filter>
     </ClCompile>
     <ClCompile Include="Helper\SortHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\LogHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\MutexHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\SearchHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\ConsoleHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\ArgvHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,9 +68,6 @@
     <ClInclude Include="Head\PathHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
-    <ClInclude Include="Head\CommonHelper.h">
-      <Filter>Head</Filter>
-    </ClInclude>
     <ClInclude Include="Head\TimeHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
@@ -66,6 +75,21 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="Head\SortHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\MutexHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\LogHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\SearchHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\ConsoleHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\ArgvHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>
