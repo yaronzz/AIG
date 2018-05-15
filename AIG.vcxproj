@@ -83,6 +83,7 @@
     <ClCompile Include="AIG.c" />
     <ClCompile Include="Helper\ArgvHelper.c" />
     <ClCompile Include="Helper\ConsoleHelper.c" />
+    <ClCompile Include="Helper\MathHelper.c" />
     <ClCompile Include="Helper\MutexHelper.c" />
     <ClCompile Include="Helper\FileHelper.c" />
     <ClCompile Include="Helper\LogHelper.c" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Head\ArgvHelper.h" />
     <ClInclude Include="Head\ConsoleHelper.h" />
     <ClInclude Include="Head\LogHelper.h" />
+    <ClInclude Include="Head\MathHelper.h" />
     <ClInclude Include="Head\MutexHelper.h" />
     <ClInclude Include="Head\FileHelper.h" />
     <ClInclude Include="Head\DefHelper.h" />

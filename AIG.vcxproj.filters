@@ -54,6 +54,9 @@
     <ClCompile Include="Helper\ArgvHelper.c">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\MathHelper.c">
+      <Filter>Helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Head\StringHelper.h">
@@ -90,6 +93,9 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="Head\ArgvHelper.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Head\MathHelper.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

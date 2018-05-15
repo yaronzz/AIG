@@ -68,70 +68,70 @@ static void argv_GetField(char* sString, int iOrder, char* pField)
 	long lBegin, lEnd, lLastCharValid;
 	unsigned long i, lTotal;
 
-	lCount = 0;
-	lTotal = strlen(sString);
-	lBegin = -1;
-	lEnd = -1;
-	lFallIn = 0;
-	lLastCharValid = 1;
-	for (i = 0; i<lTotal; i++)
-	{
-		switch (sString[i])
-		{
-		case '\'':
-		case '"':
-			if (lFallIn)
-			{
-				lEnd = i - 1;
-				lFallIn = 0;
-				if (i<lTotal - 1)
-				{
-					break;
-				}
-				else
-				{
-					lLastCharValid = 0;
-				}
-			}
-			else
-			{
-				if (lBegin == -1) // 2009-4-24
-					lBegin = i + 1;
-				lFallIn = 1;
-				break;
-			}
-		default:
-			// 2009-4-24
-			if (!lFallIn&&sString[i] == cDivider
-				|| i == (lTotal - 1))
-			{
-				if (lBegin != -1) /* 2006-6-9 */
-				{
-					if (i == lTotal - 1
-						&& lLastCharValid)
-						lEnd = i;
-					lCount++;
+	//lCount = 0;
+	//lTotal = strlen(sString);
+	//lBegin = -1;
+	//lEnd = -1;
+	//lFallIn = 0;
+	//lLastCharValid = 1;
+	//for (i = 0; i<lTotal; i++)
+	//{
+	//	switch (sString[i])
+	//	{
+	//	case '\'':
+	//	case '"':
+	//		if (lFallIn)
+	//		{
+	//			lEnd = i - 1;
+	//			lFallIn = 0;
+	//			if (i<lTotal - 1)
+	//			{
+	//				break;
+	//			}
+	//			else
+	//			{
+	//				lLastCharValid = 0;
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (lBegin == -1) // 2009-4-24
+	//				lBegin = i + 1;
+	//			lFallIn = 1;
+	//			break;
+	//		}
+	//	default:
+	//		// 2009-4-24
+	//		if (!lFallIn&&sString[i] == cDivider
+	//			|| i == (lTotal - 1))
+	//		{
+	//			if (lBegin != -1) /* 2006-6-9 */
+	//			{
+	//				if (i == lTotal - 1
+	//					&& lLastCharValid)
+	//					lEnd = i;
+	//				lCount++;
 
-					lBegin = -1;
-					lEnd = -1;
-				}
-				else if (i == lTotal - 1 && sString[i] != cDivider)
-				{
-					// 2009-6-25 只有一个有效字符的情况
-					lBegin = i;
-					lEnd = i;
+	//				lBegin = -1;
+	//				lEnd = -1;
+	//			}
+	//			else if (i == lTotal - 1 && sString[i] != cDivider)
+	//			{
+	//				// 2009-6-25 只有一个有效字符的情况
+	//				lBegin = i;
+	//				lEnd = i;
 
-					lCount++;
-				}
-			}
-			if (-1 == lBegin
-				&& sString[i] != cDivider)
-				lBegin = i;
-			if (-1 != lBegin)
-				lEnd = i;
-			break;
-		}
-	}
+	//				lCount++;
+	//			}
+	//		}
+	//		if (-1 == lBegin
+	//			&& sString[i] != cDivider)
+	//			lBegin = i;
+	//		if (-1 != lBegin)
+	//			lEnd = i;
+	//		break;
+	//	}
+	//}
 	return lCount;
 }
 

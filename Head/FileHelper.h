@@ -11,8 +11,9 @@ extern "C" {
 
 typedef enum _enumAigFileRight
 {
-	eAFileRight_ReadOnly,	//只读
-	eAFileRight_Hide, 		//隐藏
+	eAFileRight_ReadOnly	= 1,	//只读
+	eAFileRight_Hide		= 2, 	//隐藏
+	eAFileRight_System		= 4, 	//系统
 
 }enumAigFileRight;
 

@@ -17,6 +17,8 @@ int main(int argc, char* argv[])
 	char sPath2[100] = { "/home/AIG/trunk" };
 #endif
 
+	file_SetFileRight("e:\\Test", eAFileRight_Hide | eAFileRight_System);
+	return;
 	int  iArrary[20] = { 9, 3, 5, 8, 3, 5, 6, 1 };
 	char sPath[100] = { "E:\\1\\Hello.ini" };
 	char sText[100] = { "abababTextbbb" };
@@ -65,3 +67,5 @@ int main(int argc, char* argv[])
 	iCheck = string_CountChr(sText, 'b');
 	return 0;
 }
+
+

@@ -73,19 +73,17 @@ int file_SetFileRight(char *pPath, enumAigFileRight eType)
 	if (pPath == NULL)
 		return eAEC_Input;
 
-	switch (eType)
-	{
-	case eAFileRight_ReadOnly://Ö»¶Á
 #ifdef _WIN32
-		SetFileAttributes((LPCWSTR)pPath,FILE_ATTRIBUTE_READONLY);
+	DWORD aAttr = 0;
+	if (eType & eAFileRight_ReadOnly)
+		aAttr |= FILE_ATTRIBUTE_READONLY;
+	if (eType & eAFileRight_Hide)
+		aAttr |= FILE_ATTRIBUTE_HIDDEN;
+	if (eType & eAFileRight_System)
+		aAttr |= FILE_ATTRIBUTE_SYSTEM;
+
+	SetFileAttributesA((LPCWSTR)pPath, aAttr);
 #endif
-		break;
-	case eAFileRight_Hide://Òþ²Ø
-#ifdef _WIN32
-		SetFileAttributes((LPCWSTR)pPath, FILE_ATTRIBUTE_HIDDEN);
-#endif
-		break;
-	}
 
 	return 0;
 }
