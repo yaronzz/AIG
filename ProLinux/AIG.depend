@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1526539002 source:/mnt/hgfs/work/AIG/trunk/ProLinux/main.c
+	<stdio.h>
+	<stdlib.h>
+	"../include/PathHelper.h"
+
+1525941159 /mnt/hgfs/work/AIG/trunk/include/PathHelper.h
+	"DefHelper.h"
+	"TimeHelper.h"
+	"StringHelper.h"
+
+1526539024 /mnt/hgfs/work/AIG/trunk/include/DefHelper.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<time.h>
+	<io.h>
+	<direct.h>
+	<unistd.h>
+	<dirent.h>
+	<sys/stat.h>
+	<sys/time.h>
+
+1526370694 /mnt/hgfs/work/AIG/trunk/include/TimeHelper.h
+	"DefHelper.h"
+
+1526024113 /mnt/hgfs/work/AIG/trunk/include/StringHelper.h
+	"DefHelper.h"
+

@@ -13,9 +13,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.c" />
     <ClCompile Include="..\src\ArgvHelper.c">
       <Filter>src</Filter>

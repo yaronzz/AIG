@@ -82,9 +82,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\src\ArgvHelper.c" />
     <ClCompile Include="..\src\ConsoleHelper.c" />
     <ClCompile Include="..\src\FileHelper.c" />
