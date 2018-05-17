@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{880B107E-B356-46E7-9E98-F249522A85B8}</ProjectGuid>
+    <ProjectGuid>{44D12EA6-5FC7-4405-82CD-2E3471A9BF8B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>AIG</RootNamespace>
   </PropertyGroup>
@@ -41,11 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>Head;$(IncludePath)</IncludePath>
+    <IncludePath>..\\include;$(IncludePath)</IncludePath>
+    <OutDir>..\\Debug</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>Head;$(IncludePath)</IncludePath>
+    <IncludePath>..\\include;$(IncludePath)</IncludePath>
+    <OutDir>..\\Release</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -53,7 +55,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -69,7 +71,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -80,38 +82,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AIG.c" />
-    <ClCompile Include="Helper\ArgvHelper.c" />
-    <ClCompile Include="Helper\ConsoleHelper.c" />
-    <ClCompile Include="Helper\MathHelper.c" />
-    <ClCompile Include="Helper\MutexHelper.c" />
-    <ClCompile Include="Helper\FileHelper.c" />
-    <ClCompile Include="Helper\LogHelper.c" />
-    <ClCompile Include="Helper\PathHelper.c" />
-    <ClCompile Include="Helper\ProfileHelper.c" />
-    <ClCompile Include="Helper\SearchHelper.c" />
-    <ClCompile Include="Helper\SortHelper.c" />
-    <ClCompile Include="Helper\StringHelper.c" />
-    <ClCompile Include="Helper\TimeHelper.c" />
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Head\ArgvHelper.h" />
-    <ClInclude Include="Head\ConsoleHelper.h" />
-    <ClInclude Include="Head\LogHelper.h" />
-    <ClInclude Include="Head\MathHelper.h" />
-    <ClInclude Include="Head\MutexHelper.h" />
-    <ClInclude Include="Head\FileHelper.h" />
-    <ClInclude Include="Head\DefHelper.h" />
-    <ClInclude Include="Head\PathHelper.h" />
-    <ClInclude Include="Head\ProfileHelper.h" />
-    <ClInclude Include="Head\SearchHelper.h" />
-    <ClInclude Include="Head\SortHelper.h" />
-    <ClInclude Include="Head\StringHelper.h" />
-    <ClInclude Include="Head\TimeHelper.h" />
+    <ClCompile Include="..\src\ArgvHelper.c" />
+    <ClCompile Include="..\src\ConsoleHelper.c" />
+    <ClCompile Include="..\src\FileHelper.c" />
+    <ClCompile Include="..\src\LogHelper.c" />
+    <ClCompile Include="..\src\MathHelper.c" />
+    <ClCompile Include="..\src\MutexHelper.c" />
+    <ClCompile Include="..\src\PathHelper.c" />
+    <ClCompile Include="..\src\ProfileHelper.c" />
+    <ClCompile Include="..\src\SearchHelper.c" />
+    <ClCompile Include="..\src\SortHelper.c" />
+    <ClCompile Include="..\src\StringHelper.c" />
+    <ClCompile Include="..\src\TimeHelper.c" />
+    <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="makefile.sh" />
-    <None Include="MakeFile_Exe.sh" />
+    <ClInclude Include="..\include\ArgvHelper.h" />
+    <ClInclude Include="..\include\ConsoleHelper.h" />
+    <ClInclude Include="..\include\DefHelper.h" />
+    <ClInclude Include="..\include\FileHelper.h" />
+    <ClInclude Include="..\include\LogHelper.h" />
+    <ClInclude Include="..\include\MathHelper.h" />
+    <ClInclude Include="..\include\MutexHelper.h" />
+    <ClInclude Include="..\include\PathHelper.h" />
+    <ClInclude Include="..\include\ProfileHelper.h" />
+    <ClInclude Include="..\include\SearchHelper.h" />
+    <ClInclude Include="..\include\SortHelper.h" />
+    <ClInclude Include="..\include\StringHelper.h" />
+    <ClInclude Include="..\include\TimeHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
