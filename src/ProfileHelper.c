@@ -1,3 +1,6 @@
+#include "StringHelper.h"
+#include "PathHelper.h"
+#include "FileHelper.h"
 #include "ProfileHelper.h"
 
 

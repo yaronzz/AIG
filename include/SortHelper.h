@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include "DefHelper.h"
-#include "StringHelper.h"
 
 
 /// <summary>

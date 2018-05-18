@@ -100,29 +100,29 @@ void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 /// </summary>
 int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
 {
-	long long lTemp = 0;
-	long long lYear = 0;
-	long long lMon = 0;
-	long long lDay = 0;
-	long long lHour = 0;
-	long long lMin = 0;
-	long long lSec = 0;
-	long long lWeekDay = 0;
-	long long lDayCount = 0;
-	long long lYearCount = 0;
+	long long lTemp			= 0;
+	long long lYear			= 0;
+	long long lMon			= 0;
+	long long lDay			= 0;
+	long long lHour			= 0;
+	long long lMin			= 0;
+	long long lSec			= 0;
+	long long lWeekDay		= 0;
+	long long lDayCount		= 0;
+	long long lYearCount	= 0;
 
-	aTimet += 8 * 3600;					// 时间先加8小时转换为北京时间
+	aTimet	+= 8 * 3600;					// 时间先加8小时转换为北京时间
 
-	lTemp = aTimet % 86400;				// 对日子(24*3600)求余
-	lHour = lTemp / 3600;				// 时
-	lTemp = lTemp % 3600;
-	lMin = lTemp / 60;					// 分
-	lSec = lTemp % 60;					// 秒
+	lTemp	= aTimet % 86400;				// 对日子(24*3600)求余
+	lHour	= lTemp / 3600;					// 时
+	lTemp	= lTemp % 3600;
+	lMin	= lTemp / 60;					// 分
+	lSec	= lTemp % 60;					// 秒
 
-	lDayCount = aTimet / 86400;			// 从1970.1.1到in_ulUTC的天数
-	lWeekDay = (lDayCount + 4) % 7;		// 星期几
-	lYearCount = lDayCount / 365;		// 大致的年数
-	lYear = lYearCount + 1970;
+	lDayCount	= aTimet / 86400;			// 从1970.1.1到in_ulUTC的天数
+	lWeekDay	= (lDayCount + 4) % 7;		// 星期几
+	lYearCount	= lDayCount / 365;			// 大致的年数
+	lYear		= lYearCount + 1970;
 	while (1)
 	{
 		if (time_GetUTCDayNum((int)lYear) > lDayCount)

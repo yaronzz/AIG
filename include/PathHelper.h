@@ -7,7 +7,7 @@ extern "C" {
 
 #include "DefHelper.h"
 #include "TimeHelper.h"
-#include "StringHelper.h"
+
 
 typedef struct _AigFileAttribute
 {

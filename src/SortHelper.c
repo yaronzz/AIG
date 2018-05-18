@@ -1,3 +1,4 @@
+#include "StringHelper.h"
 #include "SortHelper.h"
 
 /// <summary>

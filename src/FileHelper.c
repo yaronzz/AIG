@@ -1,3 +1,5 @@
+#include "StringHelper.h"
+#include "PathHelper.h"
 #include "FileHelper.h"
 
 /// <summary>

@@ -6,8 +6,7 @@ extern "C" {
 #endif
 
 #include "DefHelper.h"
-#include "StringHelper.h"
-#include "PathHelper.h"
+
 
 typedef enum _enumAigFileRight
 {

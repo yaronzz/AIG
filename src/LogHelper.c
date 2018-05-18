@@ -1,3 +1,5 @@
+#include "TimeHelper.h"
+#include "MutexHelper.h"
 #include "LogHelper.h"
 
 typedef struct _AigLogHandle

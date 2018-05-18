@@ -6,8 +6,7 @@ extern "C" {
 #endif
 
 #include "DefHelper.h"
-#include "TimeHelper.h"
-#include "MutexHelper.h"
+
 /// <summary>
 /// 功能	 :	输出到日志文件
 /// 参数	 :	pLogFileName			[in] 日志文件名

@@ -1,156 +1,230 @@
+#include "StringHelper.h"
 #include "ArgvHelper.h"
 
+/// <summary>
+/// 功能	 :	句柄初始化
+/// 参数	 :	pHandle			[in—out]	 句柄
+/// 返回值:  
+/// </summary>
 static void argv_HandleInit(AigArgvHandle* pHandle)
 {
 	memset(pHandle, 0x00, sizeof(AigArgvHandle));
-	pHandle->iBufferSize = AIG_MAXLEN_ARGVBUFF;
-	pHandle->pTail = pHandle->sBuffer;
-	pHandle->iRemain = AIG_MAXLEN_ARGVBUFF;
+	pHandle->iBufferSize	= AIG_MAXLEN_ARGVBUFF;
+	pHandle->pTail			= pHandle->sBuffer;
+	pHandle->iRemain		= AIG_MAXLEN_ARGVBUFF;
 }
 
-static void argv_GetField(char* sString, int iOrder, char* pField)
+/// <summary>
+/// 功能	 :	获取参数数量
+/// 参数	 :	sString			[in]	 字符串
+/// 返回值:  
+/// </summary>
+static int argv_GetFieldNum(char* sString)
 {
-	int iLen;
-	int iTotalLen;
-	int iIndex;
-	int iStart, iEnd;
-	int iIsInInterval;
+	int iNumInterval1 = string_CountChr(sString, '\'');
+	int iNumInterval2 = string_CountChr(sString, '"');
+	int iNumField	  = string_CountChr(sString, ' ');
 
-	iIndex = 0;
-	iStart = -1;
-	iEnd = -1;
-	iTotalLen = strlen(sString);
-	iIsInInterval = 0;
-	for (int i = 0; i < iTotalLen; i++)
+	if (iNumInterval1 == 0 && iNumInterval2 == 0)
+		return iNumField + 1;
+
+	//如果为单数则错误
+	if (iNumInterval1 % 2 != 0 || iNumInterval2 % 2 != 0)
+		return 0;
+
+	int iCount		= 0;
+	int iBegain		= -1;
+	int iEnd		= -1;	
+	int iTotalLen	= strlen(sString);
+	for (int i = 0; i <= iTotalLen; i++)
 	{
+		if (i == iTotalLen)
+		{
+			if (iBegain != -1)
+			{
+				iEnd = i - 1;
+				iCount++;
+				iBegain = -1;
+			}
+			break;
+		}
+
 		switch (sString[i])
 		{
-		//在''和""之间的空格不用拆分
 		case '\'':
 		case '"':
-			if (iIsInInterval)
+			if (iBegain == -1)
+				iBegain = i + 1;
+			i = strchr(sString + i + 1, sString[i]) - sString;
+			break;
+		case ' ':
+			if (iBegain != -1)
 			{
 				iEnd = i - 1;
-				iIsInInterval = 0;
-				if (i == iTotalLen - 1 && iIndex == iOrder)
-				{
-					iLen = iEnd - (iStart - 1);
-					memcpy(pField, sString + iStart, sizeof(char) * iLen);
-					pField[iLen] = '\0';
-				}
-				break;
+				iCount++;
+				iBegain = -1;
 			}
-			else
-			{
-				iStart = i + 1;
-				iIsInInterval = 1;
-				break;
-			}
-		default:
-			if ((!iIsInInterval && sString[i] == ' ') || i == iTotalLen - 1)
-			{
-				iEnd = i - 1;
-				if (iIndex == iOrder)
-				{
-					iLen = iEnd - (iStart - 1);
-					memcpy(pField, sString + iStart, sizeof(char) * iLen);
-					pField[iLen] = '\0';
-					break;
-				}
+			break;
 
-				iIndex++;
-				iStart = i + 1;
-			}
+		default:
+			if (iBegain == -1)
+				iBegain = i;
+			break;
 		}
 	}
-	
-	long lCount, lFallIn;
-	long lBegin, lEnd, lLastCharValid;
-	unsigned long i, lTotal;
 
-	lCount = 0;
-	lTotal = strlen(sString);
-	lBegin = -1;
-	lEnd = -1;
-	lFallIn = 0;
-	lLastCharValid = 1;
-	//for (i = 0; i<lTotal; i++)
-	//{
-	//	switch (sString[i])
-	//	{
-	//	case '\'':
-	//	case '"':
-	//		if (lFallIn)
-	//		{
-	//			lEnd = i - 1;
-	//			lFallIn = 0;
-	//			if (i<lTotal - 1)
-	//			{
-	//				break;
-	//			}
-	//			else
-	//			{
-	//				lLastCharValid = 0;
-	//			}
-	//		}
-	//		else
-	//		{
-	//			if (lBegin == -1) // 2009-4-24
-	//				lBegin = i + 1;
-	//			lFallIn = 1;
-	//			break;
-	//		}
-	//	default:
-	//		// 2009-4-24
-	//		if (!lFallIn&&sString[i] == cDivider
-	//			|| i == (lTotal - 1))
-	//		{
-	//			if (lBegin != -1) /* 2006-6-9 */
-	//			{
-	//				if (i == lTotal - 1
-	//					&& lLastCharValid)
-	//					lEnd = i;
-	//				lCount++;
+	return iCount;
+}
 
-	//				lBegin = -1;
-	//				lEnd = -1;
-	//			}
-	//			else if (i == lTotal - 1 && sString[i] != cDivider)
-	//			{
-	//				// 2009-6-25 只有一个有效字符的情况
-	//				lBegin = i;
-	//				lEnd = i;
+/// <summary>
+/// 功能	 :	获取第N个字段
+/// 参数	 :	sString			[in]	 字符串
+///			iOrder			[in]	 序号
+///			pField			[in-out] 输出字段
+///			iFieldLen		[in]	 输出字段长度
+/// 返回值:  >= 0成功
+/// </summary>
+static int argv_GetField(char* sString, int iOrder, char* pField, int iFieldLen)
+{
+	int iNumInterval1 = string_CountChr(sString, '\'');
+	int iNumInterval2 = string_CountChr(sString, '"');
+	int iNumField	  = string_CountChr(sString, ' ');
 
-	//				lCount++;
-	//			}
-	//		}
-	//		if (-1 == lBegin
-	//			&& sString[i] != cDivider)
-	//			lBegin = i;
-	//		if (-1 != lBegin)
-	//			lEnd = i;
-	//		break;
-	//	}
-	//}
-	return lCount;
+	if (iNumInterval1 == 0 && iNumInterval2 == 0)
+	{
+		return string_GetFieldSting(sString, ' ', iOrder, pField, iFieldLen);
+	}
+
+	//如果为单数则错误
+	if (iNumInterval1 % 2 != 0 || iNumInterval2 % 2 != 0)
+		return eAEC_Input;
+
+	char sChr;
+	int iCount		= 0;
+	int iBegain		= -1;
+	int iEnd		= -1;	
+	int iTotalLen	= strlen(sString);
+	for (int i = 0; i <= iTotalLen; i++)
+	{
+		sChr = i == iTotalLen ? ' ' : sString[i];
+
+		switch (sChr)
+		{
+		case '\'':
+		case '"':
+			if (iBegain == -1)
+				iBegain = i + 1;
+			i = strchr(sString + i + 1, sString[i]) - sString;
+			break;
+		case ' ':
+			if (iBegain != -1)
+			{
+				iEnd = i - 1;
+				if (iCount != iOrder)
+				{
+					iCount++;
+					iBegain = -1;
+				}
+				else
+				{
+					//如果最后一个字符是'或者"，则需要去掉
+					if (iEnd > 0 && (sString[iEnd] == '\'' || sString[iEnd] == '"'))
+						iEnd -= 1;
+
+					memcpy(pField, sString + iBegain, iEnd - iBegain + 1);
+					pField[iEnd - iBegain + 1] = '\0';
+					return eAEC_Success;
+				}
+			}
+			break;
+
+		default:
+			if (iBegain == -1)
+				iBegain = i;
+			break;
+		}
+	}
+
+	return eAEC_Err;
 }
 
 
-
+/// <summary>
+/// 功能	 :	解析字符串
+/// 参数	 :	pHandle			[in-out]	 句柄
+///			pString			[in]		字符串
+/// 返回值:  >= 0成功
+/// </summary>
 int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 {
 	if (pHandle == NULL || pString == NULL)
 		return eAEC_Input;
 
+	int iCheck;
+	int iNum;
+	int iLen;
+	int iIndex;
 	char* pCur;
+	char sField[1024];
+	char* pName;
+	char* pValue;
 
 	//初始化
 	if (pHandle->iBufferSize != AIG_MAXLEN_ARGVBUFF)
 		argv_HandleInit(pHandle);
+	if (pHandle->iRemain <= 0)
+		return eAEC_BufferOver;
 
 	pCur = pHandle->pTail;
+	iNum = argv_GetFieldNum(pString);
+	for (int i = 0; i < iNum; i++)
+	{
+		memset(sField, 0, sizeof(sField));
+		argv_GetField(pString, i, sField, sizeof(sField));
+		
+		iLen = strlen(sField) + 1;
+		if (iLen > pHandle->iRemain)
+			return eAEC_BufferOver;
 
+		//赋值
+		iIndex = pHandle->NumParams;
+		pName = pHandle->sBuffer + pHandle->iBufferSize - pHandle->iRemain;
+		pHandle->pParamList[iIndex].sName = pName;
+		memcpy(pName, sField, iLen);
 
+		pValue = strchr(pName, '=');
+		if (pValue)
+		{
+			*pValue = '\0';
+			pHandle->pParamList[iIndex].sValue = pValue + 1;
+		}
+
+		pHandle->NumParams++;
+		pHandle->iRemain -= iLen;
+	}
+
+	return eAEC_Success;
+}
+
+/// <summary>
+/// 功能	 :	解析Main参
+/// 参数	 :	pHandle			[in-out]	 句柄
+///			argc			[in]		 Main参数量
+///			argv			[in]		 Main参数组
+/// 返回值:  >= 0成功
+/// </summary>
+int argv_ParseMainPara(AigArgvHandle* pHandle, int argc, char * argv[])
+{
+	if (pHandle == NULL || argc < 0 )
+		return eAEC_Input;
+
+	int iCheck;
+	for (int i = 0; i < argc; i++)
+	{
+		iCheck = argv_ParseString(pHandle, argv[i]);
+		if (iCheck != eAEC_Success)
+			return iCheck;
+	}
 
 	return eAEC_Success;
 }

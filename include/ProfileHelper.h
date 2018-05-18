@@ -6,9 +6,7 @@ extern "C" {
 #endif
 
 #include "DefHelper.h"
-#include "StringHelper.h"
-#include "PathHelper.h"
-#include "FileHelper.h"
+
 
 /// <summary>
 /// 功能	 :	获取配置文件中的值

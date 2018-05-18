@@ -6,7 +6,6 @@ extern "C" {
 #endif
 
 #include "DefHelper.h"
-#include "StringHelper.h"
 
 #define AIG_MAXLEN_ARGVBUFF 2048
 #define AIG_MAXLEN_ARGVNUM  256
@@ -27,7 +26,22 @@ typedef struct _AigArgvHandle
 	AigParamPairPtr	pParamList[AIG_MAXLEN_ARGVNUM];
 }AigArgvHandle;
 
+/// <summary>
+/// 功能	 :	解析字符串
+/// 参数	 :	pHandle			[in-out]	句柄
+///			pString			[in]		字符串
+/// 返回值:  >= 0成功
+/// </summary>
 int argv_ParseString(AigArgvHandle* pHandle, char* pString);
+
+/// <summary>
+/// 功能	 :	解析Main参
+/// 参数	 :	pHandle			[in-out]	句柄
+///			argc			[in]		Main参数量
+///			argv			[in]		Main参数组
+/// 返回值:  >= 0成功
+/// </summary>
+int argv_ParseMainPara(AigArgvHandle* pHandle, int argc, char * argv[]);
 
 #ifdef __cplusplus
 }
