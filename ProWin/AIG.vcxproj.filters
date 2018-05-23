@@ -50,9 +50,6 @@
     <ClCompile Include="..\src\TimeHelper.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\DesHelper.c">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ArgvHelper.h">
@@ -92,9 +89,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\TimeHelper.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\DesHelper.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

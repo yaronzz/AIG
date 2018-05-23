@@ -122,6 +122,7 @@ int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int i
 	char sTempFileName[AIG_MAXLEN_FILENAME];
 	char sTempFilePath[AIG_MAXLEN_FILEPATH];
 	char sTempFileExtension[100];
+
 	path_GetDirectoryName(pFilePath, sTempFilePath, sizeof(sTempFilePath));
 	path_GetFileNameWithoutExtension(pFilePath, sTempFileName, sizeof(sTempFileName));
 	path_GetExtensionName(pFilePath, sTempFileExtension, sizeof(sTempFileExtension));

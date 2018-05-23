@@ -84,7 +84,6 @@
   <ItemGroup>
     <ClCompile Include="..\src\ArgvHelper.c" />
     <ClCompile Include="..\src\ConsoleHelper.c" />
-    <ClCompile Include="..\src\DesHelper.c" />
     <ClCompile Include="..\src\FileHelper.c" />
     <ClCompile Include="..\src\LogHelper.c" />
     <ClCompile Include="..\src\MathHelper.c" />
@@ -101,7 +100,6 @@
     <ClInclude Include="..\include\ArgvHelper.h" />
     <ClInclude Include="..\include\ConsoleHelper.h" />
     <ClInclude Include="..\include\DefHelper.h" />
-    <ClInclude Include="..\include\DesHelper.h" />
     <ClInclude Include="..\include\FileHelper.h" />
     <ClInclude Include="..\include\LogHelper.h" />
     <ClInclude Include="..\include\MathHelper.h" />

@@ -160,7 +160,6 @@ int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 	if (pHandle == NULL || pString == NULL)
 		return eAEC_Input;
 
-	int iCheck;
 	int iNum;
 	int iLen;
 	int iIndex;
