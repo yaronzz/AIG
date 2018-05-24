@@ -43,6 +43,16 @@ typedef struct _AigEquation
 	double C;
 }AigEquation;
 
+//三角形
+typedef struct _AigTriangle
+{
+	AigCoords Point[3];			//三角形的三个点
+	AigCoords Barycenter;		//三角形的重心
+	AigCoords VerticalPoint[3];	//三个点对应的高的垂足
+	double    HeightLen[3];		//三个点对应的高的长度
+	double    Area;				//面积
+}AigTriangle;
+
 typedef enum _enumAigLenghtUnit
 {
 	eALUnit_km,		//千米
@@ -97,6 +107,14 @@ double math_MetersToUnits(enumAigLenghtUnit eUnit);
 /// 返回值:  
 /// </summary>
 double math_Sqrt(double dValue);
+
+/// <summary>
+/// 功能	 :	查看是否为直线
+/// 参数	 :	point0		[in] 第一个点的坐标
+///			point1		[in] 第二个点的坐标
+/// 返回值:  
+/// </summary>
+int math_IsLine(AigCoords point0, AigCoords point1);
 
 
 
@@ -179,6 +197,16 @@ int math_GetPointSideToLine(AigCoords point, AigCoords start_point, AigCoords en
 /// </summary> 
 int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_point, AigCoords* out_point);
 
+/// <summary>
+/// 功能	 :	求点到直线的垂足点
+/// 参数	 :	line_point0			[in] 第一个线的坐标
+///			line_point1		    [in] 第一个线的坐标
+///			line_point2		    [in] 第二个线的坐标
+///			line_point3		    [in] 第二个线的坐标
+///			point				[out]交点坐标
+/// 返回值:  
+/// </summary> 
+int math_GetTwoLineCrossPoint(AigCoords line_point0, AigCoords line_point1, AigCoords line_point2, AigCoords line_point3, AigCoords* point);
 
 
 
@@ -193,12 +221,54 @@ int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_
 int math_PointInRect(AigCoords point, AigRect rect, int isIncBoundary);
 
 /// <summary>
+/// 功能	 :	判断线与矩形框是否相交
+/// 参数	 :	point0			[in] 线的坐标
+///			point1			[in] 线的坐标
+///			rect			[in] 矩形框
+///			isLineSegment	[in] 是否为线段
+/// 返回值:  0不相交 1相交 -1错误
+/// </summary> 
+int math_LineRectIntersect(AigCoords point0, AigCoords point1, AigRect in_Rect, int isLineSegment);
+
+/// <summary>
 /// 功能	 :	判断矩形框是否相交(包含的情况也当作相交)
 /// 参数	 :	rect0			[in] 矩形框
 ///			rect1			[in] 矩形框
 /// 返回值:  
 /// </summary> 
 int math_IsRectIntersect(AigRect* in_Rect0, AigRect* in_Rect1);
+
+
+
+
+
+/// <summary>
+/// 功能	 :	查看是否为三角形
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_IsTriangle(AigTriangle* pTriangle);
+
+/// <summary>
+/// 功能	 :	查看三角形高和垂足
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleHeightAndVerticalPoint(AigTriangle* pTriangle);
+
+/// <summary>
+/// 功能	 :	获取三角形的重心
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleBarycenter(AigTriangle* pTriangle);
+
+/// <summary>
+/// 功能	 :	获取三角形的面积
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleArea(AigTriangle* pTriangle);
 
 #ifdef __cplusplus
 }

@@ -116,6 +116,20 @@ double math_Sqrt(double dValue)
 	return dMiddle;
 }
 
+/// <summary>
+/// 功能	 :	查看是否为直线
+/// 参数	 :	point0		[in] 第一个点的坐标
+///			point1		[in] 第二个点的坐标
+/// 返回值:  
+/// </summary>
+int math_IsLine(AigCoords point0, AigCoords point1)
+{
+	if (AIG_MATH_POINT_EQUAL(point0.x, point0.y, point1.x, point1.y))
+		return 0;
+
+	return 1;
+}
+
 
 
 
@@ -165,6 +179,10 @@ int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEqu
 	if (pEquation == NULL)
 		return eAEC_Input;
 
+	memset(pEquation, 0, sizeof(AigEquation));
+	if (math_IsLine(point0, point1))
+		return eAEC_Err;
+
 	//斜率 k = (y1 - y0)/(x1 - x0)
 	//方程 y - y0 = k(x - x0)
 	//	  --> y - kx = y0 - kx0
@@ -180,7 +198,6 @@ int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEqu
 	pEquation->C = C;
 	return eAEC_Success;
 }
-
 
 
 
@@ -268,7 +285,7 @@ int math_GetPointSideToLine(AigCoords point, AigCoords start_point, AigCoords en
 	//	如果S（A，B，C）为正数，则C在矢量AB的左侧；
 	//	如果S（A，B，C）为负数，则C在矢量AB的右侧；
 	//	如果S（A，B，C）为0，则C在直线AB上。
-	if (AIG_MATH_POINT_EQUAL(start_point.x, start_point.y, end_point.x, end_point.y))
+	if (math_IsLine(start_point, end_point))
 		return -1;
 
 	double dArea = (start_point.x - point.x)*(end_point.y - point.y) - (end_point.x - point.x)*(start_point.y - point.y);
@@ -296,7 +313,7 @@ int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_
 	if (out_point == NULL)
 		return -1;
 	//构不成直线
-	if (AIG_MATH_POINT_EQUAL(start_point.x, start_point.y, end_point.x, end_point.y))
+	if (math_IsLine(start_point, end_point))
 		return -1;
 
 	//求直线的二元一次方程 Ax+By+C=0
@@ -316,6 +333,42 @@ int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_
 	return eAEC_Success;
 }
 
+/// <summary>
+/// 功能	 :	求点到直线的垂足点
+/// 参数	 :	line_point0			[in] 第一个线的坐标
+///			line_point1		    [in] 第一个线的坐标
+///			line_point2		    [in] 第二个线的坐标
+///			line_point3		    [in] 第二个线的坐标
+///			point				[out]交点坐标
+/// 返回值:  
+/// </summary> 
+int math_GetTwoLineCrossPoint(AigCoords line_point0, AigCoords line_point1, AigCoords line_point2, AigCoords line_point3, AigCoords* point)
+{
+	AigCoords off1, off2, off3;//分量差值
+	off1.x = line_point1.x - line_point0.x;
+	off1.y = line_point1.y - line_point0.y;
+
+	off2.x = line_point2.x - line_point0.x;
+	off2.y = line_point2.y - line_point0.y;
+
+	off3.x = line_point3.x - line_point2.x;
+	off3.y = line_point3.y - line_point2.y;
+
+	double dTmp1 = off1.x * off3.y;
+	double dTmp2 = off1.y * off3.x;
+	double dx = off1.x * off3.x;
+	double dy = off1.y * off3.y;
+
+	memset(point, 0, sizeof(AigCoords));
+	//判断线是否平行或重合
+	double dCross = dTmp1 - dTmp2;
+	if (AIG_MATH_ABS(dCross) <= FLOAT_EQUAL_LIMIT)
+		return eAEC_Err;
+
+	point->x = -(dx * off2.y + dTmp2 * line_point0.x - dTmp1 * line_point2.x) / dCross;
+	point->y = (dy * off2.x + dTmp1 * line_point0.y - dTmp2 * line_point2.y) / dCross;
+	return eAEC_Success;
+}
 
 
 
@@ -346,6 +399,56 @@ int math_PointInRect(AigCoords point, AigRect rect, int isIncBoundary)
 }
 
 /// <summary>
+/// 功能	 :	判断线与矩形框是否相交
+/// 参数	 :	point0			[in] 线的坐标
+///			point1			[in] 线的坐标
+///			rect			[in] 矩形框
+///			isLineSegment	[in] 是否为线段
+/// 返回值:  0不相交 1相交 -1错误
+/// </summary> 
+int math_LineRectIntersect(AigCoords point0, AigCoords point1, AigRect in_Rect, int isLineSegment)
+{
+	//判断直线是否与矩形框相交，如果矩形框的四个点都在直线的一边，则不相交
+	AigCoords pRectPoint[4];
+	pRectPoint[0].x = in_Rect.left;
+	pRectPoint[0].y = in_Rect.top;
+	pRectPoint[1].x = in_Rect.right;
+	pRectPoint[1].y = in_Rect.top;
+	pRectPoint[2].x = in_Rect.right;
+	pRectPoint[2].y = in_Rect.bottom;
+	pRectPoint[3].x = in_Rect.left;
+	pRectPoint[3].y = in_Rect.bottom;
+
+	int iRet, iPreSize = -1;
+	int IsIntersect = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if ((iRet = math_GetPointSideToLine(pRectPoint[0], point0, point1)) == -1)
+			return -1;
+		if (iRet == 0 || (iPreSize != -1 && iRet != iPreSize))
+		{
+			IsIntersect = 1;
+			break;
+		}
+	}
+
+	if (IsIntersect == 0)
+		return 0;
+
+	if (isLineSegment == 0)
+		return 1;
+
+	//判断线段是否与矩形相交，如果线段两点的X或Y比矩形框的XY都大或都小，则同侧，不相交
+	if ((point0.x < in_Rect.left	&& point1.x < in_Rect.left) ||
+		(point0.x > in_Rect.right	&& point1.x > in_Rect.right) ||
+		(point0.y < in_Rect.bottom	&& point1.y < in_Rect.bottom) ||
+		(point0.y > in_Rect.top		&& point1.y > in_Rect.top))
+		return 0;
+
+	return 1;
+}
+
+/// <summary>
 /// 功能	 :	判断矩形框是否相交(包含的情况也当作相交)
 /// 参数	 :	rect0			[in] 矩形框
 ///			rect1			[in] 矩形框
@@ -369,4 +472,107 @@ int math_IsRectIntersect(AigRect* in_Rect0, AigRect* in_Rect1)
 	if (pointM.x < pointN.x && pointM.y < pointN.y)
 		return 1;
 	return 0;
+}
+
+
+
+
+
+/// <summary>
+/// 功能	 :	查看是否为三角形
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_IsTriangle(AigTriangle* pTriangle)
+{
+	if (pTriangle == NULL)
+		return 0;
+
+	AigCoords* pointA = pTriangle->Point + 0;
+	AigCoords* pointB = pTriangle->Point + 1;
+	AigCoords* pointC = pTriangle->Point + 2;
+	double dDisA = math_GetTwoPointsDistance(*pointA, *pointB);
+	double dDisB = math_GetTwoPointsDistance(*pointB, *pointC);
+	double dDisC = math_GetTwoPointsDistance(*pointA, *pointC);
+
+	//查看两边和是否大于第三边
+	if (fabs(dDisA + dDisB - dDisC) <= FLOAT_EQUAL_LIMIT
+		|| fabs(dDisA + dDisC - dDisB) <= FLOAT_EQUAL_LIMIT
+		|| fabs(dDisB + dDisC - dDisA) <= FLOAT_EQUAL_LIMIT)
+		return 0;
+
+	return 1;
+}
+
+/// <summary>
+/// 功能	 :	查看三角形高和垂足
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleHeightAndVerticalPoint(AigTriangle* pTriangle)
+{
+	if (pTriangle == NULL)
+		return eAEC_Input;
+
+	if (math_IsTriangle(pTriangle))
+		return eAEC_Err;
+
+	//获取垂足
+	math_GetVerticalPoint(pTriangle->Point[0], pTriangle->Point[1], pTriangle->Point[2], pTriangle->VerticalPoint);
+	math_GetVerticalPoint(pTriangle->Point[1], pTriangle->Point[0], pTriangle->Point[2], pTriangle->VerticalPoint + 1);
+	math_GetVerticalPoint(pTriangle->Point[2], pTriangle->Point[0], pTriangle->Point[1], pTriangle->VerticalPoint + 2);
+
+	//获取高
+	pTriangle->HeightLen[0] = math_GetTwoPointsDistance(pTriangle->Point[0], pTriangle->VerticalPoint[0]);
+	pTriangle->HeightLen[1] = math_GetTwoPointsDistance(pTriangle->Point[1], pTriangle->VerticalPoint[1]);
+	pTriangle->HeightLen[2] = math_GetTwoPointsDistance(pTriangle->Point[2], pTriangle->VerticalPoint[2]);
+
+	return eAEC_Success;
+}
+
+/// <summary>
+/// 功能	 :	获取三角形的重心
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleBarycenter(AigTriangle* pTriangle)
+{
+	//  已知三角形△A1A2A3的顶点坐标Ai(xi, yi) (i = 1, 2, 3) 。它的重心坐标为:
+	//  x = (x1 + x2 + x3) / 3;      y = (y1 + y2 + y3) / 3;
+	if (pTriangle == NULL)
+		return eAEC_Input;
+
+	if (math_IsTriangle(pTriangle))
+		return eAEC_Err;
+
+	pTriangle->Barycenter.x = (pTriangle->Point[0].x + pTriangle->Point[1].x + pTriangle->Point[2].x) / 3;
+	pTriangle->Barycenter.y = (pTriangle->Point[0].y + pTriangle->Point[1].y + pTriangle->Point[2].y) / 3;
+	return eAEC_Success;
+}
+
+/// <summary>
+/// 功能	 :	获取三角形的面积
+/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 返回值:  
+/// </summary> 
+int math_GetTriangleArea(AigTriangle* pTriangle)
+{
+	//  已知三角形△A1A2A3的顶点坐标Ai(xi, yi) (i = 1, 2, 3) 。它的面积为:
+	//  S = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
+	if (pTriangle == NULL)
+		return eAEC_Input;
+
+	if (math_IsTriangle(pTriangle))
+		return eAEC_Err;
+
+	double x1 = pTriangle->Point[0].x;
+	double x2 = pTriangle->Point[1].x;
+	double x3 = pTriangle->Point[2].x;
+	double y1 = pTriangle->Point[0].y;
+	double y2 = pTriangle->Point[1].y;
+	double y3 = pTriangle->Point[2].y;
+	double S = ((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
+
+	pTriangle->Area = AIG_MATH_ABS(S);
+	return eAEC_Success;
 }

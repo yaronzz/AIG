@@ -2,6 +2,8 @@
 //
 
 #include "ArgvHelper.h"
+#include "ListHelper.h"
+#include "StringHelper.h"
 int main(int argc, char * argv[])
 {
 	int iCheck;
