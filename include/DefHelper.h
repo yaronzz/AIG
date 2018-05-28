@@ -47,6 +47,7 @@ typedef enum _AIG_ERRORCODE
 	eAEC_NoDir				= 7,	//目录不存在
 	eAEC_PathOver			= 8,	//路径长度溢出
 	eAEC_IndexOver			= 9,	//下标溢出
+	eAEC_End				= 10,	//结束
 
 	eAEC_ParaNumOver		= 20,	//参数个数超出限制
 	eAEC_BufferOver			= 21,	//空间溢出
