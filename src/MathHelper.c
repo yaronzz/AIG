@@ -1,5 +1,4 @@
 ﻿#include "math.h"
-
 #include "MathHelper.h"
 
 /// <summary>
@@ -575,4 +574,62 @@ int math_GetTriangleArea(AigTriangle* pTriangle)
 
 	pTriangle->Area = AIG_MATH_ABS(S);
 	return eAEC_Success;
+}
+
+
+
+/// <summary>
+/// 功能	 :	获取多边形的面积叉乘
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
+/// 返回值:  顺时针为负，逆时针为正
+/// </summary> 
+int math_VectorForkMultiplyOfPloygonArea(AigCoords* point, int point_num)
+{
+	//S_OAB = 0.5*(A_x*B_y - A_y*B_x)   【(A_x，A_y)为A点的坐标】
+	//S_OBC = 0.5*(B_x*C_y - B_y*C_x)
+	//S_OCD = 0.5*(C_x*D_y - C_y*D_x)
+	//S_ODA = 0.5*(D_x*A_y - D_y*A_x)
+	//return S_OAB+S_OBC+S_OCD+S_ODA
+
+	double dArea = 0;
+	if (point == NULL || point_num < 3)
+		return 0;
+
+	for (int i = 0; i < point_num; ++i)
+		dArea += point[i].x * point[(i + 1) % point_num].y - point[i].y * point[(i + 1) % point_num].x;
+
+	return dArea / 2.0;
+}
+
+/// <summary>
+/// 功能	 :	获取多边形的面积
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
+/// 返回值:  
+/// </summary> 
+int math_GetPolygonArea(AigCoords* point, int point_num)
+{
+	double dArea = 0;
+	if (point == NULL || point_num < 3)
+		return -1;
+
+	dArea = math_VectorForkMultiplyOfPloygonArea(point, point_num);
+	dArea = fabs(dArea);
+	return dArea;
+}
+
+/// <summary>
+/// 功能	 :	多边形的点是否为顺时针
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
+/// 返回值:  
+/// </summary> 
+int math_IsClockwise(AigCoords* point, int point_num)
+{
+	double dArea = math_VectorForkMultiplyOfPloygonArea(point, point_num);
+	if (dArea > 0)
+		return 0;
+
+	return 1;
 }

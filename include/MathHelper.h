@@ -263,12 +263,36 @@ int math_GetTriangleHeightAndVerticalPoint(AigTriangle* pTriangle);
 /// </summary> 
 int math_GetTriangleBarycenter(AigTriangle* pTriangle);
 
+
+
+
+
+
 /// <summary>
-/// 功能	 :	获取三角形的面积
-/// 参数	 :	pTriangle			[in—out] 三角形结构
+/// 功能	 :	获取多边形的面积叉乘
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
+/// 返回值:  顺时针为负，逆时针为正
+/// </summary> 
+int math_VectorForkMultiplyOfPloygonArea(AigCoords* point, int point_num);
+
+/// <summary>
+/// 功能	 :	获取多边形的面积
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
 /// 返回值:  
 /// </summary> 
-int math_GetTriangleArea(AigTriangle* pTriangle);
+int math_GetPolygonArea(AigCoords* point, int point_num);
+
+/// <summary>
+/// 功能	 :	多边形的点是否为顺时针
+/// 参数	 :	point				[in] 多边形的点
+///			point_num			[in] 点的数量
+/// 返回值:  
+/// </summary> 
+int math_IsClockwise(AigCoords* point, int point_num);
+
+
 
 #ifdef __cplusplus
 }
