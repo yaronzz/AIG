@@ -2,9 +2,9 @@
 #include "ArgvHelper.h"
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¾ä±ú³õÊ¼»¯
-/// ²ÎÊı	 :	pHandle			[in¡ªout]	 ¾ä±ú
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å¥æŸ„åˆå§‹åŒ–
+/// å‚æ•°	 :	pHandle			[inâ€”out]	 å¥æŸ„
+/// è¿”å›å€¼:  
 /// </summary>
 static void argv_HandleInit(AigArgvHandle* pHandle)
 {
@@ -15,9 +15,9 @@ static void argv_HandleInit(AigArgvHandle* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡²ÎÊıÊıÁ¿
-/// ²ÎÊı	 :	sString			[in]	 ×Ö·û´®
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–å‚æ•°æ•°é‡
+/// å‚æ•°	 :	sString			[in]	 å­—ç¬¦ä¸²
+/// è¿”å›å€¼:  
 /// </summary>
 static int argv_GetFieldNum(char* sString)
 {
@@ -28,7 +28,7 @@ static int argv_GetFieldNum(char* sString)
 	if (iNumInterval1 == 0 && iNumInterval2 == 0)
 		return iNumField + 1;
 
-	//Èç¹ûÎªµ¥ÊıÔò´íÎó
+	//å¦‚æœä¸ºå•æ•°åˆ™é”™è¯¯
 	if (iNumInterval1 % 2 != 0 || iNumInterval2 % 2 != 0)
 		return 0;
 
@@ -77,12 +77,12 @@ static int argv_GetFieldNum(char* sString)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µÚN¸ö×Ö¶Î
-/// ²ÎÊı	 :	sString			[in]	 ×Ö·û´®
-///			iOrder			[in]	 ĞòºÅ
-///			pField			[in-out] Êä³ö×Ö¶Î
-///			iFieldLen		[in]	 Êä³ö×Ö¶Î³¤¶È
-/// ·µ»ØÖµ:  >= 0³É¹¦
+/// åŠŸèƒ½	 :	è·å–ç¬¬Nä¸ªå­—æ®µ
+/// å‚æ•°	 :	sString			[in]	 å­—ç¬¦ä¸²
+///			iOrder			[in]	 åºå·
+///			pField			[in-out] è¾“å‡ºå­—æ®µ
+///			iFieldLen		[in]	 è¾“å‡ºå­—æ®µé•¿åº¦
+/// è¿”å›å€¼:  >= 0æˆåŠŸ
 /// </summary>
 static int argv_GetField(char* sString, int iOrder, char* pField, int iFieldLen)
 {
@@ -95,7 +95,7 @@ static int argv_GetField(char* sString, int iOrder, char* pField, int iFieldLen)
 		return string_GetFieldSting(sString, ' ', iOrder, pField, iFieldLen);
 	}
 
-	//Èç¹ûÎªµ¥ÊıÔò´íÎó
+	//å¦‚æœä¸ºå•æ•°åˆ™é”™è¯¯
 	if (iNumInterval1 % 2 != 0 || iNumInterval2 % 2 != 0)
 		return eAEC_Input;
 
@@ -127,7 +127,7 @@ static int argv_GetField(char* sString, int iOrder, char* pField, int iFieldLen)
 				}
 				else
 				{
-					//Èç¹û×îºóÒ»¸ö×Ö·ûÊÇ'»òÕß"£¬ÔòĞèÒªÈ¥µô
+					//å¦‚æœæœ€åä¸€ä¸ªå­—ç¬¦æ˜¯'æˆ–è€…"ï¼Œåˆ™éœ€è¦å»æ‰
 					if (iEnd > 0 && (sString[iEnd] == '\'' || sString[iEnd] == '"'))
 						iEnd -= 1;
 
@@ -150,10 +150,10 @@ static int argv_GetField(char* sString, int iOrder, char* pField, int iFieldLen)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½âÎö×Ö·û´®
-/// ²ÎÊı	 :	pHandle			[in-out]	 ¾ä±ú
-///			pString			[in]		×Ö·û´®
-/// ·µ»ØÖµ:  >= 0³É¹¦
+/// åŠŸèƒ½	 :	è§£æå­—ç¬¦ä¸²
+/// å‚æ•°	 :	pHandle			[in-out]	 å¥æŸ„
+///			pString			[in]		å­—ç¬¦ä¸²
+/// è¿”å›å€¼:  >= 0æˆåŠŸ
 /// </summary>
 int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 {
@@ -168,7 +168,7 @@ int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 	char* pName;
 	char* pValue;
 
-	//³õÊ¼»¯
+	//åˆå§‹åŒ–
 	if (pHandle->iBufferSize != AIG_MAXLEN_ARGVBUFF)
 		argv_HandleInit(pHandle);
 	if (pHandle->iRemain <= 0)
@@ -185,7 +185,7 @@ int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 		if (iLen > pHandle->iRemain)
 			return eAEC_BufferOver;
 
-		//¸³Öµ
+		//èµ‹å€¼
 		iIndex = pHandle->NumParams;
 		pName = pHandle->sBuffer + pHandle->iBufferSize - pHandle->iRemain;
 		pHandle->pParamList[iIndex].sName = pName;
@@ -206,11 +206,11 @@ int argv_ParseString(AigArgvHandle* pHandle, char* pString)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½âÎöMain²Î
-/// ²ÎÊı	 :	pHandle			[in-out]	 ¾ä±ú
-///			argc			[in]		 Main²ÎÊıÁ¿
-///			argv			[in]		 Main²ÎÊı×é
-/// ·µ»ØÖµ:  >= 0³É¹¦
+/// åŠŸèƒ½	 :	è§£æMainå‚
+/// å‚æ•°	 :	pHandle			[in-out]	 å¥æŸ„
+///			argc			[in]		 Mainå‚æ•°é‡
+///			argv			[in]		 Mainå‚æ•°ç»„
+/// è¿”å›å€¼:  >= 0æˆåŠŸ
 /// </summary>
 int argv_ParseMainPara(AigArgvHandle* pHandle, int argc, char * argv[])
 {

@@ -23,9 +23,9 @@ typedef struct _AigListHandle
 /// </summary> 
 static AigListNode* list_CreatNode(AigListHandle* pHandle, void* pRecord)
 {
-	AigListNode* pNode	= (AigListNode*)malloc(sizeof(AigListNode));
+	AigListNode* pNode	= (AigListNode*)AIG_FUNC_MALLOC(sizeof(AigListNode));
 	pNode->pNext		= NULL;
-	pNode->pData		= malloc(pHandle->RecordLen);
+	pNode->pData		= AIG_FUNC_MALLOC(pHandle->RecordLen);
 	memcpy(pNode->pData, pRecord, pHandle->RecordLen);
 
 	return pNode;
@@ -38,8 +38,8 @@ static AigListNode* list_CreatNode(AigListHandle* pHandle, void* pRecord)
 /// </summary> 
 static void list_DelNode(AigListNode* pNode)
 {
-	free(pNode->pData);
-	free(pNode);
+	AIG_FUNC_FREE(pNode->pData);
+	AIG_FUNC_FREE(pNode);
 }
 
 /// <summary>
@@ -53,7 +53,7 @@ void* list_Creat(int iRecordLen, pfn_AIG_CMP_CALLBACK pCmpFunc)
 	if (iRecordLen <= 0)
 		return NULL;
 
-	AigListHandle* pHandle	= (AigListHandle*)malloc(sizeof(AigListHandle));
+	AigListHandle* pHandle	= (AigListHandle*)AIG_FUNC_MALLOC(sizeof(AigListHandle));
 	memset(pHandle, 0, sizeof(AigListHandle));
 
 	pHandle->pCmpFunc		= pCmpFunc;
@@ -72,7 +72,7 @@ void list_Destroy(void** pHandle)
 		return;
 
 	list_RemoveAll(*pHandle);
-	free(*pHandle);
+	AIG_FUNC_FREE(*pHandle);
 
 	*pHandle = NULL;
 }

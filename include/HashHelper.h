@@ -7,15 +7,18 @@ extern "C" {
 
 #include "DefHelper.h"
 
+typedef int(*pfn_AIG_HASH_CALCHASH_CALLBACK)(void* pKey, int iKeyLen);		//计算哈希值
+
 /// <summary>
 /// 功能	 :	创建哈希表
 /// 参数	 :	iKeyLen				[in] 关键字长度
 ///			iValueLen			[in] 值长度
 ///			iHashCapacity		[in] 容量
-///			pCmpFunc			[in] 比较函数
+///			pCmpFunc			[in] Key比较函数
+///			pCalcHashFunc		[in] 计算哈希值
 /// 返回值: 
 /// </summary> 
-void* hash_Creat(int iKeyLen, int iValueLen, int iHashCapacity, pfn_AIG_CMP_CALLBACK pCmpFunc);
+void* hash_Creat(int iKeyLen, int iValueLen, int iHashCapacity, pfn_AIG_CMP_CALLBACK pCmpFunc, pfn_AIG_HASH_CALCHASH_CALLBACK pCalcHashFunc);
 
 /// <summary>
 /// 功能	 :	销毁哈希表
@@ -79,6 +82,17 @@ int hash_GetNext(void* pHandle, void** out_pKey, void** out_pValue);
 /// 返回值: 
 /// </summary> 
 void* hash_Find(void* pHandle, void* pKey);
+
+
+
+
+
+
+
+
+
+
+
 
 #ifdef __cplusplus
 }

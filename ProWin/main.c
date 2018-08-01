@@ -21,7 +21,7 @@ int main(int argc, char * argv[])
 	iCheck = argv_ParseString(&aArgvHandle, "Test.exe \"A=1 2\" B=2");
 
 	void* pHashHandle;
-	pHashHandle = hash_Creat(sizeof(int), sizeof(int), 10, string_MemoryCmp);
+	pHashHandle = hash_Creat(sizeof(int), sizeof(int), 10, string_MemoryCmp,NULL);
 	for (int i = 0; i < 9; i++)
 		hash_Insert(pHashHandle, iArrary + i, iArrary + i, 1);
 

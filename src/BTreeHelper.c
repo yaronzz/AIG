@@ -33,12 +33,12 @@ typedef struct __AIG_BTREE_HANDLE
 
 static AigBTreeNode* btree_CreatNode(AIG_BTREE_HANDLE* pHandle)
 {
-	AigBTreeNode* pNode = (AigBTreeNode*)malloc(sizeof(AigBTreeNode));
+	AigBTreeNode* pNode = (AigBTreeNode*)AIG_FUNC_MALLOC(sizeof(AigBTreeNode));
 	memset(pNode, 0, sizeof(AigBTreeNode));
 
-	pNode->Keys		= (unsigned char**)malloc(sizeof(unsigned char*)*(pHandle->MValue - 1));
-	pNode->Values	= (unsigned char**)malloc(sizeof(unsigned char*)*(pHandle->MValue - 1));
-	pNode->Child	= (AigBTreeNode**)malloc(sizeof(AigBTreeNode*)*(pHandle->MValue));
+	pNode->Keys		= (unsigned char**)AIG_FUNC_MALLOC(sizeof(unsigned char*)*(pHandle->MValue - 1));
+	pNode->Values	= (unsigned char**)AIG_FUNC_MALLOC(sizeof(unsigned char*)*(pHandle->MValue - 1));
+	pNode->Child	= (AigBTreeNode**)AIG_FUNC_MALLOC(sizeof(AigBTreeNode*)*(pHandle->MValue));
 
 	for (int i = 0; i <= pHandle->MValue; i++)
 	{
@@ -209,7 +209,7 @@ void* btree_Creat(int iMValue, int iKeyLen, int iValueLen, pfn_AIG_CMP_CALLBACK 
 	if (iMValue < 2 || pCmpFunc == NULL)
 		return NULL;
 
-	AIG_BTREE_HANDLE* pHandle = (AIG_BTREE_HANDLE*)malloc(sizeof(AIG_BTREE_HANDLE));
+	AIG_BTREE_HANDLE* pHandle = (AIG_BTREE_HANDLE*)AIG_FUNC_MALLOC(sizeof(AIG_BTREE_HANDLE));
 	memset(pHandle, 0, sizeof(AIG_BTREE_HANDLE));
 
 	pHandle->Size			= 0;
@@ -226,8 +226,8 @@ void btree_Destroy(void** pHandle)
 		return;
 
 	AIG_BTREE_HANDLE* pTreeHandle = (AIG_BTREE_HANDLE*)pHandle;
-	btree_RemoveAll(*pHandle);
-	free(*pHandle);
+	//btree_RemoveAll(*pHandle);
+	AIG_FUNC_FREE(*pHandle);
 
 	*pHandle = NULL;
 }

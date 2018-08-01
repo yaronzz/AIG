@@ -83,6 +83,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\ArgvHelper.c" />
+    <ClCompile Include="..\src\BPTreeHelper.c" />
     <ClCompile Include="..\src\BTreeHelper.c" />
     <ClCompile Include="..\src\ConsoleHelper.c" />
     <ClCompile Include="..\src\FileHelper.c" />
@@ -101,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ArgvHelper.h" />
+    <ClInclude Include="..\include\BPTreeHelper.h" />
     <ClInclude Include="..\include\BTreeHelper.h" />
     <ClInclude Include="..\include\ConsoleHelper.h" />
     <ClInclude Include="..\include\DefHelper.h" />

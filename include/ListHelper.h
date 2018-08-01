@@ -23,9 +23,6 @@ void* list_Creat(int iRecordLen, pfn_AIG_CMP_CALLBACK pCmpFunc);
 /// </summary> 
 void list_Destroy(void** pHandle);
 
-
-
-
 /// <summary>
 /// 功能	 :	添加节点
 /// 参数	 :	pHandle			[in] 句柄

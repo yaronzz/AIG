@@ -1,32 +1,33 @@
 #include "HashHelper.h"
 
 /*********************************************************
-ËµÃ÷£º
-1¡¢²éÕÒÓë±éÀú»ñÈ¡µÄÖµ£¬¿ÉÒÔÔÚÍâ²¿¸Ä¶¯
-2¡¢µ±½ÚµãµÄÊıÁ¿³¬¹ıÈİÁ¿µÄ3/4Ê±£¬ĞèÒªÀ©´óÈİÁ¿
-3¡¢µ±½ÚµãµÄÏÂ±êÏàÍ¬Ê±£¬ÓÃÁ´±íµÄ·½Ê½·ÀÖ¹³åÍ»
+è¯´æ˜ï¼š
+1ã€æŸ¥æ‰¾ä¸éå†è·å–çš„å€¼ï¼Œå¯ä»¥åœ¨å¤–éƒ¨æ”¹åŠ¨
+2ã€å½“èŠ‚ç‚¹çš„æ•°é‡è¶…è¿‡å®¹é‡çš„3/4æ—¶ï¼Œéœ€è¦æ‰©å¤§å®¹é‡
+3ã€å½“èŠ‚ç‚¹çš„ä¸‹æ ‡ç›¸åŒæ—¶ï¼Œç”¨é“¾è¡¨çš„æ–¹å¼é˜²æ­¢å†²çª
 *********************************************************/
 
 typedef struct _AigHashNode
 {
-	int	Hash;						//HashÖµ
-	unsigned char*	pKey;			//¹Ø¼ü×Ö
-	unsigned char*	pValue;			//Êı¾İ
-	struct _AigHashNode* pNext;		//Á´±íµÄÏÂÒ»¸ö
+	int	Hash;						//Hashå€¼
+	unsigned char*	pKey;			//å…³é”®å­—
+	unsigned char*	pValue;			//æ•°æ®
+	struct _AigHashNode* pNext;		//é“¾è¡¨çš„ä¸‹ä¸€ä¸ª
 }AigHashNode;
 
 typedef struct _AigHashHanle
 {
-	int Size;						//½ÚµãÊıÁ¿
-	int KeyLen;						//¹Ø¼ü×ÖµÄ³¤¶È
-	int ValueLen;					//ÖµµÄ³¤¶È
-	int Capacity;					//¹şÏ£±íÈİÁ¿
-	AigHashNode** pEntry;			//Èë¿ÚÊı×é
-	pfn_AIG_CMP_CALLBACK pCmpFunc;	//¹Ø¼ü×Ö±È½ÏĞĞÊı
+	int Size;						//èŠ‚ç‚¹æ•°é‡
+	int KeyLen;						//å…³é”®å­—çš„é•¿åº¦
+	int ValueLen;					//å€¼çš„é•¿åº¦
+	int Capacity;					//å“ˆå¸Œè¡¨å®¹é‡
+	AigHashNode** pEntry;			//å…¥å£æ•°ç»„
+	pfn_AIG_CMP_CALLBACK pCmpFunc;	//å…³é”®å­—æ¯”è¾ƒè¡Œæ•°
+	pfn_AIG_HASH_CALCHASH_CALLBACK pCalcHashFunc;	//è®¡ç®—å“ˆå¸Œå€¼
 
-	unsigned char* pSeekKey;		//±éÀúÊ±·µ»ØµÄ¹Ø¼ü×Ö»º´æ
-	int SeekIndex;					//±éÀúÊ±Êı×éµÄÏÂ±ê
-	int SeekSubIndex;				//±éÀúÊ±Á´±íµÄÏÂ±ê
+	unsigned char* pSeekKey;		//éå†æ—¶è¿”å›çš„å…³é”®å­—ç¼“å­˜
+	int SeekIndex;					//éå†æ—¶æ•°ç»„çš„ä¸‹æ ‡
+	int SeekSubIndex;				//éå†æ—¶é“¾è¡¨çš„ä¸‹æ ‡
 }AigHashHanle;
 
 
@@ -43,13 +44,13 @@ int hash_AlgorithmDEK(char* pStr);
 int hash_AlgorithmELF(char* pStr);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËãÈİÁ¿
-/// ²ÎÊı	 :	iInputCapacity		[in] ÈİÁ¿
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¡ç®—å®¹é‡
+/// å‚æ•°	 :	iInputCapacity		[in] å®¹é‡
+/// è¿”å›å€¼: 
 /// </summary> 
 static int hash_CalcCapacity(int iInputCapacity)
 {
-	//¹şÏ£±í´óĞ¡ 0.75 load factor.
+	//å“ˆå¸Œè¡¨å¤§å° 0.75 load factor.
 	int minimumBucketCount = iInputCapacity * 4 / 3;
 
 	// Bucket count must be power of 2.
@@ -61,15 +62,21 @@ static int hash_CalcCapacity(int iInputCapacity)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã¹şÏ£Öµ
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey				[in] ¹Ø¼ü×Ö
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¡ç®—å“ˆå¸Œå€¼
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey				[in] å…³é”®å­—
+/// è¿”å›å€¼: 
 /// </summary> 
 static int hash_CalcHash(AigHashHanle*pMap, void* pKey)
 {
-	int hash = hash_AlgorithmBKDR(pKey);
-	//ÇóµÚ¶ş²ã
+	int hash = 0;
+	
+	if (pMap->pCalcHashFunc == NULL)
+		hash = hash_AlgorithmBKDR(pKey);
+	else
+		hash = pMap->pCalcHashFunc(pKey, pMap->KeyLen);
+
+	//æ±‚ç¬¬äºŒå±‚
 	hash += ~(hash << 9);
 	hash ^= (((unsigned int)hash) >> 14);
 	hash += (hash << 4);
@@ -79,10 +86,10 @@ static int hash_CalcHash(AigHashHanle*pMap, void* pKey)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã¹şÏ£ÖµËùÔÚµÄÏÂ±ê
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			Capacity			[in] ¹şÏ£±íÈİÁ¿
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¡ç®—å“ˆå¸Œå€¼æ‰€åœ¨çš„ä¸‹æ ‡
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			Capacity			[in] å“ˆå¸Œè¡¨å®¹é‡
+/// è¿”å›å€¼: 
 /// </summary> 
 static int hash_CalcHashIndex(int hash, int Capacity)
 {
@@ -90,16 +97,16 @@ static int hash_CalcHashIndex(int hash, int Capacity)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	À©´óÈİÁ¿£¨Èç¹ûµ±Ç°½ÚµãµÄÊıÁ¿³¬¹ı0.75±¶µÄÈİÁ¿ÔòÀ©³ä¹şÏ£±í£©
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æ‰©å¤§å®¹é‡ï¼ˆå¦‚æœå½“å‰èŠ‚ç‚¹çš„æ•°é‡è¶…è¿‡0.75å€çš„å®¹é‡åˆ™æ‰©å……å“ˆå¸Œè¡¨ï¼‰
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary> 
 static int hash_ExpandIfNecessary(AigHashHanle* pHandle)
 {
 	if (pHandle->Size > pHandle->Capacity * 3 / 4)
 	{
 		int NewBuckerCount		= pHandle->Capacity << 1;
-		AigHashNode** pNewEntry = (AigHashNode**)malloc(sizeof(AigHashNode*) * NewBuckerCount);
+		AigHashNode** pNewEntry = (AigHashNode**)AIG_FUNC_MALLOC(sizeof(AigHashNode*) * NewBuckerCount);
 		AigHashNode* pTmp		= NULL;
 		AigHashNode* pNext		= NULL;
 		int Index				= 0;
@@ -109,7 +116,7 @@ static int hash_ExpandIfNecessary(AigHashHanle* pHandle)
 			pTmp = pHandle->pEntry[i];
 			while (pTmp != NULL)
 			{
-				//¼ÆËãÏÂ±ê
+				//è®¡ç®—ä¸‹æ ‡
 				Index = hash_CalcHashIndex(pTmp->Hash, NewBuckerCount);
 
 				pNext				= pTmp->pNext;
@@ -119,7 +126,7 @@ static int hash_ExpandIfNecessary(AigHashHanle* pHandle)
 			}
 		}
 
-		free(pHandle->pEntry);
+		AIG_FUNC_FREE(pHandle->pEntry);
 		pHandle->Capacity	= NewBuckerCount;
 		pHandle->pEntry		= pNewEntry;
 	}
@@ -127,18 +134,18 @@ static int hash_ExpandIfNecessary(AigHashHanle* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	´´½ç½Úµã
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey				[in] ¹Ø¼ü×Ö
-///			pValue				[in] Öµ
-///			hash				[in] ¹şÏ£Öµ2
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	åˆ›ç•ŒèŠ‚ç‚¹
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey				[in] å…³é”®å­—
+///			pValue				[in] å€¼
+///			hash				[in] å“ˆå¸Œå€¼2
+/// è¿”å›å€¼: 
 /// </summary> 
 static AigHashNode* hash_CreatNode(AigHashHanle* pHandle, void* pKey, void* pValue, int hash)
 {
-	AigHashNode* pNode = (AigHashNode*)malloc(sizeof(AigHashNode));
-	void* pNewKey	= malloc(pHandle->KeyLen);
-	void* pNewValue = pHandle->ValueLen > 0 ? malloc(pHandle->ValueLen) : NULL;
+	AigHashNode* pNode = (AigHashNode*)AIG_FUNC_MALLOC(sizeof(AigHashNode));
+	void* pNewKey	= AIG_FUNC_MALLOC(pHandle->KeyLen);
+	void* pNewValue = pHandle->ValueLen > 0 ? AIG_FUNC_MALLOC(pHandle->ValueLen) : NULL;
 
 	pNode->Hash		= hash;
 	pNode->pKey		= pNewKey;
@@ -153,77 +160,78 @@ static AigHashNode* hash_CreatNode(AigHashHanle* pHandle, void* pKey, void* pVal
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ïú»Ù½Úµã
-/// ²ÎÊı	 :	pNode				[in] ½Úµã
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	é”€æ¯èŠ‚ç‚¹
+/// å‚æ•°	 :	pNode				[in] èŠ‚ç‚¹
+/// è¿”å›å€¼: 
 /// </summary> 
 static void hash_DestroyNode(AigHashNode* pNode)
 {
-	free(pNode->pKey);
+	AIG_FUNC_FREE(pNode->pKey);
 	if (pNode->pValue)
-		free(pNode->pValue);
+		AIG_FUNC_FREE(pNode->pValue);
 
-	free(pNode);
+	AIG_FUNC_FREE(pNode);
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶Ï¹Ø¼ü×ÖÊÇ·ñÏàÍ¬
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey0				[in] ¹Ø¼ü×Ö1
-///			hash0				[in] ¹şÏ£Öµ1
-///			pKey1				[in] ¹Ø¼ü×Ö2
-///			hash1				[in] ¹şÏ£Öµ2
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	åˆ¤æ–­å…³é”®å­—æ˜¯å¦ç›¸åŒ
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey0				[in] å…³é”®å­—1
+///			hash0				[in] å“ˆå¸Œå€¼1
+///			pKey1				[in] å…³é”®å­—2
+///			hash1				[in] å“ˆå¸Œå€¼2
+/// è¿”å›å€¼: 
 /// </summary> 
 static int hash_IsEqualKeys(AigHashHanle* pHandle, void* pKey0, int hash0, void* pKey1, int hash1)
 {
-	//ÏÈÅĞ¶Ï¹şÏ£Öµ,ÔÙµ÷ÓÃ»Øµ÷º¯ÊıÅĞ¶Ï
-	if (hash0 != hash1)	//hashÖµ²»Í¬
+	//å…ˆåˆ¤æ–­å“ˆå¸Œå€¼,å†è°ƒç”¨å›è°ƒå‡½æ•°åˆ¤æ–­
+	if (hash0 != hash1)	//hashå€¼ä¸åŒ
 		return 0;
 
 	return pHandle->pCmpFunc(pKey0, pKey1, pHandle->KeyLen) == 0;
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	´´½¨¹şÏ£±í
-/// ²ÎÊı	 :	iKeyLen				[in] ¹Ø¼ü×Ö³¤¶È
-///			iValueLen			[in] Öµ³¤¶È
-///			iHashCapacity		[in] ÈİÁ¿
-///			pCmpFunc			[in] ±È½Ïº¯Êı
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	åˆ›å»ºå“ˆå¸Œè¡¨
+/// å‚æ•°	 :	iKeyLen				[in] å…³é”®å­—é•¿åº¦
+///			iValueLen			[in] å€¼é•¿åº¦
+///			iHashCapacity		[in] å®¹é‡
+///			pCmpFunc			[in] æ¯”è¾ƒå‡½æ•°
+/// è¿”å›å€¼: 
 /// </summary> 
-void* hash_Creat(int iKeyLen, int iValueLen, int iHashCapacity, pfn_AIG_CMP_CALLBACK pCmpFunc)
+void* hash_Creat(int iKeyLen, int iValueLen, int iHashCapacity, pfn_AIG_CMP_CALLBACK pCmpFunc, pfn_AIG_HASH_CALCHASH_CALLBACK pCalcHashFunc)
 {
 	if (iKeyLen <= 0 || iValueLen < 0 || iHashCapacity <= 0 || pCmpFunc == NULL)
 		return NULL;
 
-	AigHashHanle* pHandle = (AigHashHanle*)malloc(sizeof(AigHashHanle));
+	AigHashHanle* pHandle = (AigHashHanle*)AIG_FUNC_MALLOC(sizeof(AigHashHanle));
 	memset(pHandle, 0, sizeof(AigHashHanle));
 
-	//¼ÆËãÈİÁ¿
+	//è®¡ç®—å®¹é‡
 	pHandle->Capacity = hash_CalcCapacity(iHashCapacity);
 
-	//ÉêÇëÖ¸ÕëÊı×éÄÚ´æ
-	pHandle->pEntry = (AigHashNode**)malloc(sizeof(AigHashNode*) * pHandle->Capacity);
+	//ç”³è¯·æŒ‡é’ˆæ•°ç»„å†…å­˜
+	pHandle->pEntry = (AigHashNode**)AIG_FUNC_MALLOC(sizeof(AigHashNode*) * pHandle->Capacity);
 	memset(pHandle->pEntry, 0, sizeof(AigHashNode*) * pHandle->Capacity);
 
-	//ÉêÇë±éÀúÓÃµÄKey£¬Ö÷ÒªÊÇ·ÀÖ¹¸øÍâ²¿Ö¸Õëºó£¬ËæÒâĞŞ¸ÄÁËkey
-	pHandle->pSeekKey = (unsigned char*)malloc(iKeyLen);
+	//ç”³è¯·éå†ç”¨çš„Keyï¼Œä¸»è¦æ˜¯é˜²æ­¢ç»™å¤–éƒ¨æŒ‡é’ˆåï¼Œéšæ„ä¿®æ”¹äº†key
+	pHandle->pSeekKey = (unsigned char*)AIG_FUNC_MALLOC(iKeyLen);
 	memset(pHandle->pSeekKey, 0, iKeyLen);
 
-	//ÆäËû¸³Öµ
-	pHandle->Size		= 0;
-	pHandle->KeyLen		= iKeyLen;
-	pHandle->ValueLen	= iValueLen;
-	pHandle->pCmpFunc	= pCmpFunc;
+	//å…¶ä»–èµ‹å€¼
+	pHandle->Size			= 0;
+	pHandle->KeyLen			= iKeyLen;
+	pHandle->ValueLen		= iValueLen;
+	pHandle->pCmpFunc		= pCmpFunc;
+	pHandle->pCalcHashFunc	= pCalcHashFunc;
 
 	return pHandle;
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ïú»Ù¹şÏ£±í
-/// ²ÎÊı	 :	pHandle				[in-out] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	é”€æ¯å“ˆå¸Œè¡¨
+/// å‚æ•°	 :	pHandle				[in-out] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary> 
 void hash_Destroy(void** pHandle)
 {
@@ -232,20 +240,20 @@ void hash_Destroy(void** pHandle)
 
 	AigHashHanle* pHashHandle = (AigHashHanle*)pHandle;
 	hash_RemoveAll(*pHandle);
-	free(pHashHandle->pEntry);
-	free(pHashHandle->pSeekKey);
-	free(*pHandle);
+	AIG_FUNC_FREE(pHashHandle->pEntry);
+	AIG_FUNC_FREE(pHashHandle->pSeekKey);
+	AIG_FUNC_FREE(*pHandle);
 
 	*pHandle = NULL;
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²åÈë½Úµã
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey				[in] ¹Ø¼ü×Ö
-///			pValue				[in] Öµ
-///			bIsReplace			[in] Èç¹ûÒÑ´æÔÚÊÇ·ñÌæ»»
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æ’å…¥èŠ‚ç‚¹
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey				[in] å…³é”®å­—
+///			pValue				[in] å€¼
+///			bIsReplace			[in] å¦‚æœå·²å­˜åœ¨æ˜¯å¦æ›¿æ¢
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_Insert(void* pHandle, void* pKey, void* pValue, int bIsReplace)
 {
@@ -269,11 +277,11 @@ int hash_Insert(void* pHandle, void* pKey, void* pValue, int bIsReplace)
 			*pEntry = hash_CreatNode(pHashHandle, pKey, pValue, iHash);
 			pHashHandle->Size++;
 
-			//À©´óÈİÁ¿
+			//æ‰©å¤§å®¹é‡
 			hash_ExpandIfNecessary(pHashHandle);
 			break;
 		}
-		//Èç¹ûÊ¹ÓÃµÄÊÇÍ¬Ò»¸öKeyÔòÌæ»»
+		//å¦‚æœä½¿ç”¨çš„æ˜¯åŒä¸€ä¸ªKeyåˆ™æ›¿æ¢
 		if (hash_IsEqualKeys(pHashHandle, pCurrent->pKey, pCurrent->Hash, pKey, iHash))
 		{
 			if (!bIsReplace)
@@ -291,10 +299,10 @@ int hash_Insert(void* pHandle, void* pKey, void* pValue, int bIsReplace)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÒÆ³ı½Úµã
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey				[in] ¹Ø¼ü×Ö
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	ç§»é™¤èŠ‚ç‚¹
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey				[in] å…³é”®å­—
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_Remove(void* pHandle, void* pKey)
 {
@@ -311,7 +319,7 @@ int hash_Remove(void* pHandle, void* pKey)
 	{
 		if (hash_IsEqualKeys(pHashHandle, pCurrent->pKey, pCurrent->Hash, pKey, iHash))
 		{
-			//ÏÈ½«Ö¸ÕëÖ¸ÏòÏÂÒ»¸öÔÙÉ¾³ı
+			//å…ˆå°†æŒ‡é’ˆæŒ‡å‘ä¸‹ä¸€ä¸ªå†åˆ é™¤
 			*pEntry = pCurrent->pNext;
 			hash_DestroyNode(pCurrent);
 
@@ -324,9 +332,9 @@ int hash_Remove(void* pHandle, void* pKey)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÒÆ³ıÈ«²¿½Úµã
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	ç§»é™¤å…¨éƒ¨èŠ‚ç‚¹
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_RemoveAll(void* pHandle)
 {
@@ -354,9 +362,9 @@ int hash_RemoveAll(void* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µ±Ç°½ÚµãµÄÊıÁ¿
-/// ²ÎÊı	 :	pHandle				[in]  ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–å½“å‰èŠ‚ç‚¹çš„æ•°é‡
+/// å‚æ•°	 :	pHandle				[in]  å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_GetSize(void* pHandle)
 {
@@ -368,9 +376,9 @@ int hash_GetSize(void* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	±éÀúÇ°ÖØÖÃ
-/// ²ÎÊı	 :	pHandle				[in]  ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	éå†å‰é‡ç½®
+/// å‚æ•°	 :	pHandle				[in]  å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_SetOut(void* pHandle)
 {
@@ -385,11 +393,11 @@ int hash_SetOut(void* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	±éÀúÏÂÒ»¸ö
-/// ²ÎÊı	 :	pHandle				[in]  ¾ä±ú
-///			out_pKey			[out] ¹Ø¼ü×Ö
-///			out_pValue			[out] Öµ
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	éå†ä¸‹ä¸€ä¸ª
+/// å‚æ•°	 :	pHandle				[in]  å¥æŸ„
+///			out_pKey			[out] å…³é”®å­—
+///			out_pValue			[out] å€¼
+/// è¿”å›å€¼: 
 /// </summary> 
 int hash_GetNext(void* pHandle, void** out_pKey, void** out_pValue)
 {
@@ -403,11 +411,11 @@ int hash_GetNext(void* pHandle, void** out_pKey, void** out_pValue)
 	AigHashNode* pEntry = pHashHandle->pEntry[pHashHandle->SeekIndex];
 	AigHashNode* pCurrent = pEntry;
 
-	//»ñÈ¡½Úµã
+	//è·å–èŠ‚ç‚¹
 	for (int i = 0; i < pHashHandle->SeekSubIndex && pCurrent != NULL; i++)
 		pCurrent = pCurrent->pNext;
 
-	//Ñ­»·È¡µ½ÏÂÒ»¸öÕıÈ·½Úµã
+	//å¾ªç¯å–åˆ°ä¸‹ä¸€ä¸ªæ­£ç¡®èŠ‚ç‚¹
 	while (pCurrent == NULL)
 	{
 		if (pHashHandle->SeekIndex == pHashHandle->Capacity - 1)
@@ -420,22 +428,22 @@ int hash_GetNext(void* pHandle, void** out_pKey, void** out_pValue)
 		pCurrent = pEntry;
 	}
 
-	//¸³Öµ
+	//èµ‹å€¼
 	memcpy(pHashHandle->pSeekKey, pCurrent->pKey, pHashHandle->KeyLen);
 	*out_pKey = pHashHandle->pSeekKey;
 	if (out_pValue)
 		*out_pValue = pCurrent->pValue;
 
-	//Ö¸ÏòÏÂÒ»¸ö
+	//æŒ‡å‘ä¸‹ä¸€ä¸ª
 	pHashHandle->SeekSubIndex++;
 	return eAEC_Success;
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²éÕÒ
-/// ²ÎÊı	 :	pHandle				[in] ¾ä±ú
-///			pKey				[in] ¹Ø¼ü×Ö
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æŸ¥æ‰¾
+/// å‚æ•°	 :	pHandle				[in] å¥æŸ„
+///			pKey				[in] å…³é”®å­—
+/// è¿”å›å€¼: 
 /// </summary> 
 void* hash_Find(void* pHandle, void* pKey)
 {
@@ -459,7 +467,7 @@ void* hash_Find(void* pHandle, void* pKey)
 }
 
 
-//********************************×Ö·û´®¹şÏ£Ëã·¨********************************
+//********************************å­—ç¬¦ä¸²å“ˆå¸Œç®—æ³•********************************
 //HASH-BKDR
 int hash_AlgorithmBKDR(char* pStr)
 {
@@ -598,3 +606,7 @@ int hash_AlgorithmELF(char* pStr)
 	}
 	return (iTmp & 0x7FFFFFFF);
 }
+
+
+
+

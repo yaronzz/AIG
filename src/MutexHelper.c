@@ -1,10 +1,10 @@
 #include "MutexHelper.h"
 
 /// <summary>
-/// ¹¦ÄÜ	 :	´´½¨»¥³âËø
-/// ²ÎÊı	 :	pHandle			[in-out] ¾ä±ú
-///			pMutexName		[in]	 »¥³âÁ¿Ãû³Æ,ÓÃÓÚ½ø³Ì¼ä»¥³â
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	åˆ›å»ºäº’æ–¥é”
+/// å‚æ•°	 :	pHandle			[in-out] å¥æŸ„
+///			pMutexName		[in]	 äº’æ–¥é‡åç§°,ç”¨äºè¿›ç¨‹é—´äº’æ–¥
+/// è¿”å›å€¼: 
 /// </summary>
 int mutex_Creat(void** pHandle, char* pMutexName)
 {
@@ -28,10 +28,10 @@ int mutex_Creat(void** pHandle, char* pMutexName)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	´ò¿ª»¥³âËø
-/// ²ÎÊı	 :	pHandle			[in-out] ¾ä±ú
-///			pMutexName		[in]	 »¥³âÁ¿Ãû³Æ,ÓÃÓÚ½ø³Ì¼ä»¥³â
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æ‰“å¼€äº’æ–¥é”
+/// å‚æ•°	 :	pHandle			[in-out] å¥æŸ„
+///			pMutexName		[in]	 äº’æ–¥é‡åç§°,ç”¨äºè¿›ç¨‹é—´äº’æ–¥
+/// è¿”å›å€¼: 
 /// </summary>
 int mutex_Open(void** pHandle, char* pMuetexName)
 {
@@ -54,9 +54,9 @@ int mutex_Open(void** pHandle, char* pMuetexName)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¹Ø±Õ»¥³âËø
-/// ²ÎÊı	 :	pHandle			[in-out] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	å…³é—­äº’æ–¥é”
+/// å‚æ•°	 :	pHandle			[in-out] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary>
 void mutex_Close(void** pHandle)
 {
@@ -70,10 +70,10 @@ void mutex_Close(void** pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉÏËø
-/// ²ÎÊı	 :	pHandle			[in] ¾ä±ú
-///			iMilliseconds	[in] µÈ´ıÊ±¼ä£¨ºÁÃë£©
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	ä¸Šé”
+/// å‚æ•°	 :	pHandle			[in] å¥æŸ„
+///			iMilliseconds	[in] ç­‰å¾…æ—¶é—´ï¼ˆæ¯«ç§’ï¼‰
+/// è¿”å›å€¼: 
 /// </summary>
 int mutex_LockByTime(void* pHandle, unsigned long lMilliseconds)
 {
@@ -87,9 +87,9 @@ int mutex_LockByTime(void* pHandle, unsigned long lMilliseconds)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉÏËø
-/// ²ÎÊı	 :	pHandle			[in] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	ä¸Šé”
+/// å‚æ•°	 :	pHandle			[in] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary>
 int mutex_Lock(void* pHandle)
 {
@@ -102,9 +102,9 @@ int mutex_Lock(void* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½âËø
-/// ²ÎÊı	 :	pHandle			[in] ¾ä±ú
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è§£é”
+/// å‚æ•°	 :	pHandle			[in] å¥æŸ„
+/// è¿”å›å€¼: 
 /// </summary>
 int mutex_UnLock(void* pHandle)
 {

@@ -1,22 +1,22 @@
 #include "TimeHelper.h"
 
 /// <summary>
-/// ¹¦ÄÜ	 :  ¼ÆÊ±µÄÄÚ´æ»º³å
+/// åŠŸèƒ½	 :  è®¡æ—¶çš„å†…å­˜ç¼“å†²
 /// </summary>
 static AigTimingHandle g_TimingHandle;
 
 /// <summary>
-/// ¹¦ÄÜ	 :  Ã¿¸öÔÂ·İÒÑ¾­¹ıÈ¥µÄÈÕ×ÓÊıÁ¿
+/// åŠŸèƒ½	 :  æ¯ä¸ªæœˆä»½å·²ç»è¿‡å»çš„æ—¥å­æ•°é‡
 /// </summary>
 static int AIG_MONTHDAYS[2][13] = {
 	{ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 },
-	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 },		//ÈòÄê
+	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 },		//é—°å¹´
 };
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µ±Ç°Ê±¼ä
-/// ²ÎÊı	 :	pTime		[out] µ±Ç°Ê±¼ä
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–å½“å‰æ—¶é—´
+/// å‚æ•°	 :	pTime		[out] å½“å‰æ—¶é—´
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetCurrentTime(AigSystemTime* pTime)
 {
@@ -30,10 +30,10 @@ int time_GetCurrentTime(AigSystemTime* pTime)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Ã¿¸öÔÂµÄÈÕ×ÓÊıÁ¿
-/// ²ÎÊı	 :	bIsLeapYear	 [in] ÊÇ·ñÎªÈòÄê
-///			iMonth		 [in] ÔÂ·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–æ¯ä¸ªæœˆçš„æ—¥å­æ•°é‡
+/// å‚æ•°	 :	bIsLeapYear	 [in] æ˜¯å¦ä¸ºé—°å¹´
+///			iMonth		 [in] æœˆä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetMonthDayNum(int bIsLeapYear, int iMonth)
 {
@@ -47,9 +47,9 @@ int time_GetMonthDayNum(int bIsLeapYear, int iMonth)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÊÇ·ñÎªÈòÄê
-/// ²ÎÊı	 :	iYear	 [in] Äê·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æ˜¯å¦ä¸ºé—°å¹´
+/// å‚æ•°	 :	iYear	 [in] å¹´ä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_IsLeapYear(int iYear)
 {
@@ -59,9 +59,9 @@ int time_IsLeapYear(int iYear)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã´Ó1970Äê1ÔÂ1ÈÕµ½ xxÄê1ÔÂ1ÈÕµÄÌìÊı
-/// ²ÎÊı	 :	in_lYear	 [in] Äê·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¡ç®—ä»1970å¹´1æœˆ1æ—¥åˆ° xxå¹´1æœˆ1æ—¥çš„å¤©æ•°
+/// å‚æ•°	 :	in_lYear	 [in] å¹´ä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetUTCDayNum(int in_lYear)
 {
@@ -73,10 +73,10 @@ int time_GetUTCDayNum(int in_lYear)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	FILETIME×ªpTimet
-/// ²ÎÊı	 :	aFileTime		 [in] FILETIME
+/// åŠŸèƒ½	 :	FILETIMEè½¬pTimet
+/// å‚æ•°	 :	aFileTime		 [in] FILETIME
 ///			pTimet			 [out]pTimet
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 {
@@ -93,10 +93,10 @@ void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Time_T×ªAigSystemTime
-/// ²ÎÊı	 :	aTimet		 [in] Time_T
+/// åŠŸèƒ½	 :	Time_Tè½¬AigSystemTime
+/// å‚æ•°	 :	aTimet		 [in] Time_T
 ///			pAigTime	 [out]AigSystemTime
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
 {
@@ -111,17 +111,17 @@ int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
 	long long lDayCount		= 0;
 	long long lYearCount	= 0;
 
-	aTimet	+= 8 * 3600;					// Ê±¼äÏÈ¼Ó8Ğ¡Ê±×ª»»Îª±±¾©Ê±¼ä
+	aTimet	+= 8 * 3600;					// æ—¶é—´å…ˆåŠ 8å°æ—¶è½¬æ¢ä¸ºåŒ—äº¬æ—¶é—´
 
-	lTemp	= aTimet % 86400;				// ¶ÔÈÕ×Ó(24*3600)ÇóÓà
-	lHour	= lTemp / 3600;					// Ê±
+	lTemp	= aTimet % 86400;				// å¯¹æ—¥å­(24*3600)æ±‚ä½™
+	lHour	= lTemp / 3600;					// æ—¶
 	lTemp	= lTemp % 3600;
-	lMin	= lTemp / 60;					// ·Ö
-	lSec	= lTemp % 60;					// Ãë
+	lMin	= lTemp / 60;					// åˆ†
+	lSec	= lTemp % 60;					// ç§’
 
-	lDayCount	= aTimet / 86400;			// ´Ó1970.1.1µ½in_ulUTCµÄÌìÊı
-	lWeekDay	= (lDayCount + 4) % 7;		// ĞÇÆÚ¼¸
-	lYearCount	= lDayCount / 365;			// ´óÖÂµÄÄêÊı
+	lDayCount	= aTimet / 86400;			// ä»1970.1.1åˆ°in_ulUTCçš„å¤©æ•°
+	lWeekDay	= (lDayCount + 4) % 7;		// æ˜ŸæœŸå‡ 
+	lYearCount	= lDayCount / 365;			// å¤§è‡´çš„å¹´æ•°
 	lYear		= lYearCount + 1970;
 	while (1)
 	{
@@ -154,10 +154,10 @@ int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	FILETIME×ªAigSystemTime
-/// ²ÎÊı	 :	aFileTime		 [in] FILETIME
+/// åŠŸèƒ½	 :	FILETIMEè½¬AigSystemTime
+/// å‚æ•°	 :	aFileTime		 [in] FILETIME
 ///			pAigTime		 [out]AigSystemTime
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 void time_FileTime2AigSystemTime(void* aFileTime, AigSystemTime* pAigTime)
 {
@@ -172,12 +172,12 @@ static void time_ZeroFill(char* pTmp, int iNum)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	AigSystemTime×ª×Ö·û´®
-/// ²ÎÊı	 :	pAigTime		 [in] Ê±¼ä
-///			pString			 [out]Êä³ö×Ö·û´®
-///			iStringlen		 [in] Êä³ö×Ö·û´®³¤¶È
-///			eType			 [in] ÀàĞÍ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	AigSystemTimeè½¬å­—ç¬¦ä¸²
+/// å‚æ•°	 :	pAigTime		 [in] æ—¶é—´
+///			pString			 [out]è¾“å‡ºå­—ç¬¦ä¸²
+///			iStringlen		 [in] è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+///			eType			 [in] ç±»å‹
+/// è¿”å›å€¼:
 /// </summary>
 int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringlen, enumAigTime2StringType eType)
 {
@@ -226,11 +226,11 @@ int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringle
 	case eAT2SType_T3://2017-07-10 11:30:00
 		sprintf(sBuf, "%s-%s-%s %s:%s:%s", sYear, sMonth, sDay, sHour, sMinute, sSecond);
 		break;
-	case eAT2SType_T4://2017Äê07ÔÂ10ÈÕ 11:30:00
-		sprintf(sBuf, "%sÄê%sÔÂ%sÈÕ %s:%s:%s", sYear, sMonth, sDay, sHour, sMinute, sSecond);
+	case eAT2SType_T4://2017å¹´07æœˆ10æ—¥ 11:30:00
+		sprintf(sBuf, "%så¹´%sæœˆ%sæ—¥ %s:%s:%s", sYear, sMonth, sDay, sHour, sMinute, sSecond);
 		break;
-	case eAT2SType_T5://2017Äê07ÔÂ10ÈÕ 11µã30·Ö00Ãë
-		sprintf(sBuf, "%sÄê%sÔÂ%sÈÕ %sµã%s·Ö%sÃë", sYear, sMonth, sDay, sHour, sMinute, sSecond);
+	case eAT2SType_T5://2017å¹´07æœˆ10æ—¥ 11ç‚¹30åˆ†00ç§’
+		sprintf(sBuf, "%så¹´%sæœˆ%sæ—¥ %sç‚¹%såˆ†%sç§’", sYear, sMonth, sDay, sHour, sMinute, sSecond);
 		break;
 	}
 
@@ -252,9 +252,9 @@ int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringle
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :  ¿ªÊ¼¼ÆÊ±
-/// ²ÎÊı	 :	pHandle      [out] ¼ÆÊ±¾ä±ú 
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :  å¼€å§‹è®¡æ—¶
+/// å‚æ•°	 :	pHandle      [out] è®¡æ—¶å¥æŸ„ 
+/// è¿”å›å€¼:  
 /// </summary>
 int time_StartAsyn(AigTimingHandle* pHandle)
 {
@@ -274,9 +274,9 @@ int time_StartAsyn(AigTimingHandle* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½áÊø¼ÆÊ±
-/// ²ÎÊı	 :	pHandl		[in] ¼ÆÊ±¾ä±ú
-/// ·µ»ØÖµ:  Î¢Ãë
+/// åŠŸèƒ½	 :	ç»“æŸè®¡æ—¶
+/// å‚æ•°	 :	pHandl		[in] è®¡æ—¶å¥æŸ„
+/// è¿”å›å€¼:  å¾®ç§’
 /// </summary>
 long time_EndAsyn(AigTimingHandle* pHandle)
 {
@@ -303,9 +303,9 @@ long time_EndAsyn(AigTimingHandle* pHandle)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :  ¿ªÊ¼¼ÆÊ±
-/// ²ÎÊı	 :	
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :  å¼€å§‹è®¡æ—¶
+/// å‚æ•°	 :	
+/// è¿”å›å€¼:  
 /// </summary>
 void time_Start()
 {
@@ -313,9 +313,9 @@ void time_Start()
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½áÊø¼ÆÊ±
-/// ²ÎÊı	 :	
-/// ·µ»ØÖµ:  Î¢Ãë
+/// åŠŸèƒ½	 :	ç»“æŸè®¡æ—¶
+/// å‚æ•°	 :	
+/// è¿”å›å€¼:  å¾®ç§’
 /// </summary>
 long time_End()
 {

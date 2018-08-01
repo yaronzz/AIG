@@ -100,7 +100,7 @@ int log_Open(char* pLogFileName, void** pHandle, int bIsClear)
 	}
 
 	//¸³Öµ
-	AigLogHandle* pLogHandle = (AigLogHandle*)malloc(sizeof(AigLogHandle));
+	AigLogHandle* pLogHandle = (AigLogHandle*)AIG_FUNC_MALLOC(sizeof(AigLogHandle));
 	pLogHandle->pFD = FP;
 	pLogHandle->pMutex = pMutex;
 
@@ -118,7 +118,7 @@ void log_Close(void** pHandle)
 		AigLogHandle* pLogHandle = (AigLogHandle*)pHandle;
 		fclose(pLogHandle->pFD);
 		mutex_Close(pLogHandle->pMutex);
-		free(pLogHandle);
+		AIG_FUNC_FREE(pLogHandle);
 		*pHandle = NULL;
 	}
 }

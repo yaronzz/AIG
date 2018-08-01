@@ -277,7 +277,7 @@ int string_Remove(char *in_out_pStr, char* in_Src)
 	
 	string_ReplaceStr(in_out_pStr, in_Src, NULL, pBuf, iLen);
 	memcpy(in_out_pStr, pBuf, iLen);
-	free(pBuf);
+	AIG_FUNC_FREE(pBuf);
 	return eAEC_Success;
 }
 
@@ -675,8 +675,8 @@ void* string_Malloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 	if (iLen < iNewLen)
 	{
 		if (pRet)
-			free(pRet);
-		pRet = malloc(iNewLen);
+			AIG_FUNC_FREE(pRet);
+		pRet = AIG_FUNC_MALLOC(iNewLen);
 		iLen = iNewLen;
 	}
 
@@ -703,14 +703,14 @@ void* string_Realloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 	int iLen = *in_out_BufferLen;
 	if (iLen < iNewLen)
 	{
-		pRet = malloc(iNewLen);
+		pRet = AIG_FUNC_MALLOC(iNewLen);
 		iLen = iNewLen;
 
 		memset(pRet, 0, iNewLen);
 		if (pTmp)
 		{
 			memcpy(pRet, pTmp, *in_out_BufferLen);
-			free(pTmp);
+			AIG_FUNC_FREE(pTmp);
 		}
 	}
 
@@ -727,7 +727,7 @@ void string_Free(void** in_pStr)
 {
 	if (*in_pStr)
 	{
-		free(*in_pStr);
+		AIG_FUNC_FREE(*in_pStr);
 		*in_pStr = NULL;
 	}
 }

@@ -9,7 +9,6 @@ extern "C" {
 #include <stdlib.h>
 #include <string.h>
 
-
 #ifdef _WIN32
 #include <windows.h>
 #include <time.h>
@@ -29,7 +28,8 @@ extern "C" {
 #define AIG_MAXLEN_FILEPATH	1024	//目录名的最大长度
 #define AIG_MAXLEN_FILENAME 256		//文件名的最大长度
 
-typedef int KEYPTR;
+#define AIG_FUNC_MALLOC malloc		//申请内存
+#define AIG_FUNC_FREE	free		//释放内存
 typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB, int in_KeyLen);		//关键字比较回调函数（0相等,>0 A>B,<0 A<B）
 
 

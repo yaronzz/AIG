@@ -9,14 +9,14 @@ extern "C" {
 
 typedef struct _AigSystemTime
 {
-	unsigned short Year;			//Äê
-	unsigned short Month;			//ÔÂ
-	unsigned short Day;				//ÈÕ
-	unsigned short DayOfWeek;		//ÖÜ¼¸
-	unsigned short Hour;			//Ê±
-	unsigned short Minute;			//·Ö
-	unsigned short Second;			//Ãë
-	unsigned short Milliseconds;	//ºÁÃë
+	unsigned short Year;			//å¹´
+	unsigned short Month;			//æœˆ
+	unsigned short Day;				//æ—¥
+	unsigned short DayOfWeek;		//å‘¨å‡ 
+	unsigned short Hour;			//æ—¶
+	unsigned short Minute;			//åˆ†
+	unsigned short Second;			//ç§’
+	unsigned short Milliseconds;	//æ¯«ç§’
 }AigSystemTime;
 
 typedef enum _enumAigTime2StringType
@@ -24,49 +24,48 @@ typedef enum _enumAigTime2StringType
 	eAT2SType_T1,					//20170710 113000
 	eAT2SType_T2,					//2017-07-10 11-30-00
 	eAT2SType_T3,					//2017-07-10 11:30:00
-	eAT2SType_T4,					//2017Äê07ÔÂ10ÈÕ 11:30:00
-	eAT2SType_T5,					///2017Äê07ÔÂ10ÈÕ 11µã30·Ö00Ãë
+	eAT2SType_T4,					//2017å¹´07æœˆ10æ—¥ 11:30:00
+	eAT2SType_T5,					///2017å¹´07æœˆ10æ—¥ 11ç‚¹30åˆ†00ç§’
 }enumAigTime2StringType;
 
 typedef struct _AigTimingHandle
 {
-	char bStart;					//¿ªÊ¼¼ÆÊ±
+	char bStart;					//å¼€å§‹è®¡æ—¶
 
 #ifdef _WIN32
-	LARGE_INTEGER StartTime;		//¿ªÊ¼Ê±¼äµã
+	LARGE_INTEGER StartTime;		//å¼€å§‹æ—¶é—´ç‚¹
 #elif defined(linux) || defined(__LUNX)
-	struct timeval StartTime;		//¿ªÊ¼Ê±¼äµã
+	struct timeval StartTime;		//å¼€å§‹æ—¶é—´ç‚¹
 #endif
 
 }AigTimingHandle;
 
-
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µ±Ç°Ê±¼ä
-/// ²ÎÊı	 :	pTime		[out] µ±Ç°Ê±¼ä
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–å½“å‰æ—¶é—´
+/// å‚æ•°	 :	pTime		[out] å½“å‰æ—¶é—´
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetCurrentTime(AigSystemTime* pTime);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Ã¿¸öÔÂµÄÈÕ×ÓÊıÁ¿
-/// ²ÎÊı	 :	bIsLeapYear	 [in] ÊÇ·ñÎªÈòÄê
-///			iMonth		 [in] ÔÂ·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–æ¯ä¸ªæœˆçš„æ—¥å­æ•°é‡
+/// å‚æ•°	 :	bIsLeapYear	 [in] æ˜¯å¦ä¸ºé—°å¹´
+///			iMonth		 [in] æœˆä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetMonthDayNum(int bIsLeapYear, int iMonth);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÊÇ·ñÎªÈòÄê
-/// ²ÎÊı	 :	iYear		[in] Äê·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æ˜¯å¦ä¸ºé—°å¹´
+/// å‚æ•°	 :	iYear		[in] å¹´ä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_IsLeapYear(int iYear);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã´Ó1970Äê1ÔÂ1ÈÕµ½ xxÄê1ÔÂ1ÈÕµÄÌìÊı
-/// ²ÎÊı	 :	in_lYear	 [in] Äê·İ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¡ç®—ä»1970å¹´1æœˆ1æ—¥åˆ° xxå¹´1æœˆ1æ—¥çš„å¤©æ•°
+/// å‚æ•°	 :	in_lYear	 [in] å¹´ä»½
+/// è¿”å›å€¼:
 /// </summary>
 int time_GetUTCDayNum(int in_lYear);
 
@@ -74,66 +73,66 @@ int time_GetUTCDayNum(int in_lYear);
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	FILETIME×ªpTimet
-/// ²ÎÊı	 :	aFileTime		 [in] FILETIME
+/// åŠŸèƒ½	 :	FILETIMEè½¬pTimet
+/// å‚æ•°	 :	aFileTime		 [in] FILETIME
 ///			pTimet			 [out]pTimet
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 void  time_FileTime2TimeT(void* aFileTime, time_t* pTimet);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Time_T×ªAigSystemTime
-/// ²ÎÊı	 :	ulTimestamp		[in] Time_T
+/// åŠŸèƒ½	 :	Time_Tè½¬AigSystemTime
+/// å‚æ•°	 :	ulTimestamp		[in] Time_T
 ///			out_pTime		[out]AigSystemTime
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	FILETIME×ªAigSystemTime
-/// ²ÎÊı	 :	aFileTime		 [in] FILETIME
+/// åŠŸèƒ½	 :	FILETIMEè½¬AigSystemTime
+/// å‚æ•°	 :	aFileTime		 [in] FILETIME
 ///			pAigTime		 [out]AigSystemTime
-/// ·µ»ØÖµ:
+/// è¿”å›å€¼:
 /// </summary>
 void time_FileTime2AigSystemTime(void* aFileTime, AigSystemTime* pAigTime);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	AigSystemTime×ª×Ö·û´®
-/// ²ÎÊı	 :	pAigTime		 [in] Ê±¼ä
-///			pString			 [out]Êä³ö×Ö·û´®
-///			iStringlen		 [in] Êä³ö×Ö·û´®³¤¶È
-///			eType			 [in] ÀàĞÍ
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	AigSystemTimeè½¬å­—ç¬¦ä¸²
+/// å‚æ•°	 :	pAigTime		 [in] æ—¶é—´
+///			pString			 [out]è¾“å‡ºå­—ç¬¦ä¸²
+///			iStringlen		 [in] è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+///			eType			 [in] ç±»å‹
+/// è¿”å›å€¼:
 /// </summary>
 int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringlen, enumAigTime2StringType eType);
 
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :  ¿ªÊ¼¼ÆÊ±
-/// ²ÎÊı	 :	pHandle      [out] ¼ÆÊ±¾ä±ú 
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :  å¼€å§‹è®¡æ—¶
+/// å‚æ•°	 :	pHandle      [out] è®¡æ—¶å¥æŸ„ 
+/// è¿”å›å€¼:  
 /// </summary>
 int time_StartAsyn(AigTimingHandle* pHandle);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½áÊø¼ÆÊ±
-/// ²ÎÊı	 :	pHandl		[in] ¼ÆÊ±¾ä±ú
-/// ·µ»ØÖµ:  Î¢Ãë
+/// åŠŸèƒ½	 :	ç»“æŸè®¡æ—¶
+/// å‚æ•°	 :	pHandl		[in] è®¡æ—¶å¥æŸ„
+/// è¿”å›å€¼:  å¾®ç§’
 /// </summary>
 long time_EndAsyn(AigTimingHandle* pHandle);
 
 /// <summary>
-/// ¹¦ÄÜ	 :  ¿ªÊ¼¼ÆÊ±
-/// ²ÎÊı	 :	
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :  å¼€å§‹è®¡æ—¶
+/// å‚æ•°	 :	
+/// è¿”å›å€¼:  
 /// </summary>
 void time_Start();
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½áÊø¼ÆÊ±
-/// ²ÎÊı	 :	
-/// ·µ»ØÖµ:  Î¢Ãë
+/// åŠŸèƒ½	 :	ç»“æŸè®¡æ—¶
+/// å‚æ•°	 :	
+/// è¿”å›å€¼:  å¾®ç§’
 /// </summary>
 long time_End();
 

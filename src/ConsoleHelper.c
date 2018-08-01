@@ -66,7 +66,7 @@ int console_ProgressOpen(void** pHandle, char* pDesc, int iMaxNum, int iOnlyText
 	if (pHandle == NULL || iMaxNum <= 0)
 		return eAEC_Input;
 
-	AigConsoleHanlde* pConsoleHandle = (AigConsoleHanlde*)malloc(sizeof(AigConsoleHanlde));
+	AigConsoleHanlde* pConsoleHandle = (AigConsoleHanlde*)AIG_FUNC_MALLOC(sizeof(AigConsoleHanlde));
 	console_GetPositionXY(&pConsoleHandle->iX, &pConsoleHandle->iY);
 	pConsoleHandle->iOnlyText = iOnlyText;
 	pConsoleHandle->iMaxNum = iMaxNum;
@@ -88,7 +88,7 @@ int console_ProgressOpen(void** pHandle, char* pDesc, int iMaxNum, int iOnlyText
 void console_ProgressClose(void** pHandle)
 {
 	if (*pHandle)
-		free(*pHandle);
+		AIG_FUNC_FREE(*pHandle);
 }
 
 /// <summary>

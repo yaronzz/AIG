@@ -1,13 +1,13 @@
 #include "SearchHelper.h"
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ë³Ğò²éÕÒ
-/// ²ÎÊı	 :	pArrary			[in]	 ÔªËØÊı×é
-///			arrary_num		[in]	 ÔªËØ¸öÊı
-///			element_size	[in]	 ÔªËØ´óĞ¡
-///			pFindEle		[in]	 ²éÕÒµÄÔªËØ
-///			in_pCmpFunc		[in]	 ÔªËØ±È½Ï»Øµ÷º¯Êı
-/// ·µ»ØÖµ:  >= 0³É¹¦
+/// åŠŸèƒ½	 :	é¡ºåºæŸ¥æ‰¾
+/// å‚æ•°	 :	pArrary			[in]	 å…ƒç´ æ•°ç»„
+///			arrary_num		[in]	 å…ƒç´ ä¸ªæ•°
+///			element_size	[in]	 å…ƒç´ å¤§å°
+///			pFindEle		[in]	 æŸ¥æ‰¾çš„å…ƒç´ 
+///			in_pCmpFunc		[in]	 å…ƒç´ æ¯”è¾ƒå›è°ƒå‡½æ•°
+/// è¿”å›å€¼:  >= 0æˆåŠŸ
 /// </summary>
 int search_Sequence(void* pArrary, int Arrary_num, int Element_size, void* pFindEle, pfn_AIG_CMP_CALLBACK in_pCmpFunc)
 {
@@ -25,13 +25,13 @@ int search_Sequence(void* pArrary, int Arrary_num, int Element_size, void* pFind
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¶ş·Ö²éÕÒ
-/// ²ÎÊı	 :	pArrary			[in]	 Ë³ĞòÔªËØÊı×é
-///			arrary_num		[in]	 ÔªËØ¸öÊı
-///			element_size	[in]	 ÔªËØ´óĞ¡
-///			pFindEle		[in]	 ²éÕÒµÄÔªËØ
-///			in_pCmpFunc		[in]	 ÔªËØ±È½Ï»Øµ÷º¯Êı
-/// ·µ»ØÖµ:  >= 0³É¹¦
+/// åŠŸèƒ½	 :	äºŒåˆ†æŸ¥æ‰¾
+/// å‚æ•°	 :	pArrary			[in]	 é¡ºåºå…ƒç´ æ•°ç»„
+///			arrary_num		[in]	 å…ƒç´ ä¸ªæ•°
+///			element_size	[in]	 å…ƒç´ å¤§å°
+///			pFindEle		[in]	 æŸ¥æ‰¾çš„å…ƒç´ 
+///			in_pCmpFunc		[in]	 å…ƒç´ æ¯”è¾ƒå›è°ƒå‡½æ•°
+/// è¿”å›å€¼:  >= 0æˆåŠŸ
 /// </summary>
 int search_Binary(void* pArrary, int Arrary_num, int Element_size, void* pFindEle, pfn_AIG_CMP_CALLBACK in_pCmpFunc)
 {
