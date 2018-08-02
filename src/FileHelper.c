@@ -3,16 +3,16 @@
 #include "FileHelper.h"
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ĞÂ½¨Ä¿Â¼
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æ–°å»ºç›®å½•
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_Mkdirs(char* pPath)
 {
 	if (pPath == NULL)
 		return eAEC_Input;
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	int iFlag = access(pPath, 0);
 	int iLen = strlen(pPath);
 
@@ -21,7 +21,7 @@ int file_Mkdirs(char* pPath)
 	if (iLen <= 0 || iFlag == 0)
 		return eAEC_Success;
 
-	//ÏÈµİ¹é´´½¨Ç°ÃæµÄÄ¿Â¼
+	//å…ˆé€’å½’åˆ›å»ºå‰é¢çš„ç›®å½•
 	char sString[AIG_MAXLEN_FILEPATH];
 	memcpy(sString, pPath, iLen + 1);
 	string_ReplaceChr(sString, '/', '\\');
@@ -34,16 +34,22 @@ int file_Mkdirs(char* pPath)
 			return eAEC_Mkdir;
 	}
 
+#ifdef _WIN32
 	if (mkdir(pPath) != 0)
 		return eAEC_Mkdir;
+#endif
+#if defined(__linux) || defined(linux) || defined(__LYNX)
+	if (mkdir(pPath,777) != 0)
+		return eAEC_Mkdir;
+#endif
 
 	return eAEC_Success;
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÎÄ¼şµÄ³¤¶È
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–æ–‡ä»¶çš„é•¿åº¦
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 long file_GetFileLen(char* pPath)
 {
@@ -66,9 +72,9 @@ long file_GetFileLen(char* pPath)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÎÄ¼şÈ¨ÏŞ
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¾ç½®æ–‡ä»¶æƒé™
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_SetFileRight(char *pPath, enumAigFileRight eType)
 {
@@ -91,9 +97,9 @@ int file_SetFileRight(char *pPath, enumAigFileRight eType)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´ÎÄ¼şÊÇ·ñ´æÔÚ
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æŸ¥çœ‹æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_IsFileExist(char* pPath)
 {
@@ -107,12 +113,12 @@ int file_IsFileExist(char* pPath)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡±¸·İÂ·¾¶ÎÄ¼şÃû
-/// ²ÎÊı	 :	pFilePath	 [in] Â·¾¶ÎÄ¼şÃû
-///			pBakString	 [in] ±¸·İ×Ö·û´®
-///			pOutPath	 [out]Êä³öÂ·¾¶
-///			iOutPathLen	 [in] Êä³öÂ·¾¶³¤¶È
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–å¤‡ä»½è·¯å¾„æ–‡ä»¶å
+/// å‚æ•°	 :	pFilePath	 [in] è·¯å¾„æ–‡ä»¶å
+///			pBakString	 [in] å¤‡ä»½å­—ç¬¦ä¸²
+///			pOutPath	 [out]è¾“å‡ºè·¯å¾„
+///			iOutPathLen	 [in] è¾“å‡ºè·¯å¾„é•¿åº¦
+/// è¿”å›å€¼:
 /// </summary>
 int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int iOutPathLen)
 {

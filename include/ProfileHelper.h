@@ -9,26 +9,26 @@ extern "C" {
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pDefault			Ä¬ÈÏÖµ
-///			pReturnString		Êä³ö×Ö·û´®
-///			iReturnStringLen	Êä³ö×Ö·û´®³¤¶È
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pDefault			é»˜è®¤å€¼
+///			pReturnString		è¾“å‡ºå­—ç¬¦ä¸²
+///			iReturnStringLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int   profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, int iValueLen, char* pProfilePath);
 int   profile_GetInt(char* pGroup, char* pKey, int pDefault, char* pProfilePath);
 float profile_GetFloat(char* pGroup, char* pKey, float pDefault, char* pProfilePath);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pValue				Öµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¾ç½®é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pValue				å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath);
 int profile_SetInt(char* pGroup, char* pKey, int iValue, char* pProfilePath);

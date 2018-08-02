@@ -1,4 +1,4 @@
-//BÊı-¶à²æÆ½ºâÊ÷
+//Bæ•°-å¤šå‰å¹³è¡¡æ ‘
 #if !defined __AIG_BTREE_H__
 #define __AIG_BTREE_H__
 

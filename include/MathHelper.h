@@ -10,23 +10,23 @@ extern "C" {
 #define PI									 3.14159265359
 #define FLOAT_EQUAL_LIMIT					 0.0000001f	
 
-//Çó¾ø¶ÔÖµ\×î´óÖµ\×îĞ¡Öµ
+//æ±‚ç»å¯¹å€¼\æœ€å¤§å€¼\æœ€å°å€¼
 #define AIG_MATH_ABS(value)			         ((value) > 0 ? (value) : -(value))
 #define AIG_MATH_MAX(A, B)					 (A > B ? A : B)
 #define AIG_MATH_MIN(A, B)					 (A > B ? B : A)
 
-//Çó¸¡µãÊı\×ø±êµãÊÇ·ñÏàÍ¬
+//æ±‚æµ®ç‚¹æ•°\åæ ‡ç‚¹æ˜¯å¦ç›¸åŒ
 #define AIG_MATH_FLOAT_EQUAL(A, B)			 (AIG_MATH_ABS(A - B) < FLOAT_EQUAL_LIMIT)
 #define AIG_MATH_POINT_EQUAL(AX, AY, BX, BY) (AIG_MATH_FLOAT_EQUAL(AX, BX) && AIG_MATH_FLOAT_EQUAL(AY, BY))
 
-//2Î¬×ø±ê
+//2ç»´åæ ‡
 typedef struct _AigCoords
 {
 	double x;
 	double y;
 }AigCoords;
 
-//±ß¿ò
+//è¾¹æ¡†
 typedef struct _AigRect
 {
 	double left;
@@ -35,7 +35,7 @@ typedef struct _AigRect
 	double bottom;
 }AigRect;
 
-//ÏßĞÔ·½³Ì
+//çº¿æ€§æ–¹ç¨‹
 typedef struct _AigEquation
 {
 	double A;
@@ -43,76 +43,76 @@ typedef struct _AigEquation
 	double C;
 }AigEquation;
 
-//Èı½ÇĞÎ
+//ä¸‰è§’å½¢
 typedef struct _AigTriangle
 {
-	AigCoords Point[3];			//Èı½ÇĞÎµÄÈı¸öµã
-	AigCoords Barycenter;		//Èı½ÇĞÎµÄÖØĞÄ
-	AigCoords VerticalPoint[3];	//Èı¸öµã¶ÔÓ¦µÄ¸ßµÄ´¹×ã
-	double    HeightLen[3];		//Èı¸öµã¶ÔÓ¦µÄ¸ßµÄ³¤¶È
-	double    Area;				//Ãæ»ı
+	AigCoords Point[3];			//ä¸‰è§’å½¢çš„ä¸‰ä¸ªç‚¹
+	AigCoords Barycenter;		//ä¸‰è§’å½¢çš„é‡å¿ƒ
+	AigCoords VerticalPoint[3];	//ä¸‰ä¸ªç‚¹å¯¹åº”çš„é«˜çš„å‚è¶³
+	double    HeightLen[3];		//ä¸‰ä¸ªç‚¹å¯¹åº”çš„é«˜çš„é•¿åº¦
+	double    Area;				//é¢ç§¯
 }AigTriangle;
 
 typedef enum _enumAigLenghtUnit
 {
-	eALUnit_km,		//Ç§Ã×
-	eALUnit_m,		//Ã×
-	eALUnit_dm,		//·ÖÃ×
-	eALUnit_cm,		//ÀåÃ×
-	eALUnit_mm,		//ºÁÃ×
-	eALUnit_um,		//Î¢Ã×
-	eALUnit_nm,		//ÄÎÃ×
+	eALUnit_km,		//åƒç±³
+	eALUnit_m,		//ç±³
+	eALUnit_dm,		//åˆ†ç±³
+	eALUnit_cm,		//å˜ç±³
+	eALUnit_mm,		//æ¯«ç±³
+	eALUnit_um,		//å¾®ç±³
+	eALUnit_nm,		//å¥ˆç±³
 
-	eALUnit_mi,		//Ó¢Àï
-	eALUnit_ft,		//Ó¢³ß
-	eALUnit_in,		//Ó¢´ç
+	eALUnit_mi,		//è‹±é‡Œ
+	eALUnit_ft,		//è‹±å°º
+	eALUnit_in,		//è‹±å¯¸
 
-	eALUnit_nmi,	//º£Àï
-	eALUnit_yd,		//Âë
+	eALUnit_nmi,	//æµ·é‡Œ
+	eALUnit_yd,		//ç 
 
-	eALUnit_L,		//Àï
-	eALUnit_Z,		//ÕÉ
-	eALUnit_CHI,	//³ß
-	eALUnit_CUN,	//´ç
-	eALUnit_FEN,	//·Ö
-	eALUnit_LI,		//Àå
-	eALUnit_HAO,	//ºÁ
+	eALUnit_L,		//é‡Œ
+	eALUnit_Z,		//ä¸ˆ
+	eALUnit_CHI,	//å°º
+	eALUnit_CUN,	//å¯¸
+	eALUnit_FEN,	//åˆ†
+	eALUnit_LI,		//å˜
+	eALUnit_HAO,	//æ¯«
 
 }enumAigLenghtUnit;
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´ÊÇ·ñÎª´ó¶ËÄ£Ê½
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æŸ¥çœ‹æ˜¯å¦ä¸ºå¤§ç«¯æ¨¡å¼
+/// è¿”å›å€¼: 
 /// </summary>
 int math_IsBigEndian();
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ËÄ×Ö½Ú¶ÔÆëµÄ³¤¶È
-/// ²ÎÊı	 :	iSize			[in] Ô­Ê¼³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–å››å­—èŠ‚å¯¹é½çš„é•¿åº¦
+/// å‚æ•°	 :	iSize			[in] åŸå§‹é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int math_Get4ByteAlignSize(int iSize);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½«1Ã××ª»»ÎªÆäËûµ¥Î»
-/// ²ÎÊı	 :	eUnit			[in] µ¥Î»
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	å°†1ç±³è½¬æ¢ä¸ºå…¶ä»–å•ä½
+/// å‚æ•°	 :	eUnit			[in] å•ä½
+/// è¿”å›å€¼: 
 /// </summary>
 double math_MetersToUnits(enumAigLenghtUnit eUnit);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¿ª¸ùºÅ
-/// ²ÎÊı	 :	dValue		[in] Öµ
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å¼€æ ¹å·
+/// å‚æ•°	 :	dValue		[in] å€¼
+/// è¿”å›å€¼:  
 /// </summary>
 double math_Sqrt(double dValue);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´ÊÇ·ñÎªÖ±Ïß
-/// ²ÎÊı	 :	point0		[in] µÚÒ»¸öµãµÄ×ø±ê
-///			point1		[in] µÚ¶ş¸öµãµÄ×ø±ê
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	æŸ¥çœ‹æ˜¯å¦ä¸ºç›´çº¿
+/// å‚æ•°	 :	point0		[in] ç¬¬ä¸€ä¸ªç‚¹çš„åæ ‡
+///			point1		[in] ç¬¬äºŒä¸ªç‚¹çš„åæ ‡
+/// è¿”å›å€¼:  
 /// </summary>
 int math_IsLine(AigCoords point0, AigCoords point1);
 
@@ -120,16 +120,16 @@ int math_IsLine(AigCoords point0, AigCoords point1);
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ê®Áù½øÖÆ×ªÊ®½øÖÆ
-/// ²ÎÊı	 :	pChar		[in] Öµ
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	åå…­è¿›åˆ¶è½¬åè¿›åˆ¶
+/// å‚æ•°	 :	pChar		[in] å€¼
+/// è¿”å›å€¼:  
 /// </summary>
 int math_HexToDec(char pChar);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ê®½øÖÆ×ªÊ®Áù½øÖÆ
-/// ²ÎÊı	 :	pInt		[in] Öµ
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	åè¿›åˆ¶è½¬åå…­è¿›åˆ¶
+/// å‚æ•°	 :	pInt		[in] å€¼
+/// è¿”å›å€¼:  
 /// </summary>
 char math_DecToHex(short int pInt);
 
@@ -138,11 +138,11 @@ char math_DecToHex(short int pInt);
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Ö±ÏßµÄÒ»°ã·½³Ì
-/// ²ÎÊı	 :	point0		[in] µÚÒ»¸öµãµÄ×ø±ê
-///			point1		[in] µÚ¶ş¸öµãµÄ×ø±ê
-///			pEquation	[out]Ö±Ïß·½³Ì
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–ç›´çº¿çš„ä¸€èˆ¬æ–¹ç¨‹
+/// å‚æ•°	 :	point0		[in] ç¬¬ä¸€ä¸ªç‚¹çš„åæ ‡
+///			point1		[in] ç¬¬äºŒä¸ªç‚¹çš„åæ ‡
+///			pEquation	[out]ç›´çº¿æ–¹ç¨‹
+/// è¿”å›å€¼:  
 /// </summary>
 int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEquation);
 
@@ -151,19 +151,19 @@ int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEqu
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Á½µãÖ®¼äµÄ¾àÀë
-/// ²ÎÊı	 :	point0		[in] µÚÒ»¸öµãµÄ×ø±ê
-///			point1		[in] µÚ¶ş¸öµãµÄ×ø±ê
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
+/// å‚æ•°	 :	point0		[in] ç¬¬ä¸€ä¸ªç‚¹çš„åæ ‡
+///			point1		[in] ç¬¬äºŒä¸ªç‚¹çš„åæ ‡
+/// è¿”å›å€¼:  
 /// </summary>
 double math_GetTwoPointsDistance(AigCoords point0, AigCoords point1);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µãµ½ÏßµÄ¾àÀë
-/// ²ÎÊı	 :	point			[in] µãµÄ×ø±ê
-///			line_point0		[in] µÚÒ»¸öÏßµÄ×ø±ê
-///			line_point1		[in] µÚ¶ş¸öÏßµÄ×ø±ê
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–ç‚¹åˆ°çº¿çš„è·ç¦»
+/// å‚æ•°	 :	point			[in] ç‚¹çš„åæ ‡
+///			line_point0		[in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			line_point1		[in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+/// è¿”å›å€¼:  
 /// </summary>
 double math_GetPointToLineDistance(AigCoords point, AigCoords line_point0, AigCoords line_point1);
 
@@ -171,40 +171,40 @@ double math_GetPointToLineDistance(AigCoords point, AigCoords line_point0, AigCo
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÏßÓëXÖáµÄ½Ç¶È
-/// ²ÎÊı	 :	start_point		[in] µÚÒ»¸öÏßµÄ×ø±ê
-///			end_point		[in] µÚ¶ş¸öÏßµÄ×ø±ê
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–çº¿ä¸Xè½´çš„è§’åº¦
+/// å‚æ•°	 :	start_point		[in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			end_point		[in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+/// è¿”å›å€¼:  
 /// </summary>
 double math_GetLineToXAxisAngle(AigCoords start_point, AigCoords end_point);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶ÏµãÔÚÏßµÄÄÄÒ»²à
-/// ²ÎÊı	 :	point			[in] µãµÄ×ø±ê
-///			start_point		[in] µÚÒ»¸öÏßµÄ×ø±ê
-///			end_point		[in] µÚ¶ş¸öÏßµÄ×ø±ê
-/// ·µ»ØÖµ:  0ÏÔÊ¾ 1×ó²à 2ÓÒ²à -1´íÎó
+/// åŠŸèƒ½	 :	åˆ¤æ–­ç‚¹åœ¨çº¿çš„å“ªä¸€ä¾§
+/// å‚æ•°	 :	point			[in] ç‚¹çš„åæ ‡
+///			start_point		[in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			end_point		[in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+/// è¿”å›å€¼:  0æ˜¾ç¤º 1å·¦ä¾§ 2å³ä¾§ -1é”™è¯¯
 /// </summary> 
 int math_GetPointSideToLine(AigCoords point, AigCoords start_point, AigCoords end_point);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Çóµãµ½Ö±ÏßµÄ´¹×ãµã
-/// ²ÎÊı	 :	point			[in] µãµÄ×ø±ê
-///			start_point		[in] µÚÒ»¸öÏßµÄ×ø±ê
-///			end_point		[in] µÚ¶ş¸öÏßµÄ×ø±ê
-///			out_point		[out]´¹×ã
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	æ±‚ç‚¹åˆ°ç›´çº¿çš„å‚è¶³ç‚¹
+/// å‚æ•°	 :	point			[in] ç‚¹çš„åæ ‡
+///			start_point		[in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			end_point		[in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+///			out_point		[out]å‚è¶³
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_point, AigCoords* out_point);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Çóµãµ½Ö±ÏßµÄ´¹×ãµã
-/// ²ÎÊı	 :	line_point0			[in] µÚÒ»¸öÏßµÄ×ø±ê
-///			line_point1		    [in] µÚÒ»¸öÏßµÄ×ø±ê
-///			line_point2		    [in] µÚ¶ş¸öÏßµÄ×ø±ê
-///			line_point3		    [in] µÚ¶ş¸öÏßµÄ×ø±ê
-///			point				[out]½»µã×ø±ê
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	æ±‚ç‚¹åˆ°ç›´çº¿çš„å‚è¶³ç‚¹
+/// å‚æ•°	 :	line_point0			[in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			line_point1		    [in] ç¬¬ä¸€ä¸ªçº¿çš„åæ ‡
+///			line_point2		    [in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+///			line_point3		    [in] ç¬¬äºŒä¸ªçº¿çš„åæ ‡
+///			point				[out]äº¤ç‚¹åæ ‡
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_GetTwoLineCrossPoint(AigCoords line_point0, AigCoords line_point1, AigCoords line_point2, AigCoords line_point3, AigCoords* point);
 
@@ -212,29 +212,29 @@ int math_GetTwoLineCrossPoint(AigCoords line_point0, AigCoords line_point1, AigC
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶ÏµãÊÇ·ñÔÚ¾ØĞÎ¿òÄÚ
-/// ²ÎÊı	 :	point			[in] µãµÄ×ø±ê
-///			rect			[in] ¾ØĞÎ¿ò
-///			isIncBoundary	[in] ÊÇ·ñ°üÀ¨±ß½ç(1ÊÇ-µãÂäÔÚ¿ò±ß½çÒ²ËãÔÚÆäÄÚ,0·ñ)
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨çŸ©å½¢æ¡†å†…
+/// å‚æ•°	 :	point			[in] ç‚¹çš„åæ ‡
+///			rect			[in] çŸ©å½¢æ¡†
+///			isIncBoundary	[in] æ˜¯å¦åŒ…æ‹¬è¾¹ç•Œ(1æ˜¯-ç‚¹è½åœ¨æ¡†è¾¹ç•Œä¹Ÿç®—åœ¨å…¶å†…,0å¦)
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_PointInRect(AigCoords point, AigRect rect, int isIncBoundary);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶ÏÏßÓë¾ØĞÎ¿òÊÇ·ñÏà½»
-/// ²ÎÊı	 :	point0			[in] ÏßµÄ×ø±ê
-///			point1			[in] ÏßµÄ×ø±ê
-///			rect			[in] ¾ØĞÎ¿ò
-///			isLineSegment	[in] ÊÇ·ñÎªÏß¶Î
-/// ·µ»ØÖµ:  0²»Ïà½» 1Ïà½» -1´íÎó
+/// åŠŸèƒ½	 :	åˆ¤æ–­çº¿ä¸çŸ©å½¢æ¡†æ˜¯å¦ç›¸äº¤
+/// å‚æ•°	 :	point0			[in] çº¿çš„åæ ‡
+///			point1			[in] çº¿çš„åæ ‡
+///			rect			[in] çŸ©å½¢æ¡†
+///			isLineSegment	[in] æ˜¯å¦ä¸ºçº¿æ®µ
+/// è¿”å›å€¼:  0ä¸ç›¸äº¤ 1ç›¸äº¤ -1é”™è¯¯
 /// </summary> 
 int math_LineRectIntersect(AigCoords point0, AigCoords point1, AigRect in_Rect, int isLineSegment);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶Ï¾ØĞÎ¿òÊÇ·ñÏà½»(°üº¬µÄÇé¿öÒ²µ±×÷Ïà½»)
-/// ²ÎÊı	 :	rect0			[in] ¾ØĞÎ¿ò
-///			rect1			[in] ¾ØĞÎ¿ò
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	åˆ¤æ–­çŸ©å½¢æ¡†æ˜¯å¦ç›¸äº¤(åŒ…å«çš„æƒ…å†µä¹Ÿå½“ä½œç›¸äº¤)
+/// å‚æ•°	 :	rect0			[in] çŸ©å½¢æ¡†
+///			rect1			[in] çŸ©å½¢æ¡†
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_IsRectIntersect(AigRect* in_Rect0, AigRect* in_Rect1);
 
@@ -243,23 +243,23 @@ int math_IsRectIntersect(AigRect* in_Rect0, AigRect* in_Rect1);
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´ÊÇ·ñÎªÈı½ÇĞÎ
-/// ²ÎÊı	 :	pTriangle			[in¡ªout] Èı½ÇĞÎ½á¹¹
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	æŸ¥çœ‹æ˜¯å¦ä¸ºä¸‰è§’å½¢
+/// å‚æ•°	 :	pTriangle			[inâ€”out] ä¸‰è§’å½¢ç»“æ„
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_IsTriangle(AigTriangle* pTriangle);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´Èı½ÇĞÎ¸ßºÍ´¹×ã
-/// ²ÎÊı	 :	pTriangle			[in¡ªout] Èı½ÇĞÎ½á¹¹
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	æŸ¥çœ‹ä¸‰è§’å½¢é«˜å’Œå‚è¶³
+/// å‚æ•°	 :	pTriangle			[inâ€”out] ä¸‰è§’å½¢ç»“æ„
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_GetTriangleHeightAndVerticalPoint(AigTriangle* pTriangle);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Èı½ÇĞÎµÄÖØĞÄ
-/// ²ÎÊı	 :	pTriangle			[in¡ªout] Èı½ÇĞÎ½á¹¹
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–ä¸‰è§’å½¢çš„é‡å¿ƒ
+/// å‚æ•°	 :	pTriangle			[inâ€”out] ä¸‰è§’å½¢ç»“æ„
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_GetTriangleBarycenter(AigTriangle* pTriangle);
 
@@ -269,26 +269,26 @@ int math_GetTriangleBarycenter(AigTriangle* pTriangle);
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡¶à±ßĞÎµÄÃæ»ı²æ³Ë
-/// ²ÎÊı	 :	point				[in] ¶à±ßĞÎµÄµã
-///			point_num			[in] µãµÄÊıÁ¿
-/// ·µ»ØÖµ:  Ë³Ê±ÕëÎª¸º£¬ÄæÊ±ÕëÎªÕı
+/// åŠŸèƒ½	 :	è·å–å¤šè¾¹å½¢çš„é¢ç§¯å‰ä¹˜
+/// å‚æ•°	 :	point				[in] å¤šè¾¹å½¢çš„ç‚¹
+///			point_num			[in] ç‚¹çš„æ•°é‡
+/// è¿”å›å€¼:  é¡ºæ—¶é’ˆä¸ºè´Ÿï¼Œé€†æ—¶é’ˆä¸ºæ­£
 /// </summary> 
 int math_VectorForkMultiplyOfPloygonArea(AigCoords* point, int point_num);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡¶à±ßĞÎµÄÃæ»ı
-/// ²ÎÊı	 :	point				[in] ¶à±ßĞÎµÄµã
-///			point_num			[in] µãµÄÊıÁ¿
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è·å–å¤šè¾¹å½¢çš„é¢ç§¯
+/// å‚æ•°	 :	point				[in] å¤šè¾¹å½¢çš„ç‚¹
+///			point_num			[in] ç‚¹çš„æ•°é‡
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_GetPolygonArea(AigCoords* point, int point_num);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¶à±ßĞÎµÄµãÊÇ·ñÎªË³Ê±Õë
-/// ²ÎÊı	 :	point				[in] ¶à±ßĞÎµÄµã
-///			point_num			[in] µãµÄÊıÁ¿
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å¤šè¾¹å½¢çš„ç‚¹æ˜¯å¦ä¸ºé¡ºæ—¶é’ˆ
+/// å‚æ•°	 :	point				[in] å¤šè¾¹å½¢çš„ç‚¹
+///			point_num			[in] ç‚¹çš„æ•°é‡
+/// è¿”å›å€¼:  
 /// </summary> 
 int math_IsClockwise(AigCoords* point, int point_num);
 

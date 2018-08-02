@@ -2,17 +2,17 @@
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	È¥µô×Ö·ûĞòÁĞ×ó±ßµÄ×Ö·û
-/// ²ÎÊı	 :	in_out_pStr		×Ö·û´®ÊäÈëÓëÊä³ö
-///			remove_Chr		ÏàÓ¦×Ö·û
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	å»æ‰å­—ç¬¦åºåˆ—å·¦è¾¹çš„å­—ç¬¦
+/// å‚æ•°	 :	in_out_pStr		å­—ç¬¦ä¸²è¾“å…¥ä¸è¾“å‡º
+///			remove_Chr		ç›¸åº”å­—ç¬¦
+/// è¿”å›å€¼:
 /// </summary>
 int string_LeftTrim(char* in_out_pStr, char* remove_Chr)
 {
 	if (in_out_pStr == NULL || remove_Chr == NULL)
 		return eAEC_Input;
 
-	//»ñÈ¡´ıÉ¾³ıµÄ×Ö·û´®³¤¶È
+	//è·å–å¾…åˆ é™¤çš„å­—ç¬¦ä¸²é•¿åº¦
 	int iIndex = 0;
 	int iLen = strlen(in_out_pStr);
 	for (iIndex = 0; iIndex < iLen; iIndex++)
@@ -21,7 +21,7 @@ int string_LeftTrim(char* in_out_pStr, char* remove_Chr)
 			break;
 	}
 
-	//Î»ÒÆ
+	//ä½ç§»
 	int iOffset = iLen - iIndex;
 	for (int i = 0; i < iOffset; i++)
 	{
@@ -33,10 +33,10 @@ int string_LeftTrim(char* in_out_pStr, char* remove_Chr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	È¥µô×Ö·ûĞòÁĞÓÒ±ßµÄ×Ö·û
-/// ²ÎÊı	 :	in_out_pStr		×Ö·û´®ÊäÈëÓëÊä³ö
-///			remove_Chr		ÏàÓ¦×Ö·û
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	å»æ‰å­—ç¬¦åºåˆ—å³è¾¹çš„å­—ç¬¦
+/// å‚æ•°	 :	in_out_pStr		å­—ç¬¦ä¸²è¾“å…¥ä¸è¾“å‡º
+///			remove_Chr		ç›¸åº”å­—ç¬¦
+/// è¿”å›å€¼:
 /// </summary>
 int string_RightTrim(char* in_out_pStr, char* remove_Chr)
 {
@@ -56,10 +56,10 @@ int string_RightTrim(char* in_out_pStr, char* remove_Chr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	È¥µô×Ö·ûĞòÁĞ×óÓÒ±ßµÄ×Ö·û
-/// ²ÎÊı	 :	in_out_pStr		×Ö·û´®ÊäÈëÓëÊä³ö
-///			remove_Chr		ÏàÓ¦×Ö·û
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	å»æ‰å­—ç¬¦åºåˆ—å·¦å³è¾¹çš„å­—ç¬¦
+/// å‚æ•°	 :	in_out_pStr		å­—ç¬¦ä¸²è¾“å…¥ä¸è¾“å‡º
+///			remove_Chr		ç›¸åº”å­—ç¬¦
+/// è¿”å›å€¼:
 /// </summary>
 int string_Trim(char* in_out_pStr, char* remove_Chr)
 {
@@ -67,10 +67,10 @@ int string_Trim(char* in_out_pStr, char* remove_Chr)
 		return eAEC_Input;
 
 	int iCheck;
-	//È¥³ı×ó±ßµÄ¿Õ¸ñ,TABºÍ»»ĞĞ
+	//å»é™¤å·¦è¾¹çš„ç©ºæ ¼,TABå’Œæ¢è¡Œ
 	if ((iCheck = string_LeftTrim(in_out_pStr, remove_Chr)) != eAEC_Success)
 		return iCheck;
-	//È¥³ıÓÒ±ßµÄ¿Õ¸ñ,TABºÍ»»ĞĞ
+	//å»é™¤å³è¾¹çš„ç©ºæ ¼,TABå’Œæ¢è¡Œ
 	if ((iCheck = string_RightTrim(in_out_pStr, remove_Chr)) != eAEC_Success)
 		return iCheck;
 
@@ -80,10 +80,10 @@ int string_Trim(char* in_out_pStr, char* remove_Chr)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã×Ö·û´®ÖĞ×Ö·ûµÄÊıÁ¿
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			ÏàÓ¦×Ö·û
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¡ç®—å­—ç¬¦ä¸²ä¸­å­—ç¬¦çš„æ•°é‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			ç›¸åº”å­—ç¬¦
+/// è¿”å›å€¼:
 /// </summary>
 int string_CountChr(char* in_pStr, char in_Chr)
 {
@@ -102,10 +102,10 @@ int string_CountChr(char* in_pStr, char in_Chr)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã×Ö·û´®ÖĞ×Ó´®µÄÊıÁ¿
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Src			ÏàÓ¦×Ó´®
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¡ç®—å­—ç¬¦ä¸²ä¸­å­ä¸²çš„æ•°é‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Src			ç›¸åº”å­ä¸²
+/// è¿”å›å€¼:
 /// </summary>
 int string_CountStr(char* in_pStr, char* in_Src)
 {
@@ -124,10 +124,10 @@ int string_CountStr(char* in_pStr, char* in_Src)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²éÕÒ×Ö·û´®ÖĞµÚÒ»¸öÆ¥Åä×Ö·ûµÄÏÂ±ê
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			ÏàÓ¦×Ö·û
-/// ·µ»ØÖµ:  >= 0 ´æÔÚ
+/// åŠŸèƒ½	 :	æŸ¥æ‰¾å­—ç¬¦ä¸²ä¸­ç¬¬ä¸€ä¸ªåŒ¹é…å­—ç¬¦çš„ä¸‹æ ‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			ç›¸åº”å­—ç¬¦
+/// è¿”å›å€¼:  >= 0 å­˜åœ¨
 /// </summary>
 int string_FindChr(char* in_pStr, char in_Chr)
 {
@@ -142,10 +142,10 @@ int string_FindChr(char* in_pStr, char in_Chr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²éÕÒ×Ö·û´®ÖĞµÚÒ»¸öÆ¥Åä×Ó´®µÄÏÂ±ê
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Src			ÏàÓ¦×Ó´®
-/// ·µ»ØÖµ:  >= 0 ´æÔÚ
+/// åŠŸèƒ½	 :	æŸ¥æ‰¾å­—ç¬¦ä¸²ä¸­ç¬¬ä¸€ä¸ªåŒ¹é…å­ä¸²çš„ä¸‹æ ‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Src			ç›¸åº”å­ä¸²
+/// è¿”å›å€¼:  >= 0 å­˜åœ¨
 /// </summary>
 int string_FindStr(char* in_pStr, char* in_Src)
 {
@@ -161,11 +161,11 @@ int string_FindStr(char* in_pStr, char* in_Src)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²éÕÒ×Ö·û´®ÖĞ´ÓiFromIndex¿ªÊ¼µÄÆ¥Åä×Ó´®µÄÏÂ±ê
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			iFromIndex		¿ªÊ¼ÏÂ±ê
-///			in_Src			ÏàÓ¦×Ó´®
-/// ·µ»ØÖµ:  >= 0 ´æÔÚ
+/// åŠŸèƒ½	 :	æŸ¥æ‰¾å­—ç¬¦ä¸²ä¸­ä»iFromIndexå¼€å§‹çš„åŒ¹é…å­ä¸²çš„ä¸‹æ ‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			iFromIndex		å¼€å§‹ä¸‹æ ‡
+///			in_Src			ç›¸åº”å­ä¸²
+/// è¿”å›å€¼:  >= 0 å­˜åœ¨
 /// </summary>
 int string_FindStrFrom(char* in_pStr, int iFromIndex, char* in_Src)
 {
@@ -185,11 +185,11 @@ int string_FindStrFrom(char* in_pStr, int iFromIndex, char* in_Src)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	×Ö·û´®×Ö·ûÌæ»»
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Src			Ô´
-///			in_Desc			Ìæ»»µÄ×Ö·û
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å­—ç¬¦ä¸²å­—ç¬¦æ›¿æ¢
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Src			æº
+///			in_Desc			æ›¿æ¢çš„å­—ç¬¦
+/// è¿”å›å€¼:  
 /// </summary>
 int string_ReplaceChr(char *in_out_pStr, char in_Src, char in_Desc)
 {
@@ -207,13 +207,13 @@ int string_ReplaceChr(char *in_out_pStr, char in_Src, char in_Desc)
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	×Ö·û´®×Ó´®Ìæ»»
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Src			Ô´
-///			in_Desc			Ìæ»»µÄ×Ö·û
-///			out_pResult		Êä³ö×Ö·û´®
-///			in_ResultLen	Êä³ö×Ö·û´®³¤¶È
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å­—ç¬¦ä¸²å­ä¸²æ›¿æ¢
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Src			æº
+///			in_Desc			æ›¿æ¢çš„å­—ç¬¦
+///			out_pResult		è¾“å‡ºå­—ç¬¦ä¸²
+///			in_ResultLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+/// è¿”å›å€¼:  
 /// </summary>
 int string_ReplaceStr(char *in_pStr, char* in_Src, char* in_Desc, char* out_pResult, int in_ResultLen)
 {
@@ -222,13 +222,13 @@ int string_ReplaceStr(char *in_pStr, char* in_Src, char* in_Desc, char* out_pRes
 
 	memset(out_pResult, 0, in_ResultLen);
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	int iLen_pStr = strlen(in_pStr);
 	int iLen_src = strlen(in_Src);
 	int iLen_desc = in_Desc ? strlen(in_Desc) : 0;
 	int iLen_add = iLen_desc - iLen_src > 0 ? iLen_desc - iLen_src : 0;
 
-	//¼ÆËã×îÖÕµÄ×Ö·û´®³¤¶È
+	//è®¡ç®—æœ€ç»ˆçš„å­—ç¬¦ä¸²é•¿åº¦
 	int iCount = string_CountStr(in_pStr, in_Src);
 	int iLen_result = iLen_pStr + 1 + iCount * iLen_add;
 	if (iLen_result > in_ResultLen)
@@ -262,10 +262,10 @@ int string_ReplaceStr(char *in_pStr, char* in_Src, char* in_Desc, char* out_pRes
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÒÆ³ı×Ó´®
-/// ²ÎÊı	 :	in_out_pStr		×Ö·û´®
-///			in_Src			×Ó´®
-/// ·µ»ØÖµ:  >= 0 ´æÔÚ
+/// åŠŸèƒ½	 :	ç§»é™¤å­ä¸²
+/// å‚æ•°	 :	in_out_pStr		å­—ç¬¦ä¸²
+///			in_Src			å­ä¸²
+/// è¿”å›å€¼:  >= 0 å­˜åœ¨
 /// </summary>
 int string_Remove(char *in_out_pStr, char* in_Src)
 {
@@ -282,13 +282,13 @@ int string_Remove(char *in_out_pStr, char* in_Src)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²åÈë×Ö·û´®
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_iIndex		²åÈëÏÂ±ê
-///			in_Src			²åÈë×Ó´®
-///			out_pResult		Êä³ö×Ö·û´®
-///			in_ResultLen	Êä³ö×Ö·û´®³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æ’å…¥å­—ç¬¦ä¸²
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_iIndex		æ’å…¥ä¸‹æ ‡
+///			in_Src			æ’å…¥å­ä¸²
+///			out_pResult		è¾“å‡ºå­—ç¬¦ä¸²
+///			in_ResultLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_Insert(char* in_pStr, int in_iIndex, char* in_Src, char* out_pResult, int in_ResultLen)
 {
@@ -297,14 +297,14 @@ int string_Insert(char* in_pStr, int in_iIndex, char* in_Src, char* out_pResult,
 
 	memset(out_pResult, 0, in_ResultLen);
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	int iLen_pStr = strlen(in_pStr);
 	int iLen_src = strlen(in_Src);
 	int iLen_result = iLen_pStr + iLen_src + 1;
 	if (iLen_result > in_ResultLen)
 		return eAEC_BufferOver;
 
-	//¼ÆËã²åÈëÎ»ÖÃ
+	//è®¡ç®—æ’å…¥ä½ç½®
 	in_iIndex = in_iIndex > iLen_pStr ? iLen_pStr : in_iIndex;
 
 	memcpy(out_pResult, in_pStr, in_iIndex);
@@ -316,16 +316,16 @@ int string_Insert(char* in_pStr, int in_iIndex, char* in_Src, char* out_pResult,
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	×Ö·û´®Ïà½Ó
-/// ²ÎÊı	 :	in_out_pResult	Êä³ö×Ö·û´®
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	å­—ç¬¦ä¸²ç›¸æ¥
+/// å‚æ•°	 :	in_out_pResult	è¾“å‡ºå­—ç¬¦ä¸²
+/// è¿”å›å€¼: 
 /// </summary>
 int string_Strcat(char* in_out_pResult, ...)
 {
 	if (in_out_pResult == NULL)
 		return eAEC_Input;
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	char* pString;
 	va_list pList;
 	va_start(pList, in_out_pResult);
@@ -342,9 +342,9 @@ int string_Strcat(char* in_out_pResult, ...)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	µßµ¹×Ö·û´®Ë³Ğò
-/// ²ÎÊı	 :	in_out_pResult	Êä³ö×Ö·û´®
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	é¢ å€’å­—ç¬¦ä¸²é¡ºåº
+/// å‚æ•°	 :	in_out_pResult	è¾“å‡ºå­—ç¬¦ä¸²
+/// è¿”å›å€¼: 
 /// </summary>
 int string_MakeReverse(char* in_out_pStr)
 {
@@ -364,13 +364,13 @@ int string_MakeReverse(char* in_out_pStr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½ØÈ¡×Ö·û´®
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_iIndex		¿ªÊ¼ÏÂ±ê
-///			in_Length		³¤¶È
-///			out_pResult		Êä³ö×Ö·û´®
-///			in_ResultLen	Êä³ö×Ö·û´®³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æˆªå–å­—ç¬¦ä¸²
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_iIndex		å¼€å§‹ä¸‹æ ‡
+///			in_Length		é•¿åº¦
+///			out_pResult		è¾“å‡ºå­—ç¬¦ä¸²
+///			in_ResultLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_Substring(char* in_pStr, int in_iIndex, int in_Length, char* out_pResult, int in_ResultLen)
 {
@@ -379,7 +379,7 @@ int string_Substring(char* in_pStr, int in_iIndex, int in_Length, char* out_pRes
 
 	memset(out_pResult, 0, in_ResultLen);
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	int iLen_pStr = strlen(in_pStr);
 	if (iLen_pStr <= in_iIndex)
 		return eAEC_Input;
@@ -393,13 +393,13 @@ int string_Substring(char* in_pStr, int in_iIndex, int in_Length, char* out_pRes
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½ØÈ¡…^égƒÈµÄ×Ö·û´®
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_cStartChr	é_Ê¼×Ö·û
-///			in_cEndChr		½YÊø×Ö·û
-///			out_pResult		Êä³ö×Ö·û´®
-///			in_ResultLen	Êä³ö×Ö·û´®³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æˆªå–å€é–“å…§çš„å­—ç¬¦ä¸²
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_cStartChr	é–‹å§‹å­—ç¬¦
+///			in_cEndChr		çµæŸå­—ç¬¦
+///			out_pResult		è¾“å‡ºå­—ç¬¦ä¸²
+///			in_ResultLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr, char* out_pResult, int in_ResultLen)
 {
@@ -411,7 +411,7 @@ int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr
 	if (pStart == NULL || pEnd == NULL)
 		return eAEC_Err;
 
-	//Èç¹ûé_Ê¼×Ö·ûºÍ½YÊø×Ö·ûÒ»˜ÓµÄÔ’£¬„t½YÊø×Ö·ûÒªÕÒµÚ¶ş‚€
+	//å¦‚æœé–‹å§‹å­—ç¬¦å’ŒçµæŸå­—ç¬¦ä¸€æ¨£çš„è©±ï¼Œå‰‡çµæŸå­—ç¬¦è¦æ‰¾ç¬¬äºŒå€‹
 	if (in_cStartChr == in_cEndChr)
 	{
 		pEnd = strchr(pStart + 1, in_cEndChr);
@@ -419,7 +419,7 @@ int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr
 			return eAEC_Err;
 	}
 
-	//Ó‹ËãéL¶È
+	//è¨ˆç®—é•·åº¦
 	int iLen = pEnd - pStart;
 	if (iLen > in_ResultLen)
 		return eAEC_BufferOver;
@@ -431,14 +431,14 @@ int string_SubstringByInterval(char* in_pStr, char in_cStartChr, char in_cEndChr
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½ØÈ¡×Ö·ûƒÉß…µÄ×Ö·û´®
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			ÖĞég×Ö·û
-///			out_pDesc1		Êä³ö×Ö·û´®1
-///			in_Desc1Len		Êä³ö×Ö·û´®1³¤¶È
-///			out_pDesc2		Êä³ö×Ö·û´®2
-///			in_Desc2Len		Êä³ö×Ö·û´®2³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	æˆªå–å­—ç¬¦å…©é‚Šçš„å­—ç¬¦ä¸²
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			ä¸­é–“å­—ç¬¦
+///			out_pDesc1		è¾“å‡ºå­—ç¬¦ä¸²1
+///			in_Desc1Len		è¾“å‡ºå­—ç¬¦ä¸²1é•¿åº¦
+///			out_pDesc2		è¾“å‡ºå­—ç¬¦ä¸²2
+///			in_Desc2Len		è¾“å‡ºå­—ç¬¦ä¸²2é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_SubstringByChr(char* in_pStr, char in_Chr, char* out_pDesc1, int in_Desc1Len, char* out_pDesc2, int in_Desc2Len)
 {
@@ -464,10 +464,10 @@ int string_SubstringByChr(char* in_pStr, char in_Chr, char* out_pDesc1, int in_D
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	Ààsplit¹¦ÄÜ,»ñÈ¡×Ö¶ÎÊıÁ¿
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			×Ö·û
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	ç±»splitåŠŸèƒ½,è·å–å­—æ®µæ•°é‡
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			å­—ç¬¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_GetFieldNum(char* in_pStr, char in_Chr)
 {
@@ -481,13 +481,13 @@ int string_GetFieldNum(char* in_pStr, char in_Chr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡µÚN¸ö×Ö¶Î
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			×Ö·û
-///			in_Order		×Ö¶ÎĞòºÅ
-///			out_pResult		Êä³ö×Ö·û´®
-///			in_ResultLen	Êä³ö×Ö·û´®³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–ç¬¬Nä¸ªå­—æ®µ
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			å­—ç¬¦
+///			in_Order		å­—æ®µåºå·
+///			out_pResult		è¾“å‡ºå­—ç¬¦ä¸²
+///			in_ResultLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 int string_GetFieldSting(char* in_pStr, char in_Chr, int in_Order, char* out_pResult, int in_ResultLen)
 {
@@ -499,7 +499,7 @@ int string_GetFieldSting(char* in_pStr, char in_Chr, int in_Order, char* out_pRe
 	if (in_Order >= iCount)
 		return -1;
 
-	//»ñÈ¡ÆğÊ¼Î»ÖÃºÍ½áÊøÎ»ÖÃ
+	//è·å–èµ·å§‹ä½ç½®å’Œç»“æŸä½ç½®
 	char* pStart = in_pStr;
 	char* pTmp = in_pStr;
 	for (int i = 0; i <= in_Order; i++)
@@ -514,7 +514,7 @@ int string_GetFieldSting(char* in_pStr, char in_Chr, int in_Order, char* out_pRe
 		pTmp++;
 	}
 
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	int iLen = pTmp == NULL ? 1 : pTmp - pStart;
 	if (iLen > in_ResultLen)
 		return eAEC_Creat;
@@ -525,12 +525,12 @@ int string_GetFieldSting(char* in_pStr, char in_Chr, int in_Order, char* out_pRe
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡Êı×Ö¼¯ºÏ
-/// ²ÎÊı	 :	in_pStr			×Ö·û´®
-///			in_Chr			×Ö·û
-///			pArray			¼¯ºÏ
-///			lArrayLength	¼¯ºÏ´óĞ¡
-/// ·µ»ØÖµ:  ¼¯ºÏÊıÁ¿
+/// åŠŸèƒ½	 :	è·å–æ•°å­—é›†åˆ
+/// å‚æ•°	 :	in_pStr			å­—ç¬¦ä¸²
+///			in_Chr			å­—ç¬¦
+///			pArray			é›†åˆ
+///			lArrayLength	é›†åˆå¤§å°
+/// è¿”å›å€¼:  é›†åˆæ•°é‡
 /// </summary>
 int string_GetFieldNumberSting(char* in_pStr, char in_Chr, long* pArray, long lArrayLength)
 {
@@ -594,11 +594,11 @@ int string_GetFieldNumberSting(char* in_pStr, char in_Chr, long* pArray, long lA
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ½»»»
-/// ²ÎÊı	 :	pMemA	 [in-out] »º´æ1
-///			pMemB	 [in-out] »º´æ2
-///			iSize	 [in]     ³¤¶È
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	å†…å­˜äº¤æ¢
+/// å‚æ•°	 :	pMemA	 [in-out] ç¼“å­˜1
+///			pMemB	 [in-out] ç¼“å­˜2
+///			iSize	 [in]     é•¿åº¦
+/// è¿”å›å€¼:
 /// </summary>
 void string_MemorySwap(void* pMemA, void* pMemB, int iSize)
 {
@@ -615,11 +615,11 @@ void string_MemorySwap(void* pMemA, void* pMemB, int iSize)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ±È½Ï
-/// ²ÎÊı	 :	pMemA	 [in] »º´æ1
-///			pMemB	 [in] »º´æ2
-///			iSize	 [in]     ³¤¶È
-/// ·µ»ØÖµ:  0-ÏàµÈ 1A´ó -1B´ó
+/// åŠŸèƒ½	 :	å†…å­˜æ¯”è¾ƒ
+/// å‚æ•°	 :	pMemA	 [in] ç¼“å­˜1
+///			pMemB	 [in] ç¼“å­˜2
+///			iSize	 [in]     é•¿åº¦
+/// è¿”å›å€¼:  0-ç›¸ç­‰ 1Aå¤§ -1Bå¤§
 /// </summary>
 int string_MemoryCmp(void* pMemA, void* pMemB, int iSize)
 {
@@ -643,11 +643,11 @@ int string_MemoryCmp(void* pMemA, void* pMemB, int iSize)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ¸´ÖÆ
-/// ²ÎÊı	 :	pDesc	 [out] Êä³ö»º´æ
-///			pSrc	 [in]  À´Ô´
-///			iSize	 [in]  ³¤¶È
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	å†…å­˜å¤åˆ¶
+/// å‚æ•°	 :	pDesc	 [out] è¾“å‡ºç¼“å­˜
+///			pSrc	 [in]  æ¥æº
+///			iSize	 [in]  é•¿åº¦
+/// è¿”å›å€¼:
 /// </summary>
 void string_MemoryCopy(void* pDesc, void* pSrc, int iSize)
 {
@@ -659,11 +659,11 @@ void string_MemoryCopy(void* pDesc, void* pSrc, int iSize)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ»º³åÉêÇë
-/// ²ÎÊı	 :	pBuffer:				ÔÚÊ¹ÓÃµÄÄÚ´æ»º³å
-///			in_out_BufferLen:		ÔÚÊ¹ÓÃµÄÄÚ´æ»º³å´óĞ¡
-///			iNewLen:				ĞÂÉêÇëµÄ´óĞ¡
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å†…å­˜ç¼“å†²ç”³è¯·
+/// å‚æ•°	 :	pBuffer:				åœ¨ä½¿ç”¨çš„å†…å­˜ç¼“å†²
+///			in_out_BufferLen:		åœ¨ä½¿ç”¨çš„å†…å­˜ç¼“å†²å¤§å°
+///			iNewLen:				æ–°ç”³è¯·çš„å¤§å°
+/// è¿”å›å€¼:  
 /// </summary>
 void* string_Malloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 {
@@ -687,11 +687,11 @@ void* string_Malloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ»º³åÖØĞÂÉêÇë
-/// ²ÎÊı	 :	pBuffer:				ÔÚÊ¹ÓÃµÄÄÚ´æ»º³å
-///			in_out_BufferLen:		ÔÚÊ¹ÓÃµÄÄÚ´æ»º³å´óĞ¡
-///			iNewLen:				ĞÂÉêÇëµÄ´óĞ¡
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å†…å­˜ç¼“å†²é‡æ–°ç”³è¯·
+/// å‚æ•°	 :	pBuffer:				åœ¨ä½¿ç”¨çš„å†…å­˜ç¼“å†²
+///			in_out_BufferLen:		åœ¨ä½¿ç”¨çš„å†…å­˜ç¼“å†²å¤§å°
+///			iNewLen:				æ–°ç”³è¯·çš„å¤§å°
+/// è¿”å›å€¼:  
 /// </summary>
 void* string_Realloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 {
@@ -719,9 +719,9 @@ void* string_Realloc(void* pBuffer, int* in_out_BufferLen, int iNewLen)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÄÚ´æ»º³åÊÍ·Å
-/// ²ÎÊı	 :	in_pStr:				ÔÚÊ¹ÓÃµÄÄÚ´æ»º³å
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	å†…å­˜ç¼“å†²é‡Šæ”¾
+/// å‚æ•°	 :	in_pStr:				åœ¨ä½¿ç”¨çš„å†…å­˜ç¼“å†²
+/// è¿”å›å€¼:  
 /// </summary>
 void string_Free(void** in_pStr)
 {
@@ -733,9 +733,9 @@ void string_Free(void** in_pStr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÅĞ¶Ï×Ö·û´®ÊÇ·ñÎª¿Õ´®
-/// ²ÎÊı	 :	in_pStr:				×Ö·û´®
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	åˆ¤æ–­å­—ç¬¦ä¸²æ˜¯å¦ä¸ºç©ºä¸²
+/// å‚æ•°	 :	in_pStr:				å­—ç¬¦ä¸²
+/// è¿”å›å€¼:  
 /// </summary>
 int string_IsNullOrEmpty(char *in_pStr)
 {
@@ -754,10 +754,10 @@ int string_IsNullOrEmpty(char *in_pStr)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	¼ÆËã×Ö·û´®³¤¶È
-/// ²ÎÊı	 :	in_pStr				×Ö·û´®
-///			IsUnicode			ÊÇ·ñÎª¿í×Ö·û
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	è®¡ç®—å­—ç¬¦ä¸²é•¿åº¦
+/// å‚æ•°	 :	in_pStr				å­—ç¬¦ä¸²
+///			IsUnicode			æ˜¯å¦ä¸ºå®½å­—ç¬¦
+/// è¿”å›å€¼:  
 /// </summary>
 int string_GetLen(char* in_pStr, int IsUnicode)
 {
@@ -774,18 +774,34 @@ int string_GetLen(char* in_pStr, int IsUnicode)
 	return 0;
 }
 
+/// <summary>
+/// åŠŸèƒ½	 :	å­—ç¬¦ä¸²æ¯”è¾ƒï¼ˆä¸åŒºåˆ†å¤§å°å†™ï¼‰
+/// å‚æ•°	 :	in_pStr1				å­—ç¬¦ä¸²1
+///			in_pStr2				ç¬¦ä¸²2
+/// è¿”å›å€¼:  
+/// </summary>
+int string_Stricmp(char* in_pStr1, char* in_pStr2)
+{
+#ifdef _WIN32
+	return stricmp(in_pStr1,in_pStr2);
+#endif
 
+#if defined(__linux) || defined(linux) || defined(__LYNX)
+	return strcasecmp(in_pStr1,in_pStr2);
+#endif
+
+}
 
 
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	±àÂë×ª»»
-/// ²ÎÊı	 :	pStr				×Ö·û´®
-///			pDesc				Êä³ö×Ö·û´®
-///			iDescLen			Êä³ö×Ö·û´®³¤¶È
-///			eType				×ª»»ÀàĞÍ
-/// ·µ»ØÖµ:  
+/// åŠŸèƒ½	 :	ç¼–ç è½¬æ¢
+/// å‚æ•°	 :	pStr				å­—ç¬¦ä¸²
+///			pDesc				è¾“å‡ºå­—ç¬¦ä¸²
+///			iDescLen			è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+///			eType				è½¬æ¢ç±»å‹
+/// è¿”å›å€¼:  
 /// </summary>
 int string_ConvertEncodingFormat(char* pStr, char* pDesc, int iDescLen, enumAigEncodingConvert eType)
 {

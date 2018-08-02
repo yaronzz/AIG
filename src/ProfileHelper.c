@@ -6,35 +6,35 @@
 
 typedef enum _enumAigProfileLineType
 {
-	eAPLType_Comment,	//×¢ÊÍ
-	eAPLType_Group,		//×é
-	eAPLType_KeyValue,	//¹Ø¼ü×ÖºÍÖµ
-	eAPLType_UnKnown,	//Î´Öª
+	eAPLType_Comment,	//æ³¨é‡Š
+	eAPLType_Group,		//ç»„
+	eAPLType_KeyValue,	//å…³é”®å­—å’Œå€¼
+	eAPLType_UnKnown,	//æœªçŸ¥
 }enumAigProfileLineType;
 
 /// <summary>
-/// ¹¦ÄÜ	 :	½âÎöĞĞ
-/// ²ÎÊı	 :	pLineBuf		ĞĞ»º´æ
-///			sName			¹Ø¼ü×ÖÃû
-///			sValue			Öµ
-///			iNameLen		¹Ø¼ü×ÖÃû³¤¶È
-///			iValueLen		Öµ³¤¶È
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è§£æè¡Œ
+/// å‚æ•°	 :	pLineBuf		è¡Œç¼“å­˜
+///			sName			å…³é”®å­—å
+///			sValue			å€¼
+///			iNameLen		å…³é”®å­—åé•¿åº¦
+///			iValueLen		å€¼é•¿åº¦
+/// è¿”å›å€¼: 
 /// </summary>
 static enumAigProfileLineType profile_ReadLine(char* pLineBuf, char* sName, char* sValue, int iNameLen, int iValueLen)
 {
-	//¼ÆËã³¤¶È
+	//è®¡ç®—é•¿åº¦
 	string_LeftTrim(pLineBuf, AIG_STRING_EMPTY);
 	if (strlen(pLineBuf) == 0)
 		return eAPLType_UnKnown;
 
-	//²éÑ¯ÊÇ·ñÎª×¢ÊÍĞĞ
+	//æŸ¥è¯¢æ˜¯å¦ä¸ºæ³¨é‡Šè¡Œ
 	if (pLineBuf[0] == '#')
 		return eAPLType_Comment;
-	//²é¿´ÊÇ·ñé½M
+	//æŸ¥çœ‹æ˜¯å¦ç‚ºçµ„
 	if (string_SubstringByInterval(pLineBuf, '[', ']', sName, iNameLen) == eAEC_Success)
 		return eAPLType_Group;
-	//²éÑ¯ÊÇ·ñÎª¹Ø¼ü×ÖºÍÖµĞĞ
+	//æŸ¥è¯¢æ˜¯å¦ä¸ºå…³é”®å­—å’Œå€¼è¡Œ
 	if (string_SubstringByChr(pLineBuf, '=', sName, iNameLen, sValue, iValueLen) == eAEC_Success)
 		return eAPLType_KeyValue;
 
@@ -44,14 +44,14 @@ static enumAigProfileLineType profile_ReadLine(char* pLineBuf, char* sName, char
 
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pDefault			Ä¬ÈÏÖµ
-///			pReturnString		Êä³ö×Ö·û´®
-///			iReturnStringLen	Êä³ö×Ö·û´®³¤¶È
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pDefault			é»˜è®¤å€¼
+///			pReturnString		è¾“å‡ºå­—ç¬¦ä¸²
+///			iReturnStringLen	è¾“å‡ºå­—ç¬¦ä¸²é•¿åº¦
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, int iValueLen, char* pProfilePath)
 {
@@ -66,7 +66,7 @@ int profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, in
 	char sBuf[2048];
 	enumAigProfileLineType eLineType;
 
-	//Èç¹ûÃ»ÕÒµ½ÔòÒÔÄ¬ÈÏÖµÉèÖÃ
+	//å¦‚æœæ²¡æ‰¾åˆ°åˆ™ä»¥é»˜è®¤å€¼è®¾ç½®
 	if (pDefault)
 	{
 		iLen = strlen(pDefault) + 1;
@@ -74,11 +74,11 @@ int profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, in
 		memcpy(pValue, pDefault, iLen);
 	}
 
-	//´ò¿ªÎÄ¼ş
+	//æ‰“å¼€æ–‡ä»¶
 	if ((pFD = fopen(pProfilePath, "r")) == NULL)
 		return eAEC_Open;
 	
-	//Ñ­»·¶ÁÈ¡ĞĞÊı¾İ
+	//å¾ªç¯è¯»å–è¡Œæ•°æ®
 	while (feof(pFD) == 0)
 	{
 		fgets(sBuf, sizeof(sBuf), pFD);
@@ -89,12 +89,12 @@ int profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, in
 		case eAPLType_Comment:
 			break;
 		case eAPLType_Group:
-			iInGroup = stricmp(sName, pGroup) == 0 ? 1 : 0;
+			iInGroup = string_Stricmp(sName, pGroup) == 0 ? 1 : 0;
 			break;
 		case eAPLType_KeyValue:
 			if (iInGroup)
 			{
-				if (stricmp(sName, pKey) != 0)
+				if (string_Stricmp(sName, pKey) != 0)
 					break;
 
 				fclose(pFD);
@@ -118,12 +118,12 @@ int profile_GetString(char* pGroup, char* pKey, char* pDefault, char* pValue, in
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pDefault			Ä¬ÈÏÖµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pDefault			é»˜è®¤å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_GetInt(char* pGroup, char* pKey, int pDefault, char* pProfilePath)
 {
@@ -135,12 +135,12 @@ int profile_GetInt(char* pGroup, char* pKey, int pDefault, char* pProfilePath)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pDefault			Ä¬ÈÏÖµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è·å–é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pDefault			é»˜è®¤å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 float profile_GetFloat(char* pGroup, char* pKey, float pDefault, char* pProfilePath)
 {
@@ -152,12 +152,12 @@ float profile_GetFloat(char* pGroup, char* pKey, float pDefault, char* pProfileP
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pValue				Öµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¾ç½®é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pValue				å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath)
 {
@@ -174,16 +174,16 @@ int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath
 	enumAigProfileLineType eLineType;
 	char sTempFilePath[AIG_MAXLEN_FILEPATH];
 
-	//´ò¿ªÎÄ¼ş
+	//æ‰“å¼€æ–‡ä»¶
 	if ((pFD = fopen(pProfilePath, "a+")) == NULL)
 		return eAEC_Open;
 
-	//´ò¿ª±¸·İÎÄ¼ş
+	//æ‰“å¼€å¤‡ä»½æ–‡ä»¶
 	file_GetBakFilePath(pProfilePath, "-aigbak", sTempFilePath, sizeof(sTempFilePath));
 	if ((pTempFD = fopen(sTempFilePath, "w+")) == NULL)
 		return eAEC_Open;
 	
-	//Ñ­»·¶ÁÈ¡ĞĞÊı¾İ
+	//å¾ªç¯è¯»å–è¡Œæ•°æ®
 	while (feof(pFD) == 0)
 	{
 		fgets(sBuf, sizeof(sBuf), pFD);
@@ -196,7 +196,7 @@ int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath
 			case eAPLType_Comment:
 				break;
 			case eAPLType_Group:
-				if (stricmp(sName, pGroup) == 0)
+				if (string_Stricmp(sName, pGroup) == 0)
 					iInGroup = 1;
 				else if (iInGroup)
 				{
@@ -207,7 +207,7 @@ int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath
 			case eAPLType_KeyValue:
 				if (iInGroup)
 				{
-					if (stricmp(sName, pKey) != 0)
+					if (string_Stricmp(sName, pKey) != 0)
 						break;
 
 					sprintf(sBuf, "%s=%s\n", sName, pValue);
@@ -222,14 +222,14 @@ int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath
 		fwrite(sBuf, strlen(sBuf), 1, pTempFD);
 	}
 
-	//Èç¹ûÃ»ÓĞĞ´½øÈ¥£¬ÔòÔÚÕâÀïĞÂÔö¼Ó
+	//å¦‚æœæ²¡æœ‰å†™è¿›å»ï¼Œåˆ™åœ¨è¿™é‡Œæ–°å¢åŠ 
 	if (!iAlreadySet)
 	{
 		fprintf(pTempFD, "[%s]\n", pGroup);
 		fprintf(pTempFD, "%s=%s\n", pKey, pValue);
 	}
 
-	//ÎÄ¼şÖØÖÃ
+	//æ–‡ä»¶é‡ç½®
 	fclose(pFD);
 	fclose(pTempFD);
 	remove(pProfilePath);
@@ -239,12 +239,12 @@ int profile_SetString(char* pGroup, char* pKey, char* pValue, char* pProfilePath
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pValue				Öµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¾ç½®é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pValue				å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_SetInt(char* pGroup, char* pKey, int iValue, char* pProfilePath)
 {
@@ -254,12 +254,12 @@ int profile_SetInt(char* pGroup, char* pKey, int iValue, char* pProfilePath)
 }
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÅäÖÃÎÄ¼şÖĞµÄÖµ
-/// ²ÎÊı	 :	pGroup				×éÃû
-///			pKey				¹Ø¼ü×ÖÃû
-///			pValue				Öµ
-///			pProfilePath		ÎÄ¼şÂ·¾¶
-/// ·µ»ØÖµ: 
+/// åŠŸèƒ½	 :	è®¾ç½®é…ç½®æ–‡ä»¶ä¸­çš„å€¼
+/// å‚æ•°	 :	pGroup				ç»„å
+///			pKey				å…³é”®å­—å
+///			pValue				å€¼
+///			pProfilePath		æ–‡ä»¶è·¯å¾„
+/// è¿”å›å€¼: 
 /// </summary>
 int profile_Setfloat(char* pGroup, char* pKey, float fValue, char* pProfilePath)
 {

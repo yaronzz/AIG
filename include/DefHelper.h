@@ -14,50 +14,54 @@ extern "C" {
 #include <time.h>
 #include <io.h>
 #include <direct.h>
-#elif linux || __LYNX
+#endif
+
+#if defined(__linux) || defined(linux) || defined(__LYNX)
 #include <unistd.h>
 #include <dirent.h>
+#include <stdarg.h>
+#include <time.h>
+#include <strings.h>
 #include <sys/stat.h>
-#include <sys/time.h>
 #endif
 
 #define AIG_DEBUG
-#define AIG_NORELEASE				//±íÊ¾»¹»¹Ã»ÊµÏÖ
-#define AIG_TRUE			1		//ÕýÈ·
-#define AIG_FALSE			0		//´íÎó
-#define AIG_MAXLEN_FILEPATH	1024	//Ä¿Â¼ÃûµÄ×î´ó³¤¶È
-#define AIG_MAXLEN_FILENAME 256		//ÎÄ¼þÃûµÄ×î´ó³¤¶È
+#define AIG_NORELEASE				//è¡¨ç¤ºè¿˜è¿˜æ²¡å®žçŽ°
+#define AIG_TRUE			1		//æ­£ç¡®
+#define AIG_FALSE			0		//é”™è¯¯
+#define AIG_MAXLEN_FILEPATH	1024	//ç›®å½•åçš„æœ€å¤§é•¿åº¦
+#define AIG_MAXLEN_FILENAME 256		//æ–‡ä»¶åçš„æœ€å¤§é•¿åº¦
 
-#define AIG_FUNC_MALLOC malloc		//ÉêÇëÄÚ´æ
-#define AIG_FUNC_FREE	free		//ÊÍ·ÅÄÚ´æ
-typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB, int in_KeyLen);		//¹Ø¼ü×Ö±È½Ï»Øµ÷º¯Êý£¨0ÏàµÈ,>0 A>B,<0 A<B£©
+#define AIG_FUNC_MALLOC malloc		//ç”³è¯·å†…å­˜
+#define AIG_FUNC_FREE	free		//é‡Šæ”¾å†…å­˜
+typedef int(*pfn_AIG_CMP_CALLBACK)(void* in_pKeyA, void* in_pKeyB, int in_KeyLen);		//å…³é”®å­—æ¯”è¾ƒå›žè°ƒå‡½æ•°ï¼ˆ0ç›¸ç­‰,>0 A>B,<0 A<Bï¼‰
 
 
-//´íÎóÂë
+//é”™è¯¯ç 
 typedef enum _AIG_ERRORCODE
 {
 	eAEC_Err				= -1,
 	eAEC_Success			= 0,
-	eAEC_Malloc				= 1,	//ÉêÇëÄÚ´æ¿Õ¼äÊ§°Ü
-	eAEC_Input				= 2,	//ÊäÈë²ÎÊý´íÎó
-	eAEC_Open				= 3,	//´ò¿ªÎÄ¼þÊ§°Ü
-	eAEC_Mkdir				= 4,	//ÐÂ½¨ÎÄ¼þ¼ÐÊ§°Ü
-	eAEC_Creat				= 5,	//ÐÂ½¨ÎÄ¼þÊ§°Ü
-	eAEC_NoFile				= 6,	//ÎÄ¼þ²»´æÔÚ
-	eAEC_NoDir				= 7,	//Ä¿Â¼²»´æÔÚ
-	eAEC_PathOver			= 8,	//Â·¾¶³¤¶ÈÒç³ö
-	eAEC_IndexOver			= 9,	//ÏÂ±êÒç³ö
-	eAEC_End				= 10,	//½áÊø
+	eAEC_Malloc				= 1,	//ç”³è¯·å†…å­˜ç©ºé—´å¤±è´¥
+	eAEC_Input				= 2,	//è¾“å…¥å‚æ•°é”™è¯¯
+	eAEC_Open				= 3,	//æ‰“å¼€æ–‡ä»¶å¤±è´¥
+	eAEC_Mkdir				= 4,	//æ–°å»ºæ–‡ä»¶å¤¹å¤±è´¥
+	eAEC_Creat				= 5,	//æ–°å»ºæ–‡ä»¶å¤±è´¥
+	eAEC_NoFile				= 6,	//æ–‡ä»¶ä¸å­˜åœ¨
+	eAEC_NoDir				= 7,	//ç›®å½•ä¸å­˜åœ¨
+	eAEC_PathOver			= 8,	//è·¯å¾„é•¿åº¦æº¢å‡º
+	eAEC_IndexOver			= 9,	//ä¸‹æ ‡æº¢å‡º
+	eAEC_End				= 10,	//ç»“æŸ
 
-	eAEC_ParaNumOver		= 20,	//²ÎÊý¸öÊý³¬³öÏÞÖÆ
-	eAEC_BufferOver			= 21,	//¿Õ¼äÒç³ö
-	eAEC_HandleNoLoad		= 22,	//¾ä±úÎ´×°ÔØ¹ý²ÎÊý
-	eAEC_OptErr				= 23,	//Opt¸ñÊ½´íÎó
-	eAEC_PwdLenOver	        = 24,   //ÃÜÂë³¤¶È³¬¹ýÁËÏÞÖÆ
-	eAEC_PwdErr             = 25,   //ÃÜÂë´íÎó
-	eAEC_InvalidTime		= 26,	//ÎÞÐ§µÄÊ±¼ä
-	eAEC_AlreadyExist		= 27,	//ÒÑ¾­´æÔÚ
-	eAEC_TimeOut			= 28,	//³¬Ê±
+	eAEC_ParaNumOver		= 20,	//å‚æ•°ä¸ªæ•°è¶…å‡ºé™åˆ¶
+	eAEC_BufferOver			= 21,	//ç©ºé—´æº¢å‡º
+	eAEC_HandleNoLoad		= 22,	//å¥æŸ„æœªè£…è½½è¿‡å‚æ•°
+	eAEC_OptErr				= 23,	//Optæ ¼å¼é”™è¯¯
+	eAEC_PwdLenOver	        = 24,   //å¯†ç é•¿åº¦è¶…è¿‡äº†é™åˆ¶
+	eAEC_PwdErr             = 25,   //å¯†ç é”™è¯¯
+	eAEC_InvalidTime		= 26,	//æ— æ•ˆçš„æ—¶é—´
+	eAEC_AlreadyExist		= 27,	//å·²ç»å­˜åœ¨
+	eAEC_TimeOut			= 28,	//è¶…æ—¶
 
 }AIG_ERRORCODE;
 
