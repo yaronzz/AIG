@@ -10,50 +10,65 @@ extern "C" {
 
 typedef enum _enumAigFileRight
 {
-	eAFileRight_ReadOnly	= 1,	//Ö»¶Á
-	eAFileRight_Hide		= 2, 	//Òş²Ø
-	eAFileRight_System		= 4, 	//ÏµÍ³
+	eAFileRight_ReadOnly	= 1,	//åªè¯»
+	eAFileRight_Hide		= 2, 	//éšè—
+	eAFileRight_System		= 4, 	//ç³»ç»Ÿ
 
 }enumAigFileRight;
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ĞÂ½¨Ä¿Â¼
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æ–°å»ºç›®å½•
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_Mkdirs(char* pPath);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡ÎÄ¼şµÄ³¤¶È
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–æ–‡ä»¶çš„é•¿åº¦
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 long file_GetFileLen(char* pPath);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	ÉèÖÃÎÄ¼şÈ¨ÏŞ
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è®¾ç½®æ–‡ä»¶æƒé™
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_SetFileRight(char *pPath, enumAigFileRight eType);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	²é¿´ÎÄ¼şÊÇ·ñ´æÔÚ
-/// ²ÎÊı	 :	pPath	 [in] Â·¾¶
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	æŸ¥çœ‹æ–‡ä»¶æ˜¯å¦å­˜åœ¨
+/// å‚æ•°	 :	pPath	 [in] è·¯å¾„
+/// è¿”å›å€¼:
 /// </summary>
 int file_IsFileExist(char* pPath);
 
 /// <summary>
-/// ¹¦ÄÜ	 :	»ñÈ¡±¸·İÂ·¾¶ÎÄ¼şÃû
-/// ²ÎÊı	 :	pFilePath	 [in] Â·¾¶ÎÄ¼şÃû
-///			pBakString	 [in] ±¸·İ×Ö·û´®
-///			pOutPath	 [out]Êä³öÂ·¾¶
-///			iOutPathLen	 [in] Êä³öÂ·¾¶³¤¶È
-/// ·µ»ØÖµ:
+/// åŠŸèƒ½	 :	è·å–å¤‡ä»½è·¯å¾„æ–‡ä»¶å
+/// å‚æ•°	 :	pFilePath	 [in] è·¯å¾„æ–‡ä»¶å
+///			pBakString	 [in] å¤‡ä»½å­—ç¬¦ä¸²
+///			pOutPath	 [out]è¾“å‡ºè·¯å¾„
+///			iOutPathLen	 [in] è¾“å‡ºè·¯å¾„é•¿åº¦
+/// è¿”å›å€¼:
 /// </summary>
 int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int iOutPathLen);
 
+/// <summary>
+/// åŠŸèƒ½	 :	å¤åˆ¶æ–‡ä»¶
+/// å‚æ•°	 :	pSrcPath	 [in] æºæ–‡ä»¶
+///			   pDescPath	 [in] ç›®æ ‡æ–‡ä»¶
+/// è¿”å›å€¼:
+/// </summary>
+int file_Copy(char* pSrcPath, char* pDescPath);
+
+/// <summary>
+/// åŠŸèƒ½	 :	å‰ªåˆ‡æ–‡ä»¶
+/// å‚æ•°	 :	pSrcPath	 [in] æºæ–‡ä»¶
+///			   pDescPath	 [in] ç›®æ ‡æ–‡ä»¶
+/// è¿”å›å€¼:
+/// </summary>
+int file_move(char* pSrcPath, char* pDescPath);
 
 #ifdef __cplusplus
 }

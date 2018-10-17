@@ -1,4 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <time.h>
+#include <io.h>
+#include <direct.h>
+#endif
+
+#if defined(__linux) || defined(linux) || defined(__LYNX)
+#include <unistd.h>
+#include <dirent.h>
+#include <stdarg.h>
+#include <time.h>
+#include <strings.h>
+#include <sys/stat.h>
+#endif
+
 #include "TimeHelper.h"
+
+typedef struct _AigTimingHandle
+{
+	char bStart;					//开始计时
+
+#ifdef _WIN32
+	LARGE_INTEGER StartTime;		//开始时间点
+#elif defined(linux) || defined(__LUNX)
+	struct timeval StartTime;		//开始时间点
+#endif
+
+}AigTimingHandle;
+
+
 
 /// <summary>
 /// 功能	 :  计时的内存缓冲
@@ -78,9 +112,10 @@ int time_GetUTCDayNum(int in_lYear)
 ///			pTimet			 [out]pTimet
 /// 返回值:
 /// </summary>
-void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
+void time_FileTime2TimeT(void* aFileTime, void* pTimet)
 {
 #ifdef _WIN32
+	time_t* pRet = (time_t*)pTimet;
 	LONGLONG lTemp = 0;
 	ULARGE_INTEGER ui;
 	FILETIME* pFileTime = (FILETIME*)aFileTime;
@@ -88,18 +123,21 @@ void time_FileTime2TimeT(void* aFileTime, time_t* pTimet)
 	ui.LowPart	= pFileTime->dwLowDateTime;
 	ui.HighPart = pFileTime->dwHighDateTime;
 	lTemp		= ((LONGLONG)pFileTime->dwHighDateTime << 32) + pFileTime->dwLowDateTime;
-	*pTimet		= ((LONGLONG)(ui.QuadPart - 116444736000000000) / 10000000);
+	*pRet		= ((LONGLONG)(ui.QuadPart - 116444736000000000) / 10000000);
 #endif
 }
 
 /// <summary>
 /// 功能	 :	Time_T转AigSystemTime
-/// 参数	 :	aTimet		 [in] Time_T
+/// 参数	 :	pTimet		 [in] Time_T
 ///			pAigTime	 [out]AigSystemTime
 /// 返回值:
 /// </summary>
-int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime)
+int time_TimeT2AigSystemTime(void* pTimet, AigSystemTime* pAigTime)
 {
+	time_t* pTemp = (time_t*)pTimet;
+	time_t aTimet = *pTemp;
+
 	long long lTemp			= 0;
 	long long lYear			= 0;
 	long long lMon			= 0;
@@ -230,7 +268,7 @@ int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringle
 		sprintf(sBuf, "%s年%s月%s日 %s:%s:%s", sYear, sMonth, sDay, sHour, sMinute, sSecond);
 		break;
 	case eAT2SType_T5://2017年07月10日 11点30分00秒
-		sprintf(sBuf, "%s年%s月%s日 %s点%s分%s秒", sYear, sMonth, sDay, sHour, sMinute, sSecond);
+		sprintf(sBuf, "%s年%s月%s日 %s点%s分%s秒 ", sYear, sMonth, sDay, sHour, sMinute, sSecond);
 		break;
 	}
 
@@ -256,8 +294,10 @@ int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringle
 /// 参数	 :	pHandle      [out] 计时句柄 
 /// 返回值:  
 /// </summary>
-int time_StartAsyn(AigTimingHandle* pHandle)
+int time_StartAsyn(void* pBuf)
 {
+	AigTimingHandle* pHandle = (AigTimingHandle*)pBuf;
+
 	if (pHandle == NULL)
 		return eAEC_Input;
 
@@ -278,8 +318,10 @@ int time_StartAsyn(AigTimingHandle* pHandle)
 /// 参数	 :	pHandl		[in] 计时句柄
 /// 返回值:  微秒
 /// </summary>
-long time_EndAsyn(AigTimingHandle* pHandle)
+long time_EndAsyn(void* pBuf)
 {
+	AigTimingHandle* pHandle = (AigTimingHandle*)pBuf;
+
 	long lRet = 0;
 	if (!pHandle->bStart)
 		return 0;

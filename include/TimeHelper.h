@@ -25,20 +25,10 @@ typedef enum _enumAigTime2StringType
 	eAT2SType_T2,					//2017-07-10 11-30-00
 	eAT2SType_T3,					//2017-07-10 11:30:00
 	eAT2SType_T4,					//2017年07月10日 11:30:00
-	eAT2SType_T5,					///2017年07月10日 11点30分00秒
+	eAT2SType_T5					///2017年07月10日 11点30分00秒
 }enumAigTime2StringType;
 
-typedef struct _AigTimingHandle
-{
-	char bStart;					//开始计时
 
-#ifdef _WIN32
-	LARGE_INTEGER StartTime;		//开始时间点
-#elif defined(linux) || defined(__LUNX)
-	struct timeval StartTime;		//开始时间点
-#endif
-
-}AigTimingHandle;
 
 /// <summary>
 /// 功能	 :	获取当前时间
@@ -78,15 +68,15 @@ int time_GetUTCDayNum(int in_lYear);
 ///			pTimet			 [out]pTimet
 /// 返回值:
 /// </summary>
-void  time_FileTime2TimeT(void* aFileTime, time_t* pTimet);
+void  time_FileTime2TimeT(void* aFileTime, void* pTimet);
 
 /// <summary>
 /// 功能	 :	Time_T转AigSystemTime
-/// 参数	 :	ulTimestamp		[in] Time_T
-///			out_pTime		[out]AigSystemTime
+/// 参数	 :	pTimet			[in] Time_T
+///			pAigTime		[out]AigSystemTime
 /// 返回值:
 /// </summary>
-int time_TimeT2AigSystemTime(time_t aTimet, AigSystemTime* pAigTime);
+int time_TimeT2AigSystemTime(void* pTimet, AigSystemTime* pAigTime);
 
 /// <summary>
 /// 功能	 :	FILETIME转AigSystemTime
@@ -113,14 +103,14 @@ int time_AigSysTime2String(AigSystemTime* pAigTime, char* pString, int iStringle
 /// 参数	 :	pHandle      [out] 计时句柄 
 /// 返回值:  
 /// </summary>
-int time_StartAsyn(AigTimingHandle* pHandle);
+int time_StartAsyn(void* pHandle);
 
 /// <summary>
 /// 功能	 :	结束计时
 /// 参数	 :	pHandl		[in] 计时句柄
 /// 返回值:  微秒
 /// </summary>
-long time_EndAsyn(AigTimingHandle* pHandle);
+long time_EndAsyn(void* pHandle);
 
 /// <summary>
 /// 功能	 :  开始计时

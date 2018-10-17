@@ -1,3 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <time.h>
+#include <io.h>
+#include <direct.h>
+#endif
+
+#if defined(__linux) || defined(linux) || defined(__LYNX)
+#include <unistd.h>
+#include <dirent.h>
+#include <stdarg.h>
+#include <time.h>
+#include <strings.h>
+#include <sys/stat.h>
+#endif
+
 #include "StringHelper.h"
 #include "PathHelper.h"
 #include "FileHelper.h"
@@ -145,4 +165,65 @@ int file_GetBakFilePath(char* pFilePath, char* pBakString, char* pOutPath, int i
 	return eAEC_Success;
 }
 
+/// <summary>
+/// 功能	 :	复制文件
+/// 参数	 :	pSrcPath	 [in] 源文件
+///			   pDescPath	 [in] 目标文件
+/// 返回值:
+/// </summary>
+int file_Copy(char* pSrcPath, char* pDescPath)
+{
+	FILE* pSrcFP = fopen(pSrcPath,"rb");
+	if(pSrcFP == NULL)
+		return eAEC_Open;
 
+	FILE* pDescFP = fopen(pDescPath,"wb+");
+	if(pSrcFP == NULL)
+	{
+		fclose(pSrcFP);
+		return eAEC_Open;
+	}
+
+	/* 循环读写文件 */
+	int ret;
+	char pBuff[1024];
+    while (1)
+    {
+        /* 从源文件中读取内容 */
+		ret = fread(pBuff, 1, 1024, pSrcFP);
+
+        /* 把从源文件读取到的容写入到目标文件中 */
+        if (ret != 1024)
+        {
+			fwrite(pBuff, ret, 1, pDescFP);
+        }
+        else
+        {
+			fwrite(pBuff, 1024, 1, pDescFP);
+        }
+
+		if (feof(pSrcFP))
+            break;
+    }
+
+    /* 关闭打开的文件 */
+    fclose(pSrcFP);
+    fclose(pDescFP);
+	return eAEC_Success;
+}
+
+/// <summary>
+/// 功能	 :	剪切文件
+/// 参数	 :	pSrcPath	 [in] 源文件
+///			   pDescPath	 [in] 目标文件
+/// 返回值:
+/// </summary>
+int file_move(char* pSrcPath, char* pDescPath)
+{
+	int iCheck = file_Copy(pSrcPath, pDescPath);
+	if(iCheck != eAEC_Success)
+		return iCheck;
+
+	remove(pSrcPath);
+	return eAEC_Success;
+}

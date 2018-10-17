@@ -1,3 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <time.h>
+#include <io.h>
+#include <direct.h>
+#endif
+
+#if defined(__linux) || defined(linux) || defined(__LYNX)
+#include <unistd.h>
+#include <dirent.h>
+#include <stdarg.h>
+#include <time.h>
+#include <strings.h>
+#include <sys/stat.h>
+#endif
+
 #include "ConsoleHelper.h"
 
 typedef struct _AigConsoleHanlde
