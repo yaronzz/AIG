@@ -202,15 +202,9 @@ int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEqu
 	if (math_IsLine(point0, point1))
 		return eAEC_Err;
 
-	//斜率 k = (y1 - y0)/(x1 - x0)
-	//方程 y - y0 = k(x - x0)
-	//	  --> y - kx = y0 - kx0
-	//	  --> y - x(y1 - y0)/(x1 - x0) = y0 - x0(y1 - y0)/(x1 - x0)
-	//	  --> (y0 - y1)x + (x1 - x0)y  = (x1 - x0)y0 - x0(y1 - y0)
-	//	  --> A = y0 - y1    B = x1 - x0      C = x0(y1 - y0) - (x1 - x0)y0
-	double A = point0.y - point1.y;
-	double B = point1.x - point0.x;
-	double C = point0.x*(point1.y - point0.y) - point0.y*(point1.x - point0.x);
+	double A = point1.y - point0.y;
+	double B = point0.x - point1.x;
+	double C = point1.x*point0.y - point0.x*point1.y;
 
 	pEquation->A = A;
 	pEquation->B = B;
@@ -327,8 +321,7 @@ int math_GetPointSideToLine(AigCoords point, AigCoords start_point, AigCoords en
 int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_point, AigCoords* out_point)
 {
 	//  点A(x,y),线Ax+By+C =0
-	//  垂足点为B(x1,y1)  x1=(B²x - ABy - AC)/(A²+B²)
-	//				     y1=(A²y - ABx - BC)/(A²+B²)
+	//  垂线： y=(B/A)*(x-x0)+y0
 	if (out_point == NULL)
 		return -1;
 	//构不成直线
@@ -344,10 +337,9 @@ int math_GetVerticalPoint(AigCoords point, AigCoords start_point, AigCoords end_
 	double A = aLineEquation.A;
 	double B = aLineEquation.B;
 	double C = aLineEquation.C;
-	double dTmp = A*A + B*B;
 
 	out_point->x = (B*B*x - A*B*y - A*C) / (A*A + B*B);
-	out_point->y = (A*A*y - A*B*x - B*C) / (A*A + B*B);
+	out_point->y = (-1)*(A*x + C) / B;
 
 	return eAEC_Success;
 }
