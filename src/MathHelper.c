@@ -611,7 +611,7 @@ int math_VectorForkMultiplyOfPloygonArea(AigCoords* point, int point_num)
 	for (int i = 0; i < point_num; ++i)
 		dArea += point[i].x * point[(i + 1) % point_num].y - point[i].y * point[(i + 1) % point_num].x;
 
-	return dArea / 2.0;
+	return (int)(dArea / 2.0);
 }
 
 /// <summary>
@@ -628,7 +628,7 @@ int math_GetPolygonArea(AigCoords* point, int point_num)
 
 	dArea = math_VectorForkMultiplyOfPloygonArea(point, point_num);
 	dArea = fabs(dArea);
-	return dArea;
+	return (int)dArea;
 }
 
 /// <summary>

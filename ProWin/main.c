@@ -6,6 +6,7 @@
 #include "ListHelper.h"
 #include "StringHelper.h"
 #include "HashHelper.h"
+#if 0
 int main(int argc, char * argv[])
 {
 	int iCheck;
@@ -36,4 +37,4 @@ int main(int argc, char * argv[])
 
 	return 0;
 }
-
+#endif

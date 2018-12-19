@@ -68,7 +68,7 @@ int file_Copy(char* pSrcPath, char* pDescPath);
 ///			   pDescPath	 [in] 目标文件
 /// 返回值:
 /// </summary>
-int file_move(char* pSrcPath, char* pDescPath);
+int file_Move(char* pSrcPath, char* pDescPath);
 
 #ifdef __cplusplus
 }

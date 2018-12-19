@@ -21,33 +21,33 @@
 #include "BTreeHelper.h"
 
 /*********************************************************
-è¯´æ˜Žï¼š
-1ã€æ ‘çš„ç»„æˆï¼šæ ¹ - åˆ†æ”¯ - å¶å­
+ËµÃ÷£º
+1¡¢Ê÷µÄ×é³É£º¸ù - ·ÖÖ§ - Ò¶×Ó
 		  
 *********************************************************/
 
 typedef struct _AigBTreeNode
 {
-	short   IsLeaf;					//æ˜¯å¦ä¸ºå¶å­
-	short	KeyNum;					//Keyçš„æ•°é‡
+	short   IsLeaf;					//ÊÇ·ñÎªÒ¶×Ó
+	short	KeyNum;					//KeyµÄÊýÁ¿
 
-	unsigned char**	Keys;			//Keyé›†åˆ
-	unsigned char** Values;			//å€¼é›†åˆ
+	unsigned char**	Keys;			//Key¼¯ºÏ
+	unsigned char** Values;			//Öµ¼¯ºÏ
 
-	struct _AigBTreeNode* Parent;	//çˆ¶èŠ‚ç‚¹
-	struct _AigBTreeNode** Child;	//å­èŠ‚ç‚¹æ•°ç»„
+	struct _AigBTreeNode* Parent;	//¸¸½Úµã
+	struct _AigBTreeNode** Child;	//×Ó½ÚµãÊý×é
 }AigBTreeNode;
 
 typedef struct __AIG_BTREE_HANDLE
 {
-	int Size;						//èŠ‚ç‚¹æ•°é‡		
-	int KeyLen;						//å…³é”®å­—é•¿åº¦
-	int ValueLen;					//å€¼é•¿åº¦
-	int MValue;						//Må€¼,æœ€å¤šæœ‰Mä¸ªå­©å­,>=2
-	int SplitKeyNum;				//æ–°åˆ†è£‚çš„èŠ‚ç‚¹Keyæ•°é‡ï¼ˆæ ¹æ®Må€¼å¥‡å¶æ•°ä¸åŒè€Œä¸åŒï¼‰
+	int Size;						//½ÚµãÊýÁ¿		
+	int KeyLen;						//¹Ø¼ü×Ö³¤¶È
+	int ValueLen;					//Öµ³¤¶È
+	int MValue;						//MÖµ,×î¶àÓÐM¸öº¢×Ó,>=2
+	int SplitKeyNum;				//ÐÂ·ÖÁÑµÄ½ÚµãKeyÊýÁ¿£¨¸ù¾ÝMÖµÆæÅ¼Êý²»Í¬¶ø²»Í¬£©
 
-	AigBTreeNode* pRoot;			//æ ¹ç»“ç‚¹
-	pfn_AIG_CMP_CALLBACK pCmpFunc;	//èŠ‚ç‚¹æ¯”è¾ƒå›žè°ƒå‡½æ•°
+	AigBTreeNode* pRoot;			//¸ù½áµã
+	pfn_AIG_CMP_CALLBACK pCmpFunc;	//½Úµã±È½Ï»Øµ÷º¯Êý
 } AIG_BTREE_HANDLE;
 
 
@@ -153,7 +153,7 @@ static int btree_InsertKeyAfterSplit(AIG_BTREE_HANDLE* pHandle, AigBTreeNode* pK
 	int iRightNum	= pHandle->SplitKeyNum;
 	int iLeftNum	= pKeyNode->KeyNum - iRightNum;
 
-	//åˆ†è£‚
+	//·ÖÁÑ
 	AigBTreeNode*pNewNode = btree_CreatNode(pHandle);
 	pNewNode->IsLeaf = 1;
 	pNewNode->KeyNum = iRightNum;
@@ -168,10 +168,10 @@ static int btree_InsertKeyAfterSplit(AIG_BTREE_HANDLE* pHandle, AigBTreeNode* pK
 		pKeyNode->Child[iRightNum + i]	= NULL;
 	}
 
-	//é‡ç½®åŽŸèŠ‚ç‚¹çš„Keyæ•°é‡
+	//ÖØÖÃÔ­½ÚµãµÄKeyÊýÁ¿
 	pKeyNode->KeyNum = iLeftNum;
 
-	//èŽ·å–çˆ¶äº²çš„Key
+	//»ñÈ¡¸¸Ç×µÄKey
 	unsigned char* pParentKey	= pKey;
 	unsigned char* pParentValue = pValue;
 	if (iLeftNum > iIndex)
@@ -199,7 +199,7 @@ static int btree_InsertKeyAfterSplit(AIG_BTREE_HANDLE* pHandle, AigBTreeNode* pK
 		pNewNode->Values[iIndex]	= pValue;
 	}
 
-	//å¦‚æžœæ²¡æœ‰çˆ¶åˆ†æ”¯åˆ™åˆ›å»ºä¸€ä¸ª
+	//Èç¹ûÃ»ÓÐ¸¸·ÖÖ§Ôò´´½¨Ò»¸ö
 	AigBTreeNode*pParentNode = pKeyNode->Parent;
 	if (pParentNode == NULL)
 	{
@@ -215,7 +215,7 @@ static int btree_InsertKeyAfterSplit(AIG_BTREE_HANDLE* pHandle, AigBTreeNode* pK
 		return eAEC_Success;
 	}
 
-	//å°†Keyæ’å…¥åˆ°çˆ¶åˆ†æ”¯ä¸­
+	//½«Key²åÈëµ½¸¸·ÖÖ§ÖÐ
 	int iParentIndex = btree_GetKeyInsertIndex(pHandle, pParentNode, pParentKey);
 	if (pParentNode->KeyNum < pHandle->MValue - 1)
 		return btree_InsertKey(pHandle, pParentNode, iParentIndex, pParentKey, pParentValue);
@@ -263,10 +263,10 @@ int btree_Insert(void* pHandle, void* pKey, void* pValue, void** pOldValue)
 	if (pTreeHandle->pRoot == NULL)
 		return btree_AddRoot(pTreeHandle, pKey, pValue);
 
-	//æŸ¥æ‰¾å¶å­èŠ‚ç‚¹
+	//²éÕÒÒ¶×Ó½Úµã
 	AigBTreeNode* pKeyNode = btree_FindKeyNode(pTreeHandle, pKey);
 
-	//æŸ¥è¯¢æ˜¯å¦å·²ç»å­˜åœ¨æ­¤Key
+	//²éÑ¯ÊÇ·ñÒÑ¾­´æÔÚ´ËKey
 	int iIndex = btree_FindKeyIndex(pTreeHandle, pKeyNode, pKey);
 	if (iIndex >= 0)
 	{
@@ -277,7 +277,7 @@ int btree_Insert(void* pHandle, void* pKey, void* pValue, void** pOldValue)
 		return eAEC_Success;
 	}
 
-	//æŸ¥è¯¢Keyçš„æ’å…¥ä½ç½®
+	//²éÑ¯KeyµÄ²åÈëÎ»ÖÃ
 	iIndex = btree_GetKeyInsertIndex(pTreeHandle, pKeyNode, pKey);
 	if (pKeyNode->KeyNum < pTreeHandle->MValue - 1)
 		btree_InsertKey(pTreeHandle, pKeyNode, iIndex, pKey, pValue);

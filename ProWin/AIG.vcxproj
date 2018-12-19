@@ -57,6 +57,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +93,7 @@
     <ClCompile Include="..\src\LogHelper.c" />
     <ClCompile Include="..\src\MathHelper.c" />
     <ClCompile Include="..\src\MutexHelper.c" />
+    <ClCompile Include="..\src\NetHelper.c" />
     <ClCompile Include="..\src\PathHelper.c" />
     <ClCompile Include="..\src\ProfileHelper.c" />
     <ClCompile Include="..\src\SearchHelper.c" />
@@ -112,6 +114,7 @@
     <ClInclude Include="..\include\LogHelper.h" />
     <ClInclude Include="..\include\MathHelper.h" />
     <ClInclude Include="..\include\MutexHelper.h" />
+    <ClInclude Include="..\include\NetHelper.h" />
     <ClInclude Include="..\include\PathHelper.h" />
     <ClInclude Include="..\include\ProfileHelper.h" />
     <ClInclude Include="..\include\SearchHelper.h" />

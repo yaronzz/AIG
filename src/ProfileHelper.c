@@ -166,7 +166,7 @@ float profile_GetFloat(char* pGroup, char* pKey, float pDefault, char* pProfileP
 {
 	char sBuf[1024];
 	if (profile_GetString(pGroup, pKey, NULL, sBuf, sizeof(sBuf), pProfilePath) == eAEC_Success)
-		return atof(sBuf);
+		return (float)atof(sBuf);
 
 	return pDefault;
 }

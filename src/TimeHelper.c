@@ -59,7 +59,7 @@ int time_GetCurrentTime(AigSystemTime* pTime)
 
 	time_t aRawTime;
 	time(&aRawTime);
-	time_TimeT2AigSystemTime(aRawTime, pTime);
+	time_TimeT2AigSystemTime(&aRawTime, pTime);
 	return eAEC_Success;
 }
 
@@ -201,7 +201,7 @@ void time_FileTime2AigSystemTime(void* aFileTime, AigSystemTime* pAigTime)
 {
 	time_t aTimeT;
 	time_FileTime2TimeT(aFileTime, &aTimeT);
-	time_TimeT2AigSystemTime(aTimeT, pAigTime);
+	time_TimeT2AigSystemTime(&aTimeT, pAigTime);
 }
 
 static void time_ZeroFill(char* pTmp, int iNum)

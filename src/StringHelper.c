@@ -646,7 +646,6 @@ int string_MemoryCmp(void* pMemA, void* pMemB, int iSize)
 {
 	unsigned char* pEleA = pMemA;
 	unsigned char* pEleB = pMemB;
-	unsigned char Tmp;
 
 	while (iSize-- > 0)
 	{

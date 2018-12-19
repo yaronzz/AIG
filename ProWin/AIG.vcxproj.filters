@@ -62,6 +62,9 @@
     <ClCompile Include="..\src\BPTreeHelper.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\NetHelper.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ArgvHelper.h">
@@ -113,6 +116,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\BPTreeHelper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\NetHelper.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

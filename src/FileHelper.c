@@ -110,7 +110,7 @@ int file_SetFileRight(char *pPath, enumAigFileRight eType)
 	if (eType & eAFileRight_System)
 		aAttr |= FILE_ATTRIBUTE_SYSTEM;
 
-	SetFileAttributesA((LPCWSTR)pPath, aAttr);
+	SetFileAttributesA((LPCSTR)pPath, aAttr);
 #endif
 
 	return 0;
@@ -218,7 +218,7 @@ int file_Copy(char* pSrcPath, char* pDescPath)
 ///			   pDescPath	 [in] 目标文件
 /// 返回值:
 /// </summary>
-int file_move(char* pSrcPath, char* pDescPath)
+int file_Move(char* pSrcPath, char* pDescPath)
 {
 	int iCheck = file_Copy(pSrcPath, pDescPath);
 	if(iCheck != eAEC_Success)

@@ -32,7 +32,7 @@ int mutex_Creat(void** pHandle, char* pMutexName)
 		return eAEC_Input;
 
 #ifdef _WIN32
-	HANDLE hMutex = CreateMutex(NULL, FALSE, pMutexName);
+	HANDLE hMutex = CreateMutex(NULL, FALSE, (LPCWSTR)pMutexName);
 	DWORD dwRet = GetLastError();
 	if (hMutex == NULL || ERROR_ALREADY_EXISTS == dwRet)
 	{
@@ -59,7 +59,7 @@ int mutex_Open(void** pHandle, char* pMuetexName)
 		return eAEC_Input;
 
 #ifdef _WIN32
-	HANDLE hMutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, pMuetexName);
+	HANDLE hMutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, (LPCWSTR)pMuetexName);
 	if (hMutex == NULL)
 	{
 		CloseHandle(hMutex);

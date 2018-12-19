@@ -50,3 +50,15 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/ProLinux/AIG.cbp
+/ProLinux/AIG.depend
+/ProLinux/AIG.layout
+/ProLinux/test
+/ProWin/Debug
+/ProWin/Release
+/ProWin/AIG.sdf
+/ProWin/AIG.v12.suo
+/ProWin/Debug
+/ProWin/Release
+/ProWin/AIG.sdf
+/ProWin/AIG.v12.suo
