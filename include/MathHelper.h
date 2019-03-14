@@ -159,6 +159,16 @@ int math_GetLinearEquation(AigCoords point0, AigCoords point1, AigEquation* pEqu
 double math_GetTwoPointsDistance(AigCoords point0, AigCoords point1);
 
 /// <summary>
+/// 功能	 :	获取两点之间一段距离的点
+/// 参数	 :	point0		[in] 第一个点的坐标
+///			point1		[in] 第二个点的坐标
+///			dDis		[in] 第三个点距第一个点的距离
+///			pCoord		[in] 第三个点的坐标
+/// 返回值:  
+/// </summary>
+double math_GetPointCoorInSegment(AigCoords point0, AigCoords point1, double dDis, AigCoords* pCoord);
+
+/// <summary>
 /// 功能	 :	获取点到线的距离
 /// 参数	 :	point			[in] 点的坐标
 ///			line_point0		[in] 第一个线的坐标

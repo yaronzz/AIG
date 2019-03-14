@@ -162,3 +162,9 @@ int sort_Shell(void* pArrary, int Arrary_num, int Element_size, pfn_AIG_CMP_CALL
 	}
 	return 0;
 }
+
+
+int sort_Debug()
+{
+	return 0;
+}

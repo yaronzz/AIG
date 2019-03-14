@@ -1,14 +1,28 @@
 // AIG.cpp : 定义控制台应用程序的入口点。
 //
 #include "stdio.h"
-
+#include "MathHelper.h"
 #include "ArgvHelper.h"
 #include "ListHelper.h"
 #include "StringHelper.h"
 #include "HashHelper.h"
-#if 0
+#if 1
+
+double getPointCoorInSegment(double x1, double y1, double x2, double y2, double dDis, double*x3, double*y3);
+
+
 int main(int argc, char * argv[])
 {
+
+	AigCoords A;
+	AigCoords B;
+	AigCoords C;
+	A.x = 412018046;
+	A.y = 81874019;
+	B.x = 412018028;
+	B.y = 81874081;
+	math_GetPointCoorInSegment(A, B, 21, &C);
+
 	int iCheck;
 	AigArgvHandle aArgvHandle;
 	unsigned char sText1[1024];

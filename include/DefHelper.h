@@ -43,6 +43,10 @@ typedef enum _AIG_ERRORCODE
 	eAEC_AlreadyExist		= 27,	//已经存在
 	eAEC_TimeOut			= 28,	//超时
 
+	eAEC_InitErr			= 30,	//初始化失败
+	eAEC_CoverAddr			= 31,	//地址转换
+	eAEC_BindErr			= 32,	//绑定
+	eAEC_ListenErr			= 33,	//监听
 }AIG_ERRORCODE;
 
 

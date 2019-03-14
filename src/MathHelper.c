@@ -232,6 +232,65 @@ double math_GetTwoPointsDistance(AigCoords point0, AigCoords point1)
 }
 
 /// <summary>
+/// 功能	 :	获取两点之间一段距离的点
+/// 参数	 :	point0		[in] 第一个点的坐标
+///			point1		[in] 第二个点的坐标
+///			dDis		[in] 第三个点距第一个点的距离
+///			pCoord		[in] 第三个点的坐标
+/// 返回值:  
+/// </summary>
+double math_GetPointCoorInSegment(AigCoords point0, AigCoords point1, double dDis, AigCoords* pCoord)
+{
+	double dDisAB = math_GetTwoPointsDistance(point0, point1);
+	if (dDisAB == 0 || dDis < 0 || dDisAB < dDis)
+		return -1;
+	if (dDisAB == dDis)
+	{
+		memcpy(pCoord, &point1, sizeof(AigCoords));
+		return 0;
+	}
+	if (dDis == 0)
+	{
+		memcpy(pCoord, &point0, sizeof(AigCoords));
+		return 0;
+	}
+
+	double dX = point0.x - ((dDis*(point0.x - point1.x)) / dDisAB);
+	double dY = point0.y - ((dDis*(point0.y - point1.y)) / dDisAB);
+
+	pCoord->x = dX;
+	pCoord->y = dY;
+	return 0;
+}
+
+double getPointCoorInSegment(double x1, double y1, double x2, double y2, double dDis, double*x3, double*y3)
+{
+	double dTmp = 0.0000001f;
+	if (dDis < dTmp)
+		return -1;
+	if (dDis == 0)
+	{
+		*x3 = x1;
+		*y3 = y1;
+		return 0;
+	}
+	double dDisAB = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+	if (dDisAB <= dTmp || dDis < dTmp || dDisAB < dDis)
+		return -1;
+	if ((dDisAB - dDis) <= dTmp || (dDis - dDisAB) >= dTmp)
+	{
+		*x3 = x2;
+		*y3 = y2;
+		return 0;
+	}
+	*x3 = x1 - ((dDis*(x1 - x2)) / dDisAB);
+	*y3 = y1 - ((dDis*(y1 - y2)) / dDisAB);
+	return 0;
+}
+
+
+
+/// <summary>
 /// 功能	 :	获取点到线的距离
 /// 参数	 :	point			[in] 点的坐标
 ///			line_point0		[in] 第一个线的坐标
