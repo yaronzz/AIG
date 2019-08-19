@@ -50,7 +50,7 @@ typedef struct _AigHashHanle
 	int SeekSubIndex;				//遍历时链表的下标
 }AigHashHanle;
 
-
+//获取哈希值的算法
 int hash_AlgorithmBKDR(char* pStr);
 int hash_AlgorithmFNV(char* pStr);
 int hash_AlgorithmFNV_1A(char* pStr);
@@ -223,7 +223,7 @@ void* hash_Creat(int iKeyLen, int iValueLen, int iHashCapacity, pfn_AIG_CMP_CALL
 {
 	if (iKeyLen <= 0 || iValueLen < 0 || iHashCapacity <= 0 || pCmpFunc == NULL)
 		return NULL;
-
+	
 	AigHashHanle* pHandle = (AigHashHanle*)AIG_FUNC_MALLOC(sizeof(AigHashHanle));
 	memset(pHandle, 0, sizeof(AigHashHanle));
 
@@ -427,7 +427,7 @@ int hash_GetNext(void* pHandle, void** out_pKey, void** out_pValue)
 	AigHashHanle* pHashHandle = (AigHashHanle*)pHandle;
 	if (pHashHandle->Size == 0)
 		return eAEC_End;
-
+	
 	AigHashNode* pEntry = pHashHandle->pEntry[pHashHandle->SeekIndex];
 	AigHashNode* pCurrent = pEntry;
 

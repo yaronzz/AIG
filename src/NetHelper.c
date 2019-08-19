@@ -10,7 +10,7 @@
 //		return;
 //	}
 //
-//	//uv_tcp_t *client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
+//	//uv_tcp_t *client = (uv_tcp_t*)com_malloc(sizeof(uv_tcp_t));
 //	//uv_tcp_init(loop, client);
 //	//if (uv_accept(server, (uv_stream_t*)client) == 0) {
 //	//	uv_read_start((uv_stream_t*)client, alloc_buffer, echo_read);

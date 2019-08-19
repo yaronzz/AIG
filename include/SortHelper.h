@@ -27,7 +27,7 @@ int sort_Bubble(void* pArrary, int Arrary_num, int Element_size, pfn_AIG_CMP_CAL
 /// 返回值: 
 /// </summary>
 int sort_Insertion(void* pArrary, int Arrary_num, int Element_size, pfn_AIG_CMP_CALLBACK in_pCmpFunc);
-
+       
 /// <summary>
 /// 功能	 :	二分插入排序(从小到大)
 /// 参数	 :	pArrary			[in-out] 元素数组
